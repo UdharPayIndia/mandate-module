@@ -153,8 +153,7 @@ dependencies {
 
 
     // Chuck - Network Debugger
-    debugImplementation("com.github.chuckerteam.chucker:library:3.5.2")
-    releaseImplementation("com.github.chuckerteam.chucker:library-no-op:3.5.2")
+    implementation("com.github.chuckerteam.chucker:library:3.5.2")
 
     // hyper verge
     api("co.hyperverge:hyperkyc:0.28.0", {

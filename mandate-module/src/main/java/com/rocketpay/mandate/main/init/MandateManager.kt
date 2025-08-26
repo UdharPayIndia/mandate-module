@@ -127,7 +127,7 @@ class MandateManager private constructor(
     }
 
     fun skipKyc(): Boolean {
-        return skipKyc && BuildConfig.DEBUG
+        return skipKyc && isDebug()
     }
 
     fun isDebug(): Boolean {
