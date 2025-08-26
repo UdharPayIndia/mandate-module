@@ -10,7 +10,6 @@ import com.rocketpay.mandate.feature.mandate.domain.entities.PaymentMethod
 import com.rocketpay.mandate.feature.mandate.domain.usecase.MandateUseCase
 import com.rocketpay.mandate.feature.mandate.presentation.ui.mandateadd.viewmodel.ChargeBearer
 import com.rocketpay.mandate.feature.mandate.presentation.ui.mandateadd.viewmodel.InstallmentFrequency
-import com.rocketpay.mandate.feature.mandate.presentation.ui.mandateadd.viewmodel.UpiIdError
 import com.rocketpay.mandate.feature.mandate.presentation.ui.utils.WhatsAppMessageParserUtils
 import com.rocketpay.mandate.main.init.MandateManager
 import com.rocketpay.mandate.feature.permission.common.PermissionType
@@ -114,7 +113,7 @@ internal class MandateAddStateMachine(
                 next(MandateAddASF.LoadProductWallet)
             }
             is MandateAddEvent.UpdateProductWallet -> {
-                val balanceKeyCount = abs(state.productWallet?.outstanding.double())
+                val balanceKeyCount = abs(event.productWallet?.outstanding.double())
                 if(balanceKeyCount > 0){
                     next(state.copy(productWallet = event.productWallet))
                 }else{

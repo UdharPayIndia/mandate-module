@@ -34,7 +34,7 @@ afterEvaluate {
             maven {
                 // GitHub Packages example
                 name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/UdharPayIndia/mandate-sdk")
+                url = uri("https://maven.pkg.github.com/UdharPayIndia/mandate-module")
                 credentials {
                     username = project.findProperty("gpr.user") as String?
                     password = project.findProperty("gpr.key") as String?

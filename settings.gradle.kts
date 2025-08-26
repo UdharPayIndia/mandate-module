@@ -17,7 +17,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "mandate-sdk"
 include(":androidApp")
-include(":shared")
 
 include(":kernel-common")
 include(":network-manager")
