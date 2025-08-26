@@ -4,7 +4,7 @@
     <style name="RpMainScreen" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/rp_blue_2</item>
         <item name="colorPrimaryDark">@color/rp_blue_1</item>
-        <item name="colorAccent">@color/rp_blue_4</item>
+        <item name="colorAccent">@color/rp_blue_3</item>
         <item name="colorPrimaryVariant">@color/rp_blue_1</item>
         <item name="colorSecondary">@color/rp_blue_4</item>
         <item name="colorSecondaryVariant">@color/rp_blue_5</item>

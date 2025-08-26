@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!--        <color name="blue_1">#082E76</color>-->
-    <!--        <color name="blue_2">#0B45B0</color>-->
-    <!--        <color name="blue_3">#578EF4</color>-->
-    <!--        <color name="blue_4">#8ABBF3</color>-->
-    <!--        <color name="blue_5">#ECF4FD</color>-->
-    <!--        <color name="blue_6">#F7FAFE</color>-->
-
     <color name="blue_1">#0B45B0</color>
     <color name="blue_2">#0D53D8</color>
     <color name="blue_3">#578EF4</color>

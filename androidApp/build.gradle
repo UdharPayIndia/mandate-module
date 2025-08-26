@@ -91,9 +91,6 @@ dependencies {
     implementation libs.play.services.location
     implementation libs.play.services.auth.api.phone
 
-    implementation project(":kernel-common")
-    implementation project(":network-manager")
-    implementation project(":sync-manager-core")
     implementation project(':mandate-module')
 
     // Gson
