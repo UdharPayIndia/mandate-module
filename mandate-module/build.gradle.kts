@@ -79,7 +79,6 @@ android {
             buildConfigField("String", "API_BASE_URL", "\"https://api.rocketpay.co.in\"")
             buildConfigField("String", "VERSION_CODE", "\"$versionCode\"")
             buildConfigField("String", "VERSION_NAME", "\"$versionName\"")
-            buildConfigField("String", "APP_NAME", "\"EMI Safe Pro\"")
 
         }
         debug {
@@ -89,7 +88,6 @@ android {
             buildConfigField("String", "API_BASE_URL", "\"https://api-staging.rocketpay.co.in\"")
             buildConfigField("String", "VERSION_CODE", "\"$versionCode\"")
             buildConfigField("String", "VERSION_NAME", "\"$versionName\"")
-            buildConfigField("String", "APP_NAME", "\"Emi Safe Pro\"")
         }
     }
 

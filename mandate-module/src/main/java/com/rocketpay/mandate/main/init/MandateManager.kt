@@ -26,6 +26,7 @@ import kotlinx.coroutines.GlobalScope
 class MandateManager private constructor(
     private val context: Context,
     private val enterpriseId: String,
+    private val appName: String,
     private var loginMobileNumber: String,
     private val customerSupportNumber: String,
     private val skipKyc: Boolean
@@ -94,6 +95,10 @@ class MandateManager private constructor(
     /*******
      * Getter/Setter
      *******/
+
+    fun getAppName(): String{
+        return appName
+    }
     fun getEnterpriseId(): String{
         return enterpriseId
     }
@@ -128,6 +133,7 @@ class MandateManager private constructor(
         private var loginMobileNumber: String = ""
         private var customerSupportNumber: String = ""
         private var skipKyc: Boolean = false
+        private var appName: String = ""
 
         fun setContext(context: Context) = apply {
             this.context = context.applicationContext
@@ -156,7 +162,7 @@ class MandateManager private constructor(
             if (instance != null) {
                 throw Exception("MandateManager is already built, it can not be re built")
             }
-            instance = MandateManager(context, enterpriseId, loginMobileNumber, customerSupportNumber, skipKyc)
+            instance = MandateManager(context, enterpriseId,appName, loginMobileNumber, customerSupportNumber, skipKyc)
         }
     }
 

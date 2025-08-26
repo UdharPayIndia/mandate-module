@@ -10,6 +10,7 @@ import com.rocketpay.mandate.common.mvistatemachine.contract.Next
 import com.rocketpay.mandate.common.mvistatemachine.viewmodel.simple.SimpleStateMachineImpl
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
 import com.rocketpay.mandate.common.syncmanager.client.SyncManager
+import com.rocketpay.mandate.main.init.MandateManager
 import kotlinx.coroutines.CoroutineScope
 
 internal class EnterPenaltyAmountStateMachine  (
@@ -68,7 +69,7 @@ internal class EnterPenaltyAmountStateMachine  (
                         ResourceManager.getInstance().getString(
                             R.string.rp_allow_app_to_charge_bounce_charge,
                             AmountUtils.format(AmountUtils.stringToDouble(state.penaltyAmount)),
-                            BuildConfig.APP_NAME
+                            MandateManager.getInstance().getAppName()
                         ),
                         ResourceManager.getInstance().getString(R.string.rp_yes),
                         ResourceManager.getInstance().getString(R.string.rp_dismiss)

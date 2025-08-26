@@ -10,11 +10,12 @@ import com.rocketpay.mandate.common.basemodule.common.presentation.progressdialo
 import com.rocketpay.mandate.common.basemodule.common.presentation.progressdialog.ProgressDialogVM
 import com.rocketpay.mandate.common.basemodule.main.viewmodel.BaseMainUM
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
+import com.rocketpay.mandate.main.init.MandateManager
 
 internal class EnterPenaltyAmountUM (private val dispatchEvent: (EnterPenaltyAmountEvent) -> Unit) : BaseMainUM() {
 
     val penaltySubText = ObservableField<String>(ResourceManager.getInstance().getString(R.string.rp_allow_app_to_charge,
-        BuildConfig.APP_NAME))
+        MandateManager.getInstance().getAppName()))
     val penaltyAmount = ObservableField("")
     val penaltyAmountError = ObservableField<String>()
 

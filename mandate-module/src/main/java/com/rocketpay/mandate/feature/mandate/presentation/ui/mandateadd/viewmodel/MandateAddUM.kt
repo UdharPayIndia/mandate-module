@@ -23,6 +23,7 @@ import com.rocketpay.mandate.common.basemodule.common.presentation.utils.AmountU
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.DateUtils
 import com.rocketpay.mandate.common.basemodule.main.viewmodel.BaseMainUM
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
+import com.rocketpay.mandate.main.init.MandateManager
 
 internal class MandateAddUM (private val dispatchEvent: (MandateAddEvent) -> Unit) : BaseMainUM() {
 
@@ -387,13 +388,13 @@ internal class MandateAddUM (private val dispatchEvent: (MandateAddEvent) -> Uni
         if(merchantCharges != null && (freeByTokenization)){
             if(state.chargeResponse?.showAtMandateLevel == true || installment <= 1){
                 handlingChargeLabel.set(ResourceManager.getInstance().getString(
-                    R.string.rp_merchant_charges_at_zero, BuildConfig.APP_NAME))
+                    R.string.rp_merchant_charges_at_zero, MandateManager.getInstance().getAppName()))
             }else{
                 handlingChargeLabel.set(ResourceManager.getInstance().getString(
-                    R.string.rp_merchant_charges_per_installment_at_zero, BuildConfig.APP_NAME))
+                    R.string.rp_merchant_charges_per_installment_at_zero, MandateManager.getInstance().getAppName()))
             }
             subscriptionInfoText.set(ResourceManager.getInstance().getString(R.string.rp_saved_with_app_plan,
-                AmountUtils.format(merchantCharges.discount), BuildConfig.APP_NAME))
+                AmountUtils.format(merchantCharges.discount), MandateManager.getInstance().getAppName()))
         }else{
             if(state.chargeResponse?.showAtMandateLevel == true || installment <= 1){
                 handlingChargeLabel.set(ResourceManager.getInstance().getString(R.string.rp_merchant_charges))

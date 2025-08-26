@@ -16,6 +16,7 @@ import com.rocketpay.mandate.common.basemodule.common.presentation.utils.DateUti
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.QrGeneratorUtils
 import com.rocketpay.mandate.common.basemodule.main.viewmodel.BaseMainUM
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
+import com.rocketpay.mandate.main.init.MandateManager
 
 internal class MandatePreviewDialogVM(val mandate: Mandate, val showSkip: Boolean, private val dispatchEvent: (MandateAddEvent) -> Unit) : BaseMainUM() {
 
@@ -98,7 +99,7 @@ internal class MandatePreviewDialogVM(val mandate: Mandate, val showSkip: Boolea
         val termsAndCondition = ResourceManager.getInstance().getString(R.string.rp_terms_n_condition)
         val termsAndConditionSubtitle = ResourceManager.getInstance().getString(
             R.string.rp_by_accepting_this_mandate_i_consent_to_term,
-            BuildConfig.APP_NAME,
+            MandateManager.getInstance().getAppName(),
             termsAndCondition)
             .getSpannable()
             .setTextColor(termsAndCondition, ResourceManager.getInstance().getColor(R.color.rp_blue_2))

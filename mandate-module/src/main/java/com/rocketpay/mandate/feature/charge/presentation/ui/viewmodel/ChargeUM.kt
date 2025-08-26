@@ -15,13 +15,14 @@ import com.rocketpay.mandate.common.basemodule.common.presentation.ext.makeBold
 import com.rocketpay.mandate.common.basemodule.common.presentation.ext.strike
 import com.rocketpay.mandate.common.basemodule.main.viewmodel.BaseMainUM
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
+import com.rocketpay.mandate.main.init.MandateManager
 
 internal class ChargeUM(private val dispatchEvent: (ChargeEvent) -> Unit) : BaseMainUM() {
 
     val businessFlowBaseVisibility = ObservableInt(View.GONE)
     val customerFlowBaseVisibility = ObservableInt(View.GONE)
     val customerFlowTitle = ObservableField<String>(ResourceManager.getInstance().getString(R.string.rp_customer_bank_charge_subtitle,
-        BuildConfig.APP_NAME))
+        MandateManager.getInstance().getAppName()))
     val autopayBaseVisibility = ObservableInt(View.GONE)
     val isCashFreeEnabled = ObservableBoolean(false)
 

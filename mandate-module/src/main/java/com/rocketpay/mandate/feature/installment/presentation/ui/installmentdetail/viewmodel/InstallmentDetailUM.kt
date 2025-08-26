@@ -20,6 +20,7 @@ import com.rocketpay.mandate.common.basemodule.common.presentation.utils.DateUti
 import com.rocketpay.mandate.common.basemodule.main.viewmodel.BaseMainUM
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
 import com.rocketpay.mandate.feature.common.domain.CommonUseCase
+import com.rocketpay.mandate.main.init.MandateManager
 
 internal class InstallmentDetailUM(val dispatchEvent: (InstallmentDetailEvent) -> Unit) : BaseMainUM() {
 
@@ -29,7 +30,7 @@ internal class InstallmentDetailUM(val dispatchEvent: (InstallmentDetailEvent) -
     val amount = ObservableField<String>()
     val fromParty = ObservableField<String>()
     val installmentUtrLabel = ObservableField<String>(ResourceManager.getInstance().getString(R.string.rp_app_transaction_id,
-        BuildConfig.APP_NAME))
+        MandateManager.getInstance().getAppName()))
     val installmentUtr = ObservableField<String>()
     val fromDetail = ObservableField<String>()
     val toDetail = ObservableField<String>()
@@ -73,7 +74,7 @@ internal class InstallmentDetailUM(val dispatchEvent: (InstallmentDetailEvent) -
 
     val penaltyDetailVisibility = ObservableBoolean(false)
     val penaltyTitleText = ObservableField<String>(ResourceManager.getInstance().getString(R.string.rp_app_bounce_penalty_collected,
-        BuildConfig.APP_NAME))
+        MandateManager.getInstance().getAppName()))
     val penaltyDetailText = ObservableField<String>()
 
     val manualSummaryVisibility = ObservableBoolean(false)
