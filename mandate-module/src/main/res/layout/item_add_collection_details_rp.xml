@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.mandate.presentation.ui.mandateadd.viewmodel.MandateAddUM"/>
+    </data>
+
+    <FrameLayout
+        android:visibility="@{vm.collectionDetailVisibility ? View.VISIBLE : View.GONE}"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            style="@style/rp_surface_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/rp_size_4"
+            android:orientation="vertical"
+            android:padding="@dimen/rp_size_16"
+            android:visibility="@{vm.isCollectionDetailsExpanded ? View.VISIBLE : View.GONE}">
+
+            <TextView
+                android:textAppearance="@style/rp_body_regular_medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/rp_size_4"
+                android:textColor="@color/rp_grey_1"
+                android:text="@string/rp_how_do_you_want_to_collect_this_amount" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/rp_size_4"
+                    android:orientation="horizontal"
+                    android:onClick="@{() -> vm.onCollectInInstallmentClick()}"
+                    android:background="@drawable/rp_ripple_card">
+
+                    <ImageView
+                        android:layout_width="@dimen/rp_size_24"
+                        android:layout_height="@dimen/rp_size_24"
+                        android:layout_marginEnd="@dimen/rp_size_8"
+                        android:layout_marginVertical="@dimen/rp_size_8"
+                        android:src="@{vm.installmentCollectionDrawable}"
+                        app:tint="@color/rp_blue_2"
+                        tools:src="@drawable/rp_ic_radio_filled"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:textAppearance="@style/rp_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/rp_collect_in_installments" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/rp_size_4"
+                    android:orientation="horizontal"
+                    android:onClick="@{() -> vm.onSinglePaymentClick()}"
+                    android:background="@drawable/rp_ripple_card">
+
+                    <ImageView
+                        android:layout_width="@dimen/rp_size_24"
+                        android:layout_height="@dimen/rp_size_24"
+                        android:layout_marginEnd="@dimen/rp_size_8"
+                        android:layout_marginVertical="@dimen/rp_size_8"
+                        android:src="@{vm.singlePaymentDrawable}"
+                        app:tint="@color/rp_blue_2"
+                        tools:src="@drawable/rp_ic_radio_filled"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:textAppearance="@style/rp_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/rp_one_time_payment" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/rp_size_20"
+                android:visibility="@{vm.frequencyVisibility}">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/rp_grey_1"
+                    android:text="@string/rp_frequency_of_collection"
+                    android:textAppearance="@style/rp_body_regular_medium" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rp_background_card_cta"
+                    android:gravity="start|center"
+                    android:layout_marginTop="@dimen/rp_size_8"
+                    android:onClick="@{() -> vm.onInstallmentFrequencyClick()}"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/rp_size_8">
+
+                    <ImageView
+                        android:layout_width="@dimen/rp_size_20"
+                        android:layout_height="@dimen/rp_size_20"
+                        android:layout_marginStart="@dimen/rp_size_8"
+                        android:src="@drawable/rp_ic_refresh"
+                        app:tint="@color/rp_blue_2"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/rp_size_8"
+                        android:includeFontPadding="false"
+                        android:text="@{vm.installmentFrequency}"
+                        android:textAppearance="@style/rp_cta_regular"
+                        android:textColor="@color/rp_blue_2"
+                        tools:text="@string/rp_select_frequency" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/rp_size_16"
+                    android:layout_marginTop="@dimen/rp_size_4"
+                    android:textAppearance="@style/rp_body_small"
+                    android:textColor="@color/rp_red_1"
+                    app:textWithEmptyCheck="@{vm.installmentFrequencyError}"
+                    tools:text="@string/rp_upi_amount_limit_exceeded" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/rp_size_20"
+                android:visibility="@{vm.installmentVisibility}">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/rp_grey_1"
+                    android:text="@string/rp_how_many_installments"
+                    android:textAppearance="@style/rp_body_regular_medium" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/rp_size_8"
+                    android:background="@drawable/rp_background_card_cta"
+                    android:gravity="start|center"
+                    android:onClick="@{() -> vm.onInstallmentClick()}"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/rp_size_8">
+
+                    <ImageView
+                        android:layout_width="@dimen/rp_size_20"
+                        android:layout_height="@dimen/rp_size_20"
+                        android:layout_marginStart="@dimen/rp_size_8"
+                        android:src="@drawable/rp_ic_step"
+                        app:tint="@color/rp_blue_2"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/rp_size_8"
+                        android:includeFontPadding="false"
+                        android:text="@{vm.installment}"
+                        android:textAppearance="@style/rp_cta_regular"
+                        android:textColor="@color/rp_blue_2"
+                        tools:text="@string/rp_no_of_installments" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/rp_size_16"
+                    android:layout_marginTop="@dimen/rp_size_4"
+                    android:textAppearance="@style/rp_body_small"
+                    android:textColor="@color/rp_red_1"
+                    app:textWithEmptyCheck="@{vm.installmentError}"
+                    tools:text="@string/rp_upi_amount_limit_exceeded" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/rp_size_20"
+                android:visibility="@{vm.startDateVisibility}">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/rp_grey_1"
+                    android:text="@string/rp_when_do_you_want_to_start_collection"
+                    android:textAppearance="@style/rp_body_regular_medium" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/rp_size_8"
+                    android:background="@drawable/rp_background_card_cta"
+                    android:gravity="start|center"
+                    android:onClick="@{() -> vm.onStartDateClick()}"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/rp_size_8">
+
+                    <ImageView
+                        android:layout_width="@dimen/rp_size_20"
+                        android:layout_height="@dimen/rp_size_20"
+                        android:layout_marginStart="@dimen/rp_size_8"
+                        android:src="@drawable/rp_ic_calendar"
+                        app:tint="@color/rp_blue_2"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/rp_size_8"
+                        android:includeFontPadding="false"
+                        android:text="@{vm.startDate}"
+                        android:textAppearance="@style/rp_cta_regular"
+                        android:textColor="@color/rp_blue_2"
+                        tools:text="@string/rp_select_a_date" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/rp_size_16"
+                    android:layout_marginTop="@dimen/rp_size_4"
+                    android:textAppearance="@style/rp_body_small"
+                    android:textColor="@color/rp_red_1"
+                    app:textWithEmptyCheck="@{vm.startDateError}"
+                    tools:text="@string/rp_upi_amount_limit_exceeded" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/rp_surface_1"
+            android:padding="@dimen/rp_size_16"
+            android:layout_margin="@dimen/rp_size_4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:visibility="gone"
+            android:foreground="?attr/selectableItemBackground"
+            android:onClick="@{() -> vm.onEditCollectionDetails()}"
+            android:clickable="@{!vm.isCollectionDetailsExpanded}"
+            android:visibility="@{vm.isCollectionDetailsExpanded ? View.GONE : View.VISIBLE}">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:textAppearance="@style/rp_title"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@{vm.collectionTitleText}"
+                android:layout_marginEnd="@dimen/rp_size_16"
+                tools:text="1. Settlement bank details"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintBottom_toTopOf="@+id/tv_subtitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/iv_edit"/>
+
+            <TextView
+                android:id="@+id/tv_subtitle"
+                android:textAppearance="@style/rp_body_regular"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                app:textWithEmptyCheck="@{vm.collectionSubTitleText}"
+                android:layout_marginEnd="@dimen/rp_size_16"
+                tools:text="Please ensure you enter your correct PAN"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/iv_edit"/>
+
+            <ImageView
+                android:id="@+id/iv_edit"
+                android:layout_width="@dimen/rp_size_32"
+                android:layout_height="@dimen/rp_size_32"
+                android:layout_marginStart="@dimen/rp_size_6"
+                android:layout_marginEnd="@dimen/rp_size_12"
+                android:layout_gravity="center"
+                android:background="@drawable/rp_ic_circle"
+                android:backgroundTint="@color/rp_blue_5"
+                android:padding="@dimen/rp_size_6"
+                android:src="@drawable/rp_ic_edit"
+                app:tint="@color/rp_blue_2"
+                tools:ignore="ContentDescription"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_title"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_subtitle"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+</layout>

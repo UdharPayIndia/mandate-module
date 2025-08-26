@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.charge.presentation.ui.viewmodel.ItemChargeVM"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/rp_size_8"
+        android:background="@drawable/rp_background_card_radius_top"
+        android:backgroundTint="@color/rp_blue_3"
+        android:onClick="@{() -> vm.onItemClick()}">
+
+    </LinearLayout>
+
+</layout>

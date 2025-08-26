@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.settlements.presentation.ui.detail.viewmodel.SettlementDetailUM" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/rp_size_126"
+                    android:background="@color/rp_green_2" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="@dimen/rp_size_16"
+                        android:paddingTop="12dp"
+                        android:paddingEnd="@dimen/rp_size_16"
+                        tools:background="@color/rp_green_2">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:includeFontPadding="false"
+                            android:text="@{vm.settledAmount}"
+                            android:textAppearance="@style/rp_body_large_medium"
+                            android:textColor="@color/rp_grey_6"
+                            android:textSize="56sp"
+                            tools:text="2,00,000" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/rp_size_12"
+                            android:layout_marginTop="@dimen/rp_size_8"
+                            android:visibility="@{vm.installmentVisibility ? View.VISIBLE : View.GONE}"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:includeFontPadding="false"
+                                android:text="@string/rp_from"
+                                android:alpha="0.5"
+                                android:textAppearance="@style/rp_header"
+                                android:textColor="@color/rp_grey_5" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:includeFontPadding="false"
+                                android:text="@{vm.settlementSummary}"
+                                android:textAppearance="@style/rp_body_regular"
+                                android:textColor="@color/rp_grey_6"
+                                tools:text="Ishan Sharma" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/rp_surface_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/rp_size_8"
+                        android:layout_marginTop="@dimen/rp_size_4"
+                        android:layout_marginEnd="@dimen/rp_size_8"
+                        android:layout_marginBottom="@dimen/rp_size_4"
+                        android:orientation="vertical"
+                        android:padding="@dimen/rp_size_16">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/rp_size_16"
+                            android:text="@string/rp_settlement_details"
+                            android:textColor="@color/rp_grey_3"
+                            android:textAppearance="@style/rp_header" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:ellipsize="end"
+                                android:singleLine="true"
+                                android:text="@string/rp_amount_settled_on"
+                                android:textAppearance="@style/rp_body_small"
+                                android:textColor="@color/rp_grey_3" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:textAppearance="@style/rp_body_large"
+                                app:textWithNullCheck="@{vm.settlementTime}"
+                                tools:text="Ishan Sharma • ICICI 4059XXXXXXX129" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/rp_size_16"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:ellipsize="end"
+                                    android:singleLine="true"
+                                    android:text="@string/rp_utr_number"
+                                    android:textAppearance="@style/rp_body_small"
+                                    android:textColor="@color/rp_grey_3" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:textAppearance="@style/rp_body_large"
+                                    app:textWithNullCheck="@{vm.utrNumber}"
+                                    tools:text="219894829802" />
+
+                            </LinearLayout>
+
+                            <ImageView
+                                android:layout_width="@dimen/rp_size_36"
+                                android:layout_height="@dimen/rp_size_36"
+                                android:layout_gravity="center"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:onClick="@{() -> vm.onUtrClick()}"
+                                android:padding="10dp"
+                                android:src="@drawable/rp_ic_copy"
+                                app:tint="@color/rp_green_2"
+                                tools:ignore="ContentDescription" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/rp_size_16"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:ellipsize="end"
+                                android:singleLine="true"
+                                android:text="@string/rp_account_of_settlement"
+                                android:textAppearance="@style/rp_body_small"
+                                android:textColor="@color/rp_grey_3" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:textAppearance="@style/rp_body_large"
+                                app:textWithNullCheck="@{vm.settlementAccountNumber}"
+                                tools:text="Virat Sharma • SBI 2030XXXXXXX818" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <LinearLayout
+                style="@style/rp_surface_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/rp_size_8"
+                android:layout_marginEnd="@dimen/rp_size_8"
+                android:padding="@dimen/rp_size_16"
+                android:visibility="@{vm.installmentVisibility ? View.VISIBLE : View.GONE}"
+                android:layout_marginBottom="@dimen/rp_size_4"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/rp_size_8"
+                    android:textColor="@color/rp_grey_3"
+                    android:text="@{vm.installmentCountText}"
+                    tools:text="@string/rp_total_installments"
+                    android:textAppearance="@style/rp_header" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_installment_detail_rp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/rp_surface_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/rp_size_8"
+                android:layout_marginEnd="@dimen/rp_size_8"
+                android:padding="@dimen/rp_size_16"
+                android:gravity="center"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:visibility="@{vm.errorVisibility ? View.VISIBLE : View.GONE}"
+                android:layout_marginBottom="@dimen/rp_size_4"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/rp_size_36"
+                    android:layout_height="@dimen/rp_size_36"
+                    android:layout_gravity="center"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="6dp"
+                    android:src="@drawable/rp_ic_warning_triangle"
+                    app:tint="@color/rp_red_2"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/rp_size_8"
+                    android:textColor="@color/rp_grey_3"
+                    android:gravity="center"
+                    android:text="@{vm.errorMessage}"
+                    tools:text="@string/rp_total_installments"
+                    android:textAppearance="@style/rp_body_small" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_edit"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/rp_size_16"
+                    android:includeFontPadding="false"
+                    android:insetTop="@dimen/rp_size_0"
+                    android:insetBottom="@dimen/rp_size_0"
+                    android:minHeight="@dimen/rp_size_28"
+                    android:onClick="@{() -> vm.onRetryClick()}"
+                    android:text="@string/rp_retry"
+                    android:textAppearance="@style/rp_cta_regular"
+                    app:layout_constraintTop_toBottomOf="@+id/lyt_frame"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_download"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:textColor="@color/rp_red_2"
+                    android:backgroundTint="@color/rp_red_5"
+                    />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

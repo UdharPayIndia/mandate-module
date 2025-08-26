@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.text.TextUtils"/>
+        <import type="android.view.View"/>
+
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.common.basemodule.common.presentation.progressdialog.ProgressDialogVM"/>
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/rp_size_8">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/rp_size_96"
+                android:background="@{vm.headerBackgroundDrawable}"
+                tools:background="@color/rp_green_2">
+
+                <ProgressBar
+                    style="@style/RpMyProgressBar"
+                    android:indeterminateDrawable="@drawable/rp_progress_dialog"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:visibility="@{vm.progressBarVisibility}"
+                    tools:ignore="ContentDescription"
+                    tools:visibility="gone" />
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:src="@{vm.headerDrawable}"
+                    tools:ignore="ContentDescription"
+                    tools:visibility="gone" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/rp_size_16"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:textAppearance="@style/rp_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_margin="@dimen/rp_size_8"
+                    android:text="@{vm.title}"
+                    android:visibility="@{TextUtils.isEmpty(vm.title) ? View.GONE : View.VISIBLE}"
+                    tools:text="Failed to send Payment Link" />
+
+                <TextView
+                    android:textAppearance="@style/rp_body_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/rp_size_8"
+                    android:gravity="center"
+                    android:visibility="@{TextUtils.isEmpty(vm.detail) ? View.GONE : View.VISIBLE}"
+                    android:text="@{vm.detail}"
+                    tools:text="Please check your internet connection and try again" />
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/rp_cta_regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/rp_size_40"
+                    android:layout_margin="@dimen/rp_size_8"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:visibility="@{TextUtils.isEmpty(vm.actionBtnText) ? View.GONE : View.VISIBLE}"
+                    app:backgroundTint="@{vm.actionBtnBackgroundColor}"
+                    android:includeFontPadding="false"
+                    android:text="@{vm.actionBtnText}"
+                    android:onClick="@{() -> vm.onActionBtnClick()}"
+                    tools:text="@string/rp_ok"/>
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/rp_size_32"
+                    android:layout_marginStart="@dimen/rp_size_8"
+                    android:layout_marginEnd="@dimen/rp_size_8"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:textAllCaps="false"
+                    android:textColor="@{vm.secondaryBtnTextColor}"
+                    app:strokeColor="@color/rp_grey_6"
+                    app:rippleColor="@color/rp_blue_5"
+                    android:includeFontPadding="false"
+                    android:textAppearance="@style/rp_cta_regular"
+                    android:visibility="@{TextUtils.isEmpty(vm.secondaryActionBtnText) ? View.GONE : View.VISIBLE}"
+                    android:text="@{vm.secondaryActionBtnText}"
+                    android:onClick="@{() -> vm.onSecondaryActionBtnClick()}"
+                    tools:text="@string/rp_cancel"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.bankaccount.presentation.ui.bankaccountlist.viewmodel.ItemBankAccountVM"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/rp_size_8"
+        android:orientation="vertical"
+        android:background="@{vm.background}">
+
+        <TextView
+            android:textAppearance="@style/rp_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/rp_size_8"
+            android:layout_marginStart="@dimen/rp_size_8"
+            android:layout_marginEnd="@dimen/rp_size_8"
+            android:text="@{vm.accountType}"
+            android:textColor="@{vm.accountTypeTextColor}"
+            android:visibility="@{vm.accountTypeVisibility}"
+            tools:text="ICICI Bank" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/rp_size_8"
+            android:orientation="vertical"
+            android:background="@drawable/rp_background_card_8"
+            android:elevation="@dimen/rp_size_4">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/rp_size_8"
+                android:orientation="horizontal"
+                android:background="@drawable/rp_background_card_radius_top"
+                android:backgroundTint="@color/rp_blue_5"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="@dimen/rp_size_56"
+                    android:layout_height="@dimen/rp_size_56"
+                    android:layout_margin="@dimen/rp_size_8"
+                    android:padding="@dimen/rp_size_8"
+                    android:src="@{vm.bankIcon}"
+                    android:background="@drawable/rp_ic_circle"
+                    tools:ignore="ContentDescription" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:textAppearance="@style/rp_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{vm.bankName}"
+                        tools:text="ICICI Bank" />
+
+                    <TextView
+                        android:textAppearance="@style/rp_body_regular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/rp_size_2"
+                        app:textWithNullCheck="@{vm.bankAccountNumber}"
+                        tools:text="1000 due in 13 days" />
+
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="@dimen/rp_size_40"
+                        android:layout_height="@dimen/rp_size_40"
+                        android:layout_margin="@dimen/rp_size_8"
+                        android:padding="@dimen/rp_size_8"
+                        android:src="@drawable/rp_ic_tick_within_circle"
+                        android:visibility="@{vm.verifiedVisibility}"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:layout_width="@dimen/rp_size_40"
+                        android:layout_height="@dimen/rp_size_40"
+                        android:layout_margin="@dimen/rp_size_8"
+                        android:paddingStart="18dp"
+                        android:paddingEnd="18dp"
+                        android:paddingTop="@dimen/rp_size_12"
+                        android:paddingBottom="@dimen/rp_size_12"
+                        android:src="@drawable/rp_ic_three_dot"
+                        app:tint="@color/rp_blue_2"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:onClick="@{(view) -> vm.onMenuClick(view)}"
+                        android:visibility="@{vm.menuVisibility}"
+                        tools:ignore="ContentDescription" />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/rp_size_16"
+                android:paddingEnd="@dimen/rp_size_16"
+                android:paddingTop="@dimen/rp_size_12"
+                android:paddingBottom="@dimen/rp_size_12"
+                android:visibility="@{vm.ifscDetailsVisibility ? View.VISIBLE : View.GONE}"
+                android:orientation="horizontal"
+                android:background="@drawable/rp_background_card_radius_bottom"
+                android:backgroundTint="@color/rp_grey_6">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1.2"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:textAppearance="@style/rp_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/rp_blue_3"
+                        android:text="@string/rp_ifsc_code"/>
+
+                    <TextView
+                        android:textAppearance="@style/rp_body_regular"
+                        android:layout_marginTop="@dimen/rp_size_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{vm.ifscCode}"
+                        tools:text="ICIC0001109" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1.8"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:textAppearance="@style/rp_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/rp_blue_3"
+                        android:text="@string/rp_branch"/>
+
+                    <TextView
+                        android:textAppearance="@style/rp_body_regular"
+                        android:layout_marginTop="@dimen/rp_size_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{vm.branch}"
+                        tools:text="HSR Layout Sector 7" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

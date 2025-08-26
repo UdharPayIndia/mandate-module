@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.kyc.presentation.ui.kyc.viewmodel.ItemTextInputVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_pan"
+        style="@style/RpMyTextInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/rp_size_8"
+        android:hint="@{vm.inputHint}"
+        tools:hint="@string/rp_enter_pan_number"
+        app:errorIconDrawable="@null"
+        app:errorText="@{vm.inputError}"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_pan"
+            style="@style/RpMyEditText"
+            android:layout_width="match_parent"
+            android:inputType="textCapCharacters"
+            android:text="@{vm.inputText}"
+            android:paddingEnd="@dimen/rp_size_40"
+            android:onTextChanged="@{(text,a,b,c) -> vm.onTextChanged(text)}" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:layout_width="@dimen/rp_size_52"
+        android:layout_height="@dimen/rp_size_52"
+        android:padding="@dimen/rp_size_16"
+        android:layout_marginTop="@dimen/rp_size_8"
+        android:visibility="@{vm.inputText.empty ? View.GONE : View.VISIBLE}"
+        android:foreground="?attr/selectableItemBackground"
+        android:onClick="@{() -> vm.onClearClick()}"
+        app:tint="@color/rp_grey_4"
+        android:src="@drawable/rp_ic_cross_round_filled"
+        app:layout_constraintTop_toTopOf="@+id/til_pan"
+        app:layout_constraintEnd_toEndOf="@+id/til_pan"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

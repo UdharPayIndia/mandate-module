@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.mandate.presentation.ui.mandateadd.viewmodel.MandatePreviewDialogVM" />
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/rp_size_16"
+        android:background="@drawable/rp_background_card_8"
+        android:backgroundTint="@color/rp_blue_5">
+
+        <TextView
+            android:id="@+id/tv_installment_label"
+            android:textAppearance="@style/rp_body_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:visibility="@{vm.tennerVisibility ? View.VISIBLE : View.GONE}"
+            android:textColor="@color/rp_grey_2"
+            android:ellipsize="end"
+            android:text="@string/rp_installment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_installment"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_installment"
+            android:textAppearance="@style/rp_body_small"
+            android:layout_width="0dp"
+            android:textColor="@color/rp_grey_2"
+            android:layout_height="wrap_content"
+            android:visibility="@{vm.tennerVisibility ? View.VISIBLE : View.GONE}"
+            android:text="@{vm.tennerTime}"
+            tools:text="6 Weeks"
+            android:gravity="end"
+            app:layout_constraintStart_toEndOf="@+id/tv_installment_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_installment_label"/>
+
+        <TextView
+            android:id="@+id/tv_amount_per_installment_label"
+            android:textAppearance="@style/rp_body_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:textColor="@color/rp_grey_2"
+            android:ellipsize="end"
+            android:text="@{vm.installmentAmountLabel}"
+            tools:text="@string/rp_amount_per_installments"
+            android:layout_marginTop="@dimen/rp_size_16"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_amount_per_installment"
+            app:layout_constraintTop_toBottomOf="@+id/tv_installment_label"/>
+
+        <TextView
+            android:id="@+id/tv_amount_per_installment"
+            android:textAppearance="@style/rp_body_small"
+            android:layout_width="0dp"
+            android:textColor="@color/rp_grey_2"
+            android:layout_height="wrap_content"
+            app:textWithNullCheck="@{vm.installmentAmount}"
+            tools:text="6 Weeks"
+            android:gravity="end"
+            app:layout_constraintStart_toEndOf="@+id/tv_amount_per_installment_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_amount_per_installment_label"/>
+
+        <TextView
+            android:id="@+id/tv_starting_from_label"
+            android:textAppearance="@style/rp_body_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="@{vm.startDateLabel}"
+            android:textColor="@color/rp_grey_2"
+            android:ellipsize="end"
+            tools:text="@string/rp_starting_from"
+            android:layout_marginTop="@dimen/rp_size_16"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_starting_from"
+            app:layout_constraintTop_toBottomOf="@+id/tv_amount_per_installment_label"/>
+
+        <TextView
+            android:id="@+id/tv_starting_from"
+            android:textAppearance="@style/rp_body_small"
+            android:layout_width="0dp"
+            android:textColor="@color/rp_grey_2"
+            android:layout_height="wrap_content"
+            app:textWithNullCheck="@{vm.startDate}"
+            tools:text="6 Weeks"
+            android:gravity="end"
+            app:layout_constraintStart_toEndOf="@+id/tv_starting_from_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_starting_from_label"/>
+
+        <TextView
+            android:id="@+id/tv_customer_charges_label"
+            android:textAppearance="@style/rp_body_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="@string/rp_customer_charges"
+            android:textColor="@color/rp_grey_2"
+            android:ellipsize="end"
+            android:visibility="@{vm.customerChargesVisibility ? View.VISIBLE : View.GONE}"
+            android:layout_marginTop="@dimen/rp_size_16"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_customer_charges"
+            app:layout_constraintTop_toBottomOf="@+id/tv_starting_from_label"/>
+
+        <TextView
+            android:id="@+id/tv_customer_charges"
+            android:textAppearance="@style/rp_body_small"
+            android:layout_width="0dp"
+            android:textColor="@color/rp_grey_2"
+            android:layout_height="wrap_content"
+            android:text="@{vm.customerChargesText}"
+            android:visibility="@{vm.customerChargesVisibility ? View.VISIBLE : View.GONE}"
+            tools:text="6 Weeks"
+            android:gravity="end"
+            app:layout_constraintStart_toEndOf="@+id/tv_customer_charges_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_customer_charges_label"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

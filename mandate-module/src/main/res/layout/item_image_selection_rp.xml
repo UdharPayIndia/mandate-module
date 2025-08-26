@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.image.presentation.ui.selection.viewmodel.ItemImageSelectionVM"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/rp_size_12"
+        android:onClick="@{() -> vm.onItemClick()}"
+        android:background="?attr/selectableItemBackground"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:layout_width="@dimen/rp_size_20"
+            android:layout_height="@dimen/rp_size_20"
+            android:layout_gravity="center"
+            android:src="@{vm.drawable}"
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/rp_ic_camera_qr"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/rp_size_16"
+            android:layout_gravity="center_horizontal"
+            android:gravity="start"
+            android:singleLine="true"
+            android:textColor="@color/rp_grey_1"
+            android:ellipsize="end"
+            android:text="@{vm.name}"
+            style="@style/rp_cta_regular"
+            tools:text="Camera" />
+
+    </LinearLayout>
+
+</layout>

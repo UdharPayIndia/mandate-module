@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <import type="android.text.TextUtils"/>
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.image.presentation.ui.selection.viewmodel.ImageSelectionUM" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/lyt_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:clickable="false"
+        android:background="@color/rp_blue_6">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/rp_size_16"
+            android:layout_marginHorizontal="@dimen/rp_size_16"
+            android:layout_gravity="center_horizontal"
+            android:gravity="start"
+            android:singleLine="true"
+            android:textColor="@color/rp_blue_2"
+            android:ellipsize="end"
+            android:text="@{vm.titleText}"
+            tools:text="@string/rp_select_photo_from"
+            style="@style/rp_title" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/rp_size_4"
+            android:layout_marginHorizontal="@dimen/rp_size_16"
+            android:layout_gravity="center_horizontal"
+            android:gravity="start"
+            android:ellipsize="end"
+            android:visibility="@{TextUtils.isEmpty(vm.subTitleText) ? View.GONE : View.VISIBLE}"
+            android:text="@{vm.subTitleText}"
+            tools:text="@string/rp_select_photo_from"
+            style="@style/rp_body_regular" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_list"
+            tools:listitem="@layout/item_image_selection_rp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/rp_size_16"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/rp_size_8"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="@{vm.permissionVisibility ? View.VISIBLE : View.INVISIBLE}"
+            android:layout_margin="@dimen/rp_size_16"
+            android:background="@drawable/rp_background_card_8"
+            android:backgroundTint="@color/rp_grey_2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/rp_size_16"
+                android:layout_gravity="center_horizontal"
+                android:gravity="start"
+                android:singleLine="true"
+                android:textColor="@color/rp_grey_6"
+                android:ellipsize="end"
+                android:text="@{vm.permissionTitle}"
+                tools:text="@string/rp_camera_permission_denied"
+                style="@style/rp_body_regular"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/rp_size_16"
+                android:layout_gravity="center_horizontal"
+                android:gravity="start"
+                android:singleLine="true"
+                android:padding="@dimen/rp_size_12"
+                android:textColor="@color/rp_yellow_2"
+                android:ellipsize="end"
+                android:onClick="@{() -> vm.onSettingClick()}"
+                android:text="@string/rp_settings"
+                style="@style/rp_body_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</layout>

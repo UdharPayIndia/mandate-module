@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.product.presentation.ui.order.detail.viewmodel.ProductOrderDetailUM"/>
+        <import type="android.text.TextUtils"/>
+        <import type="android.view.View"/>
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/rp_size_64"
+                    android:background="@{vm.toolbarBackground}"
+                    tools:background="@color/rp_blue_2"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/rp_size_12">
+
+                    <LinearLayout
+                        style="@style/rp_surface_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginStart="@dimen/rp_size_8"
+                        android:layout_marginEnd="@dimen/rp_size_8"
+                        android:layout_marginBottom="@dimen/rp_size_4">
+
+                        <TextView
+                            android:textAppearance="@style/rp_body_small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/rp_size_16"
+                            android:layout_marginStart="@dimen/rp_size_16"
+                            android:layout_marginEnd="@dimen/rp_size_16"
+                            android:layout_marginBottom="@dimen/rp_size_16"
+                            android:text="@{vm.titleText}"
+                            tools:text="@string/rp_key_purchased" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginStart="@dimen/rp_size_16"
+                            android:layout_marginEnd="@dimen/rp_size_16"
+                            android:layout_marginBottom="@dimen/rp_size_16">
+
+                            <ImageView
+                                android:id="@+id/iv_logo"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@{vm.iconDrawable}"
+                                tools:src="@drawable/rp_ic_super_key"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"/>
+
+                            <TextView
+                                android:textAppearance="@style/rp_body_regular"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/rp_size_12"
+                                android:layout_gravity="center_vertical"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="@{vm.quantityText}"
+                                tools:text="Rahulkumar" />
+
+                            <TextView
+                                android:textAppearance="@style/rp_body_regular_medium"
+                                android:paddingStart="@dimen/rp_size_8"
+                                android:paddingEnd="@dimen/rp_size_8"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="@{vm.amount}"
+                                android:textColor="@{vm.amountTextColor}"
+                                tools:textColor="@color/rp_grey_1"
+                                android:gravity="center"
+                                tools:text="Finished" />
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <LinearLayout
+                style="@style/rp_surface_1"
+                android:layout_marginStart="@dimen/rp_size_8"
+                android:layout_marginEnd="@dimen/rp_size_8"
+                android:layout_marginTop="@dimen/rp_size_4"
+                android:layout_marginBottom="@dimen/rp_size_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:textAppearance="@style/rp_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/rp_size_16"
+                    android:layout_marginStart="@dimen/rp_size_16"
+                    android:layout_marginEnd="@dimen/rp_size_16"
+                    android:layout_marginBottom="@dimen/rp_size_16"
+                    android:text="@string/rp_other_details" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/rp_size_16"
+                    android:layout_marginEnd="@dimen/rp_size_16"
+                    android:layout_marginBottom="@dimen/rp_size_12">
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="horizontal">-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:orientation="vertical">-->
+
+<!--                            <TextView-->
+<!--                                android:textAppearance="@style/body_small"-->
+<!--                                android:textColor="@color/grey_3"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_gravity="center_vertical"-->
+<!--                                android:singleLine="true"-->
+<!--                                android:ellipsize="end"-->
+<!--                                android:text="@string/transaction_id"/>-->
+
+<!--                            <TextView-->
+<!--                                android:textAppearance="@style/body_large"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_gravity="center"-->
+<!--                                app:textWithNullCheck="@{vm.utr}"-->
+<!--                                tools:text="219894829802"/>-->
+
+<!--                        </LinearLayout>-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="@dimen/size_36"-->
+<!--                            android:layout_height="@dimen/size_36"-->
+<!--                            android:padding="10dp"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:src="@drawable/ic_copy"-->
+<!--                            app:tint="@color/blue_2"-->
+<!--                            android:onClick="@{() -> vm.onTransactionIdCopyClick()}"-->
+<!--                            android:background="?attr/selectableItemBackgroundBorderless"-->
+<!--                            android:visibility="@{vm.utrCopyVisibility}"-->
+<!--                            tools:ignore="ContentDescription" />-->
+
+<!--                    </LinearLayout>-->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:textAppearance="@style/rp_body_small"
+                                android:textColor="@color/rp_grey_3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:singleLine="true"
+                                android:ellipsize="end"
+                                android:text="@string/rp_product_order_id"/>
+
+                            <TextView
+                                android:textAppearance="@style/rp_body_large"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:visibility="@{TextUtils.isEmpty(vm.installmentUtr) ? View.GONE : View.VISIBLE}"
+                                android:text="@{vm.installmentUtr}"
+                                tools:text="219894829802"/>
+
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="@dimen/rp_size_36"
+                            android:layout_height="@dimen/rp_size_36"
+                            android:padding="10dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/rp_ic_copy"
+                            app:tint="@color/rp_blue_2"
+                            android:onClick="@{() -> vm.onRocketPayTransactionIdCopyClick()}"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            tools:ignore="ContentDescription" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="rp_blue_1">#0B45B0</color>
+    <color name="rp_blue_2">#0D53D8</color>
+    <color name="rp_blue_3">#578EF4</color>
+    <color name="rp_blue_4">#8ABBF3</color>
+    <color name="rp_blue_5">#ECF4FD</color>
+    <color name="rp_blue_6">#F7FAFE</color>
+
+    <color name="rp_grey_1">#001A23</color>
+    <color name="rp_grey_2">#33484F</color>
+    <color name="rp_grey_3">#66767B</color>
+    <color name="rp_grey_4">#CCD1D3</color>
+    <color name="rp_grey_41">#F1F1F1</color>
+    <color name="rp_grey_5">#FDFDFD</color>
+    <color name="rp_grey_6">#FFFFFF</color>
+    <color name="rp_grey_7">#efefef</color>
+    <color name="rp_grey_8">#FAFDFC</color>
+    <color name="rp_grey_9">#99001A23</color>
+
+    <color name="rp_red_1">#E03131</color>
+    <color name="rp_red_2">#FA5252</color>
+    <color name="rp_red_3">#fdb5b5</color>
+    <color name="rp_red_4">#FF8787</color>
+    <color name="rp_red_5">#F9E3E6</color>
+    <color name="rp_red_6">#ffcc0000</color>
+
+    <color name="rp_yellow_1">#FCC419</color>
+    <color name="rp_yellow_2">#DCA919</color>
+    <color name="rp_yellow_3">#FFF3BF</color>
+    <color name="rp_yellow_4">#FFE066</color>
+
+    <color name="rp_orange_1">#FD7E14</color>
+    <color name="rp_orange_2">#FFA94D</color>
+    <color name="rp_orange_3">#fed5b3</color>
+    <color name="rp_orange_5">#FAECDC</color>
+    <color name="rp_orange_6">#FFA94D</color>
+    <color name="rp_orange_7">#FFD8A8</color>
+
+    <array name="rp_material_colors">
+        <item>@color/rp_blue_3</item>
+        <item>@color/rp_blue_4</item>
+        <item>@color/rp_blue_3</item>
+        <item>@color/rp_blue_4</item>
+    </array>
+
+    <color name="rp_green_1">#066649</color>
+    <color name="rp_green_2">#099268</color>
+    <color name="rp_green_3">#53B395</color>
+    <color name="rp_green_4">#B5DED2</color>
+    <color name="rp_green_5">#E6F4F0</color>
+    <color name="rp_green_6">#F8FCFB</color>
+
+</resources>

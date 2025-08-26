@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.kyc.presentation.ui.kyc.viewmodel.ItemKycBusinessPanVM"/>
+        <import type="android.view.View"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/rp_size_8"
+        android:orientation="vertical"
+        android:background="@drawable/rp_background_card_8"
+        android:elevation="@dimen/rp_size_4">
+
+        <include
+            layout="@layout/item_kyc_completed_rp"
+            app:vm="@{vm.itemKycCompletedVM}"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/rp_size_8"
+            android:paddingBottom="@dimen/rp_size_8"
+            android:visibility="@{vm.itemKycCompletedVM.detailLayoutVisibility}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/rp_size_8"
+                android:adapter="@{vm.adapterObservable}"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="2"
+                tools:listitem="@layout/item_text_input_rp" />
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/rp_size_48"
+                android:layout_marginTop="@dimen/rp_size_16"
+                android:layout_marginBottom="@dimen/rp_size_8"
+                android:layout_marginHorizontal="@dimen/rp_size_8"
+                android:includeFontPadding="false"
+                android:enabled="@{vm.verifyEnable}"
+                android:insetTop="@dimen/rp_size_0"
+                android:insetBottom="@dimen/rp_size_0"
+                android:onClick="@{() -> vm.onVerifyClick()}"
+                android:text="@{vm.buttonText}"
+                tools:text="@string/rp_verify"
+                android:textAppearance="@style/rp_cta_regular" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

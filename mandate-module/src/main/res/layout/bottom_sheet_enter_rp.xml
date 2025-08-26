@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.text.TextUtils"/>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.common.basemodule.common.presentation.bottomsheetenter.BottomSheetEnterVM"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/rp_size_16"
+        android:background="@drawable/rp_background_card_radius_top">
+
+        <TextView
+            android:textColor="@color/rp_blue_2"
+            android:textAppearance="@style/rp_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{vm.title}"
+            tools:text="Select xyz" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/RpMyTextInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/rp_size_16"
+            android:hint="@{vm.hint}"
+            tools:hint="@string/rp_cancel"
+            app:errorIconDrawable="@null">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_generic"
+                style="@style/RpMyEditText"
+                android:layout_width="match_parent"
+                android:inputType="number"
+                android:onTextChanged="@{(text,a,b,c) -> vm.onTextChange(text)}"
+                android:text="@={vm.text}"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_marginTop="@dimen/rp_size_2"
+            android:textAppearance="@style/rp_body_small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{vm.helperText}"
+            android:gravity="end"
+            tools:text="Information" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/rp_size_48"
+            android:layout_marginTop="@dimen/rp_size_16"
+            android:includeFontPadding="false"
+            android:insetTop="@dimen/rp_size_0"
+            android:insetBottom="@dimen/rp_size_0"
+            android:onClick="@{() -> vm.onPrimaryCtaClick()}"
+            android:text="@{vm.primaryActionText}"
+            tools:text="@string/rp_ok"
+            android:textAppearance="@style/rp_cta_regular" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/rp_size_32"
+            android:layout_marginTop="@dimen/rp_size_8"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:textAllCaps="false"
+            app:strokeColor="@color/rp_grey_6"
+            app:rippleColor="@color/rp_blue_5"
+            android:includeFontPadding="false"
+            android:textAppearance="@style/rp_cta_regular"
+            android:visibility="@{TextUtils.isEmpty(vm.secondaryActionText) ? View.GONE : View.VISIBLE}"
+            android:text="@{vm.secondaryActionText}"
+            android:onClick="@{() -> vm.onSecondaryCtaClick()}"
+            tools:text="@string/rp_cancel"/>
+
+    </LinearLayout>
+
+</layout>

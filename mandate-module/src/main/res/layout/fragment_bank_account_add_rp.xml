@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.text.TextUtils"/>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.bankaccount.presentation.ui.bankaccountadd.viewmodel.BankAccountAddUM"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/rp_size_16">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/rp_yellow_3"
+                    android:gravity="start"
+                    android:paddingHorizontal="@dimen/rp_size_16"
+                    android:paddingVertical="@dimen/rp_size_12"
+                    android:visibility="@{TextUtils.isEmpty(vm.infoText) || vm.isFromOnBoarding() ? View.GONE : View.VISIBLE}"
+                    android:text="@{vm.infoText}"
+                    android:textAppearance="@style/rp_body_regular_medium"
+                    tools:text="@string/rp_kyc_registration" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{vm.isFromOnBoarding() ? View.VISIBLE : View.GONE}"
+                    android:paddingHorizontal="@dimen/rp_size_16"
+                    android:paddingVertical="@dimen/rp_size_24">
+
+                    <TextView
+                        android:id="@+id/tvTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:layout_marginEnd="@dimen/rp_size_16"
+                        android:text="@string/rp_add_your_bank_account_once_before_creating_a_mandate"
+                        android:textAppearance="@style/rp_body_regular_medium"
+                        app:layout_constraintEnd_toStartOf="@+id/ivIllustration"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/tvSubTitle"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintVertical_bias="0.5"/>
+
+                    <TextView
+                        android:id="@+id/tvSubTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:layout_marginEnd="@dimen/rp_size_16"
+                        android:layout_marginTop="@dimen/rp_size_4"
+                        android:text="@string/rp_this_will_be_used_as_settlement_account_for_all_your_collections"
+                        android:textAppearance="@style/rp_body_regular"
+                        app:layout_constraintEnd_toStartOf="@+id/ivIllustration"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintVertical_chainStyle="packed" />
+
+                    <ImageView
+                        android:id="@+id/ivIllustration"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@mipmap/rp_illustration_super_key_mandate"
+                        tools:ignore="ContentDescription"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/tvBankAccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:visibility="@{vm.isFromOnBoarding() ? View.VISIBLE : View.GONE}"
+                    android:layout_marginTop="@dimen/rp_size_24"
+                    android:layout_marginHorizontal="@dimen/rp_size_16"
+                    android:text="@string/rp_bank_account"
+                    android:textAppearance="@style/rp_body_regular_medium" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/RpMyTextInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/rp_size_16"
+                    android:layout_marginTop="@dimen/rp_size_16"
+                    android:hint="@string/rp_bank_account_number_hint"
+                    app:errorIconDrawable="@null"
+                    app:errorText="@{vm.accountNumberError}">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_account_number"
+                        style="@style/RpMyEditText"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:onTextChanged="@{(text,a,b,c) -> vm.onAccountNumberTextChanged(text)}" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/RpMyTextInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/rp_size_16"
+                    android:layout_marginTop="@dimen/rp_size_16"
+                    android:hint="@string/rp_bank_account_ifsc_code_hint"
+                    app:errorIconDrawable="@null"
+                    app:errorText="@{vm.ifscCodeError}">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/RpMyEditText"
+                        android:layout_width="match_parent"
+                        android:inputType="textCapCharacters"
+                        android:onFocusChange="@{(v, hasFocus) -> vm.onIfscFocusChanged(hasFocus)}"
+                        android:onTextChanged="@{(text,a,b,c) -> vm.onIfscTextChanged(text)}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/name"
+                    style="@style/RpMyTextInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/rp_size_16"
+                    android:layout_marginTop="@dimen/rp_size_16"
+                    android:hint="@string/rp_bank_account_holder_name_hint"
+                    android:visibility="@{vm.isFromOnBoarding() ? View.GONE : View.VISIBLE}"
+                    app:errorIconDrawable="@null"
+                    app:errorText="@{vm.nameError}">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/RpMyEditText"
+                        android:layout_width="match_parent"
+                        android:inputType="text"
+                        android:onFocusChange="@{(v, hasFocus) -> vm.onNameFocusChanged(hasFocus)}"
+                        android:onTextChanged="@{(text,a,b,c) -> vm.onNameTextChanged(text)}"
+                        android:text="@{vm.name}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/rp_size_16"
+                    android:layout_marginTop="@dimen/rp_size_16"
+                    android:background="?attr/selectableItemBackground"
+                    android:onClick="@{() -> vm.onPrimaryButtonChecked()}"
+                    android:orientation="horizontal"
+                    android:visibility="@{vm.checkBoxVisibility &amp;&amp; !vm.isFromOnBoarding() ? View.VISIBLE : View.GONE}">
+
+                    <ImageView
+                        android:layout_width="@dimen/rp_size_16"
+                        android:layout_height="@dimen/rp_size_16"
+                        android:layout_margin="@dimen/rp_size_8"
+                        android:src="@{vm.checkBoxDrawable}"
+                        tools:ignore="ContentDescription"
+                        tools:src="@drawable/rp_ic_checkbox_empty" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/rp_set_this_bank_account_as_primary"
+                        android:textAppearance="@style/rp_body_small" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="@{vm.isFromOnBoarding() ? View.VISIBLE : View.GONE}"
+                android:background="@color/rp_green_5"
+                android:gravity="center">
+
+                <TextView
+                    android:textAppearance="@style/rp_body_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/rp_green_1"
+                    android:text="@string/rp_your_data_is_100_safe_with" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/rp_size_4"
+                    android:layout_margin="@dimen/rp_size_8"
+                    app:cardElevation="@dimen/rp_size_1">
+
+                    <ImageView
+                        android:id="@+id/iv_call_us"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/rp_ic_rocket_safe"
+                        tools:ignore="ContentDescription"/>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/rp_size_16"
+                android:layout_marginHorizontal="@dimen/rp_size_16"
+                android:layout_marginBottom="@dimen/rp_size_16"
+                android:includeFontPadding="false"
+                android:enabled="@{vm.verifyEnable}"
+                android:insetTop="@dimen/rp_size_0"
+                android:insetBottom="@dimen/rp_size_0"
+                android:onClick="@{() -> vm.onVerifyClick()}"
+                android:text="@string/rp_verify_bank_account"
+                android:textAppearance="@style/rp_cta_regular" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

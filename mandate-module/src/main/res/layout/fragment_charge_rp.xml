@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.charge.presentation.ui.viewmodel.ChargeUM"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/rp_background_card_radius_top"
+        android:backgroundTint="@color/rp_blue_6">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/rp_size_12">
+
+            <LinearLayout
+                style="@style/rp_surface_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="@dimen/rp_size_4"
+                android:paddingStart="@dimen/rp_size_16"
+                android:paddingEnd="@dimen/rp_size_16"
+                android:paddingTop="@dimen/rp_size_12"
+                android:paddingBottom="@dimen/rp_size_12"
+                android:visibility="@{vm.businessFlowBaseVisibility}">
+
+                <TextView
+                    android:textAppearance="@style/rp_heading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rp_service_charge"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/rp_size_4"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:textAppearance="@style/rp_body_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{vm.serviceChargeDetail}"
+                        tools:text="@string/rp_service_charge_detail_percentage"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/rp_size_4"
+                        android:layout_marginTop="@dimen/rp_size_1"
+                        android:layout_marginBottom="@dimen/rp_size_1"
+                        android:layout_marginEnd="@dimen/rp_size_4"
+                        android:includeFontPadding="false"
+                        android:gravity="center"
+                        android:text="@string/rp_free"
+                        android:textAllCaps="true"
+                        android:paddingStart="@dimen/rp_size_4"
+                        android:paddingEnd="@dimen/rp_size_4"
+                        android:paddingTop="@dimen/rp_size_2"
+                        android:paddingBottom="@dimen/rp_size_2"
+                        android:background="@drawable/rp_background_card_2"
+                        android:backgroundTint="@color/rp_green_2"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.02"
+                        android:textColor="@color/rp_grey_6"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:textAppearance="@style/rp_body_regular"
+                    android:textColor="@color/rp_grey_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{vm.serviceChargeHelperText}"
+                    tools:text="@string/rp_service_charge_subtitle"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/rp_surface_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="@dimen/rp_size_4"
+                android:paddingStart="@dimen/rp_size_16"
+                tools:visibility="gone"
+                android:paddingEnd="@dimen/rp_size_16"
+                android:paddingTop="@dimen/rp_size_12"
+                android:paddingBottom="@dimen/rp_size_12"
+                android:visibility="@{vm.customerFlowBaseVisibility}">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:background="@drawable/rp_ripple_card">
+
+                    <TextView
+                        android:textAppearance="@style/rp_heading"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rp_customers_bank_charges"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:textAppearance="@style/rp_body_regular"
+                    android:textColor="@color/rp_grey_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rp_customer_bank_charge_subtitle"/>
+
+                <ImageView
+                    android:layout_width="348dp"
+                    android:layout_height="256dp"
+                    android:layout_marginTop="@dimen/rp_size_16"
+                    android:src="@drawable/rp_illustration_charge"
+                    android:scaleType="fitXY"
+                    tools:ignore="ContentDescription" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/rp_surface_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="@dimen/rp_size_4"
+                android:paddingStart="@dimen/rp_size_16"
+                android:paddingEnd="@dimen/rp_size_16"
+                android:paddingTop="@dimen/rp_size_12"
+                android:paddingBottom="@dimen/rp_size_12"
+                android:visibility="@{vm.autopayBaseVisibility}">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:background="@drawable/rp_ripple_card">
+
+                    <TextView
+                        android:textAppearance="@style/rp_heading"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rp_upi_vs_nach_title"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:textAppearance="@style/rp_body_regular"
+                    android:textColor="@color/rp_grey_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rp_upi_vs_nach_subtitle"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="164dp"
+                    android:layout_marginTop="@dimen/rp_size_16"
+                    android:visibility="@{vm.isCashFreeEnabled() ? View.GONE : View.VISIBLE}"
+                    android:src="@drawable/rp_illustration_upi_vs_nach"
+                    android:scaleType="fitXY"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="214dp"
+                    android:layout_marginTop="@dimen/rp_size_16"
+                    android:visibility="@{vm.isCashFreeEnabled() ? View.VISIBLE : View.GONE}"
+                    android:src="@drawable/rp_illustration_upi_cashfree_vs_nach"
+                    android:scaleType="fitXY"
+                    tools:ignore="ContentDescription" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/rp_grey_6">
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/rp_size_48"
+                android:layout_margin="@dimen/rp_size_16"
+                android:includeFontPadding="false"
+                android:insetTop="@dimen/rp_size_0"
+                android:insetBottom="@dimen/rp_size_0"
+                android:onClick="@{() -> vm.onGeneratePaymentLinkClick()}"
+                android:text="@string/rp_ok"
+                android:textAppearance="@style/rp_cta_regular"
+                android:backgroundTint="@color/rp_blue_2"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

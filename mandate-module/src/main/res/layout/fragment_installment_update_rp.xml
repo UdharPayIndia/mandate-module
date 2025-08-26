@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.installment.presentation.ui.installmentupdate.viewmodel.InstallmentUpdateUM" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/rp_size_16">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:text="@string/rp_choose_payment_mode"
+            android:textAppearance="@style/rp_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/lyt_cash"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:foreground="?attr/selectableItemBackground"
+            android:onClick="@{() -> vm.onCashClicked()}"
+            android:layout_marginTop="@dimen/rp_size_16"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@{vm.cashDrawable}"
+                app:tint="@color/rp_blue_2"
+                tools:src="@drawable/rp_ic_radio_empty" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/rp_size_12"
+                android:layout_marginEnd="@dimen/rp_size_12"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:layout_gravity="center_vertical"
+                android:text="@string/rp_cash"
+                android:textAppearance="@style/rp_body_regular_medium" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lyt_online"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:foreground="?attr/selectableItemBackground"
+            android:onClick="@{() -> vm.onOnlineClicked()}"
+            android:layout_marginTop="@dimen/rp_size_12"
+            app:layout_constraintTop_toBottomOf="@+id/lyt_cash"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@{vm.onlineDrawable}"
+                app:tint="@color/rp_blue_2"
+                tools:src="@drawable/rp_ic_radio_empty" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/rp_size_12"
+                android:layout_marginEnd="@dimen/rp_size_12"
+                android:layout_gravity="center_vertical"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/rp_online"
+                android:textAppearance="@style/rp_body_regular_medium" />
+        </LinearLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_comment"
+            style="@style/RpMyTextInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/rp_comments_optional"
+            android:layout_marginTop="@dimen/rp_size_16"
+            app:layout_constraintTop_toBottomOf="@+id/lyt_online"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_retailer_name"
+                style="@style/RpMyEditText"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:inputType="textMultiLine"
+                android:maxLines="5"
+                android:drawableTint="@android:color/black"
+                android:onTextChanged="@{(text,a,b,c) -> vm.onCommentChanged(text)}"
+                android:text="@{vm.comment}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/rp_size_40"
+            android:layout_marginTop="@dimen/rp_size_28"
+            android:backgroundTint="@color/rp_blue_2"
+            android:includeFontPadding="false"
+            android:insetTop="@dimen/rp_size_0"
+            android:insetBottom="@dimen/rp_size_0"
+            android:minHeight="@dimen/rp_size_52"
+            android:onClick="@{() -> vm.onSaveClick()}"
+            android:text="@string/rp_save"
+            android:textAppearance="@style/rp_cta_regular"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_cancel"
+            app:layout_constraintTop_toBottomOf="@+id/til_comment" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_cancel"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/rp_size_40"
+            android:layout_marginStart="@dimen/rp_size_16"
+            android:layout_marginTop="@dimen/rp_size_28"
+            android:backgroundTint="@color/rp_blue_5"
+            android:includeFontPadding="false"
+            android:insetTop="@dimen/rp_size_0"
+            android:insetBottom="@dimen/rp_size_0"
+            android:minHeight="@dimen/rp_size_52"
+            android:onClick="@{() -> vm.onCancelClick()}"
+            android:text="@string/rp_cancel"
+            android:textAppearance="@style/rp_cta_regular"
+            android:textColor="@color/rp_blue_2"
+            app:layout_constraintStart_toEndOf="@+id/btn_save"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_comment"
+            app:elevation="@dimen/rp_size_0"
+            android:elevation="@dimen/rp_size_0"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

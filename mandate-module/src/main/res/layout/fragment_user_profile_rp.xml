@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.profile.presentation.ui.viewmodel.UserProfileUM"/>
+
+        <import type="android.view.View" />
+
+        <import type="android.text.TextUtils"/>
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/rp_grey_6">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/rp_size_12"
+                android:gravity="center"
+                android:background="@color/rp_blue_2">
+
+                <ImageView
+                    android:layout_width="@dimen/rp_size_80"
+                    android:layout_height="@dimen/rp_size_80"
+                    android:layout_margin="@dimen/rp_size_8"
+                    android:src="@mipmap/rp_profile_image"
+                    android:scaleType="fitCenter"
+                    tools:ignore="ContentDescription" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_margin="@dimen/rp_size_8">
+
+                    <TextView
+                        android:textAppearance="@style/rp_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@{vm.userName}"
+                        android:textColor="@color/rp_grey_6"
+                        tools:text="My Name" />
+
+                    <TextView
+                        android:textAppearance="@style/rp_body_small"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@{vm.mobileNumber}"
+                        android:textColor="@color/rp_blue_4"
+                        tools:text="+918877168861" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/rp_size_8"
+                    android:gravity="center"
+                    android:onClick="@{() -> vm.onKycClick()}"
+                    android:background="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="@dimen/rp_size_24"
+                        android:layout_height="@dimen/rp_size_24"
+                        android:layout_margin="@dimen/rp_size_8"
+                        android:src="@drawable/rp_ic_kyc"
+                        app:tint="@color/rp_blue_4"
+                        tools:ignore="ContentDescription" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="@dimen/rp_size_8">
+
+                        <TextView
+                            android:textAppearance="@style/rp_body_regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="@{vm.kycTitle}"
+                            tools:text="@string/rp_kyc_profile_title"/>
+
+                        <TextView
+                            android:textAppearance="@style/rp_body_small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@{vm.kycSubtitle}"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            tools:text="@string/rp_kyc_complete_banner_text"/>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/rp_size_20"
+                        android:layout_height="@dimen/rp_size_20"
+                        android:layout_margin="@dimen/rp_size_8"
+                        android:src="@{vm.kycStatusIcon}"
+                        android:visibility="@{vm.kycStatusVisibility}"
+                        tools:src="@drawable/rp_ic_info_filled"
+                        tools:tint="@color/rp_orange_1"
+                        tools:ignore="ContentDescription"/>
+
+                    <ImageView
+                        android:layout_width="@dimen/rp_size_20"
+                        android:layout_height="@dimen/rp_size_20"
+                        android:padding="@dimen/rp_size_4"
+                        android:layout_margin="@dimen/rp_size_8"
+                        android:src="@drawable/rp_ic_forward"
+                        app:tint="@color/rp_grey_4"
+                        tools:ignore="ContentDescription"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/rp_size_56"
+                    android:background="@drawable/rp_divider_hr"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/rp_size_8"
+                    android:gravity="center"
+                    android:onClick="@{() -> vm.onBusinessProfileClick()}"
+                    android:background="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="@dimen/rp_size_24"
+                        android:layout_height="@dimen/rp_size_24"
+                        android:layout_margin="@dimen/rp_size_8"
+                        android:src="@drawable/rp_ic_shop"
+                        app:tint="@color/rp_blue_4"
+                        tools:ignore="ContentDescription" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="@dimen/rp_size_8">
+
+                        <TextView
+                            android:textAppearance="@style/rp_body_regular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="@{vm.businessNameTitle}"
+                            tools:text="@string/rp_add_business_name"/>
+
+                        <TextView
+                            android:textAppearance="@style/rp_body_small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@{vm.businessName}"
+                            tools:text="@string/rp_this_will_be_shown_to_your_customer"/>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/rp_size_20"
+                        android:layout_height="@dimen/rp_size_20"
+                        android:layout_margin="@dimen/rp_size_8"
+                        android:src="@drawable/rp_ic_info_filled"
+                        app:tint="@color/rp_orange_1"
+                        android:visibility="@{vm.businessNameAlertVisibility}"
+                        tools:ignore="ContentDescription"/>
+
+                    <ImageView
+                        android:layout_width="@dimen/rp_size_20"
+                        android:layout_height="@dimen/rp_size_20"
+                        android:padding="@dimen/rp_size_4"
+                        android:layout_margin="@dimen/rp_size_8"
+                        android:src="@drawable/rp_ic_forward"
+                        app:tint="@color/rp_grey_4"
+                        tools:ignore="ContentDescription"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/rp_size_56"
+                    android:background="@drawable/rp_divider_hr"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/rp_size_8"
+                    android:gravity="center"
+                    android:onClick="@{() -> vm.onBankAccountsClick()}"
+                    android:background="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="@dimen/rp_size_24"
+                        android:layout_height="@dimen/rp_size_24"
+                        android:layout_margin="@dimen/rp_size_8"
+                        android:src="@drawable/rp_ic_bank"
+                        app:tint="@color/rp_blue_4"
+                        tools:ignore="ContentDescription" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="@dimen/rp_size_8">
+
+                        <TextView
+                            android:textAppearance="@style/rp_body_regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/rp_bank_accounts" />
+
+                        <TextView
+                            android:textAppearance="@style/rp_body_small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/rp_added_banks_amp_primary_bank"/>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/rp_size_20"
+                        android:layout_height="@dimen/rp_size_20"
+                        android:padding="@dimen/rp_size_4"
+                        android:layout_margin="@dimen/rp_size_8"
+                        android:src="@drawable/rp_ic_forward"
+                        app:tint="@color/rp_grey_4"
+                        tools:ignore="ContentDescription"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/rp_size_56"
+                    android:background="@drawable/rp_divider_hr"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="32dp"/>
+
+<!--            <include layout="@layout/item_trust_address_with_power_by"/>-->
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.kyc.presentation.ui.identityintro.viewmodel.KycIdentityIntroUM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/rp_background_card_radius_top"
+        android:backgroundTint="@color/rp_grey_6"
+        android:paddingBottom="@dimen/rp_size_24">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/iv_illustration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/rp_grey_6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:cardCornerRadius="@dimen/rp_size_8"
+            app:cardElevation="@dimen/rp_size_0">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/rp_size_300"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/rp_illustration_identity_aadhaar"
+                tools:ignore="ContentDescription" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/rp_size_16"
+            android:layout_marginTop="@dimen/rp_size_30"
+            android:gravity="center_horizontal"
+            android:text="@{vm.titleText}"
+            tools:text="@string/rp_use_addhar_card"
+            android:textAppearance="@style/rp_heading"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_illustration" />
+
+        <TextView
+            android:id="@+id/tv_subtext"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/rp_size_16"
+            android:layout_marginTop="@dimen/rp_size_8"
+            android:gravity="center_horizontal"
+            android:text="@string/rp_verify_adhaar_with_otp"
+            android:textAppearance="@style/rp_body_regular"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:backgroundTint="@color/rp_grey_4"
+            android:background="@drawable/rp_divider_dotted_line_horizontal"
+            android:layout_marginHorizontal="@dimen/rp_size_64"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_or"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_or"/>
+
+        <TextView
+            android:id="@+id/tv_or"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/rp_size_16"
+            android:layout_marginTop="@dimen/rp_size_8"
+            android:gravity="center_horizontal"
+            android:text="@string/rp_or"
+            android:paddingHorizontal="@dimen/rp_size_8"
+            android:background="@color/rp_grey_6"
+            android:textAppearance="@style/rp_body_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_subtext" />
+
+        <TextView
+            android:id="@+id/tv_upload"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/rp_size_16"
+            android:layout_marginTop="@dimen/rp_size_8"
+            android:gravity="center_horizontal"
+            android:text="@string/rp_upload_photo_of_your_aadhaar_card"
+            android:textAppearance="@style/rp_body_regular"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_or" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_fill_kyc"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/rp_size_16"
+            android:layout_marginTop="@dimen/rp_size_20"
+            android:backgroundTint="@color/rp_blue_2"
+            android:includeFontPadding="false"
+            android:insetTop="@dimen/rp_size_0"
+            android:insetBottom="@dimen/rp_size_0"
+            android:minHeight="@dimen/rp_size_52"
+            android:onClick="@{() -> vm.onNextClick()}"
+            android:text="@string/rp_next"
+            android:textAppearance="@style/rp_cta_regular"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_upload" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

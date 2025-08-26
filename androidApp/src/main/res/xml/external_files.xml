@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <root-path name="root" path="."/>
+    <external-path name="ext" path="." />
+    <cache-path name="int_cache" path="." />
+    <cache-path name="sg_share_images" path="sg_temp_dir/" />
+    <files-path name="int_files" path="." />
+    <external-cache-path name="ext_cache" path="." />
+    <external-files-path name="ext_files" path="." />
+    <external-path name="attachment_file" path="."/>
+    <external-path name="pictures" path="Pictures/" />
+    <external-path name="storage/emulated" path="."/>
+</paths>

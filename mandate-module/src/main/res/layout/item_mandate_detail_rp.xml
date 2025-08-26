@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.mandate.presentation.ui.mandatedetail.viewmodel.ItemMandateDetailVM"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/rp_size_8"
+        android:paddingStart="@dimen/rp_size_8"
+        android:paddingEnd="@dimen/rp_size_8"
+        android:paddingTop="@dimen/rp_size_12"
+        android:paddingBottom="@dimen/rp_size_12"
+        android:background="@{vm.background}"
+        android:clickable="@{vm.forwardIconVisibility == View.VISIBLE ? true : false}"
+        android:onClick="@{() -> vm.onItemClick()}"
+        tools:background="@drawable/rp_background_card_item_active">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textAppearance="@style/rp_body_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{vm.installmentDetail}"
+                    tools:text="Rahulkumar" />
+
+                <TextView
+                    android:textAppearance="@style/rp_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:paddingHorizontal="@dimen/rp_size_8"
+                    android:paddingVertical="@dimen/rp_size_2"
+                    android:layout_marginStart="@dimen/rp_size_8"
+                    android:maxLines="1"
+                    android:visibility="@{vm.showMandateTag ?  View.VISIBLE : View.GONE}"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/rp_background_card_24"
+                    android:backgroundTint="@color/rp_blue_5"
+                    android:text="@string/rp_mandate"
+                    android:textColor="@color/rp_blue_2"
+                    android:drawablePadding="@dimen/rp_size_4"
+                    android:drawableStart="@drawable/rp_ic_rocket_pay_small"/>
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="2dp"
+                    android:layout_weight="1"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center|end"
+                    android:gravity="center">
+
+                    <TextView
+                        android:textAppearance="@style/rp_num_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{vm.amount}"
+                        android:textColor="@{vm.installmentAmountColor}"
+                        tools:text="₹50" />
+
+                    <ImageView
+                        android:layout_width="@dimen/rp_size_12"
+                        android:layout_height="@dimen/rp_size_12"
+                        android:layout_marginStart="@dimen/rp_size_4"
+                        android:src="@{vm.installmentStateIcon}"
+                        tools:src="@drawable/rp_ic_whatsapp"
+                        tools:tint="@color/rp_blue_2"
+                        tools:ignore="ContentDescription" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textAppearance="@style/rp_body_small_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{vm.date}"
+                    android:textColor="@color/rp_grey_2"
+                    tools:text="22/03/22 07:44 PM"/>
+
+                <TextView
+                    android:textAppearance="@style/rp_body_small_medium"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|end"
+                    android:gravity="center_vertical|end"
+                    android:text="@{vm.installmentState}"
+                    tools:text="You will get" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:padding="@dimen/rp_size_6"
+            android:layout_marginStart="@dimen/rp_size_4"
+            android:layout_gravity="center_vertical"
+            android:src="@{vm.forwardIcon}"
+            android:visibility="@{vm.forwardIconVisibility}"
+            tools:src="@drawable/rp_ic_forward"
+            tools:tint="@color/rp_blue_2"
+            tools:ignore="ContentDescription" />
+
+    </LinearLayout>
+
+</layout>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.bankaccount.presentation.ui.bankaccountlist.viewmodel.BankAccountListUM"/>
+        <import type="android.view.View" />
+        <import type="android.text.TextUtils"/>
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/rp_grey_6">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:clipChildren="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:paddingBottom="@dimen/rp_size_72"
+                tools:listitem="@layout/item_bank_account_rp"
+                android:visibility="@{vm.emptyStateVisibility == View.VISIBLE ? View.GONE : View.VISIBLE}"/>
+
+            <LinearLayout
+                android:id="@+id/empty_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/rp_size_16"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="@{vm.emptyStateVisibility}">
+
+                <ImageView
+                    android:id="@+id/illustration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@{vm.illustration}"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:textAppearance="@style/rp_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/rp_size_8"
+                    android:gravity="center"
+                    android:text="@{vm.illustrationDescription}" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="bottom">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/rp_size_4">
+
+                <Button
+                    android:id="@+id/efb_add_customer"
+                    style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton.Icon"
+                    android:textAppearance="@style/rp_cta_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="24dp"
+                    android:includeFontPadding="false"
+                    android:onClick="@{() -> vm.onAddBankAccountClick()}"
+                    android:text="@string/rp_add_new_bank"
+                    android:textColor="@color/rp_grey_6"
+                    android:background="@drawable/rp_background_card_24"
+                    app:backgroundTint="@color/rp_blue_2"
+                    app:icon="@drawable/rp_ic_bank_add"
+                    app:iconTint="@color/rp_grey_6" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</layout>

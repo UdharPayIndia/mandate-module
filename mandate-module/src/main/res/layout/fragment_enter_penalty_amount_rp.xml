@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.text.TextUtils"/>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.installment.presentation.ui.penalty.viewmodel.EnterPenaltyAmountUM" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/rp_size_16">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:text="@string/rp_enter_penalty_amount"
+            android:textAppearance="@style/rp_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:text="@string/rp_allow_rocketpay_to_charge"
+            android:textAppearance="@style/rp_body_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lyt_otp"
+            style="@style/RpMyTextInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintEnabled="false"
+            app:errorText="@{vm.penaltyAmountError}"
+            app:errorIconDrawable="@null"
+            app:errorEnabled="@{!TextUtils.isEmpty(vm.penaltyAmountError)}"
+            android:layout_marginTop="@dimen/rp_size_24"
+            app:layout_constraintTop_toBottomOf="@+id/tv_subtitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tvInfo">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_otp"
+                style="@style/RpMyCompactEditText"
+                android:layout_width="match_parent"
+                android:inputType="number"
+                android:maxLength="6"
+                android:hint="@string/rp_penalty_amount"
+                android:textColorHint="@color/rp_grey_4"
+                android:onTextChanged="@{(text,a,b,c) -> vm.updatePenaltyAmount(text)}"
+                app:textWithCursor="@{vm.penaltyAmount}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tvInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/rp_body_small"
+            android:drawablePadding="@dimen/rp_size_8"
+            android:layout_marginTop="@dimen/rp_size_12"
+            android:textColor="@color/rp_grey_1"
+            android:background="@drawable/rp_background_card_4"
+            android:backgroundTint="@color/rp_yellow_3"
+            android:paddingVertical="@dimen/rp_size_8"
+            android:paddingHorizontal="@dimen/rp_size_10"
+            android:gravity="center_vertical"
+            app:drawableStartCompat="@drawable/rp_ic_warning_round"
+            app:drawableTint="@color/rp_yellow_1"
+            app:layout_constraintTop_toBottomOf="@+id/lyt_otp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_save"
+            android:text="@string/rp_it_will_be_settled_into_your_account"/>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/rp_size_36"
+            android:includeFontPadding="false"
+            android:insetTop="@dimen/rp_size_0"
+            android:insetBottom="@dimen/rp_size_0"
+            android:minHeight="@dimen/rp_size_52"
+            android:enabled="@{vm.isEnabled()}"
+            android:onClick="@{() -> vm.onSubmitClick()}"
+            android:text="@string/rp_submit"
+            android:textAppearance="@style/rp_cta_regular"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvInfo" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

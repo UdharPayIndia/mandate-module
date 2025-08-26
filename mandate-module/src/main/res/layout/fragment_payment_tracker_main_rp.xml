@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.installment.presentation.ui.paymentSchedule.main.viewmodel.PaymentTrackerMainUM" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/lytScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/rp_grey_6"
+        android:descendantFocusability="beforeDescendants"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/rp_grey_6"
+            android:fitsSystemWindows="true"
+            app:elevation="@dimen/rp_size_0"
+            app:expanded="true">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:statusBarScrim="@color/rp_grey_6">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <include
+                        layout="@layout/layout_payment_tracker_summary_rp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:vm="@{vm}" />
+
+                </LinearLayout>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/rp_size_8"
+                android:orientation="horizontal"
+                >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/rp_size_16"
+                    android:gravity="center_vertical"
+                    android:onClick="@{() -> vm.onOutstandingClicked()}"
+                    android:orientation="horizontal"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:background="@drawable/rp_background_card_4"
+                    android:backgroundTint="@{vm.isOutstandingSelected() ? @color/rp_blue_2 : @color/rp_grey_41}"
+                    tools:backgroundTint="@color/rp_grey_4">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/rp_body_small"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:paddingVertical="@dimen/rp_size_12"
+                        android:text="@{vm.outstandingCountText}"
+                        android:textColor="@{vm.isOutstandingSelected() ? @color/rp_grey_6 : @color/rp_grey_3}"
+                        tools:text="@string/rp_outstanding"
+                        tools:textColor="@color/rp_grey_3"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/rp_size_8"
+                    android:gravity="center_vertical"
+                    android:onClick="@{() -> vm.onUpcomingClicked()}"
+                    android:orientation="horizontal"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:background="@drawable/rp_background_card_4"
+                    android:backgroundTint="@{vm.isUpcomingSelected() ? @color/rp_blue_2 : @color/rp_grey_41}"
+                    tools:backgroundTint="@color/rp_grey_4">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/rp_body_small"
+                        android:includeFontPadding="false"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/rp_size_12"
+                        android:text="@{vm.upcomingCountText}"
+                        android:textColor="@{vm.isUpcomingSelected() ? @color/rp_grey_6 : @color/rp_grey_3}"
+                        tools:text="@string/rp_upcoming" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/rp_size_8"
+                    android:gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/rp_size_16"
+                    android:onClick="@{() -> vm.onCollectedClicked()}"
+                    android:orientation="horizontal"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:background="@drawable/rp_background_card_4"
+                    android:backgroundTint="@{vm.isCollectedSelected() ? @color/rp_blue_2 : @color/rp_grey_41}"
+                    tools:backgroundTint="@color/rp_grey_4">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/rp_body_small"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:paddingVertical="@dimen/rp_size_12"
+                        android:text="@{vm.collectedCountText}"
+                        android:textColor="@{vm.isCollectedSelected() ? @color/rp_grey_6 : @color/rp_grey_3}"
+                        tools:text="@string/rp_collected" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/lytChild"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/rp_size_16"
+                android:fillViewport="true"
+                app:layout_constrainedHeight="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        </LinearLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

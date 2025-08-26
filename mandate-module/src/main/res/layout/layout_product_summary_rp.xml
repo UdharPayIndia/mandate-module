@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.product.presentation.ui.order.list.viewmodel.ItemProductSummaryVM" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/rp_size_12"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            app:cardCornerRadius="@dimen/rp_size_4">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_balance_keys_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/rp_size_2"
+                    android:layout_marginTop="@dimen/rp_size_16"
+                    android:gravity="center"
+                    android:text="@{vm.balanceValue}"
+                    android:textAppearance="@style/rp_title"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_balance_keys_label"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    tools:text="23" />
+
+                <TextView
+                    android:id="@+id/tv_balance_keys_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/rp_size_2"
+                    android:layout_marginBottom="@dimen/rp_size_16"
+                    android:gravity="center"
+                    android:text="@string/rp_balance"
+                    android:textAppearance="@style/rp_body_small"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_balance_keys_value" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.25" />
+
+                <TextView
+                    android:id="@+id/tv_active_keys_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/rp_size_2"
+                    android:layout_marginTop="@dimen/rp_size_16"
+                    android:gravity="center"
+                    android:text="@{vm.purchasedValue}"
+                    android:textAppearance="@style/rp_title"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_active_keys_label"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_2"
+                    app:layout_constraintStart_toEndOf="@+id/guideline_1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    tools:text="23" />
+
+                <TextView
+                    android:id="@+id/tv_active_keys_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/rp_size_2"
+                    android:layout_marginBottom="@dimen/rp_size_16"
+                    android:gravity="center"
+                    android:text="@string/rp_purchased"
+                    android:textAppearance="@style/rp_body_small"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_2"
+                    app:layout_constraintStart_toEndOf="@+id/guideline_1"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_active_keys_value" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.50" />
+
+                <TextView
+                    android:id="@+id/tv_pending_keys_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/rp_size_2"
+                    android:layout_marginTop="@dimen/rp_size_16"
+                    android:gravity="center"
+                    android:text="@{vm.inProcessValue}"
+                    android:textAppearance="@style/rp_title"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_pending_keys_label"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_3"
+                    app:layout_constraintStart_toEndOf="@+id/guideline_2"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    tools:text="23" />
+
+                <TextView
+                    android:id="@+id/tv_pending_keys_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/rp_size_2"
+                    android:layout_marginBottom="@dimen/rp_size_16"
+                    android:gravity="center"
+                    android:text="@string/rp_in_process"
+                    android:textAppearance="@style/rp_body_small"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_3"
+                    app:layout_constraintStart_toEndOf="@+id/guideline_2"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_pending_keys_value" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.75" />
+
+                <TextView
+                    android:id="@+id/tv_finished_keys_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/rp_size_2"
+                    android:layout_marginTop="@dimen/rp_size_16"
+                    android:gravity="center"
+                    android:text="@{vm.usedValue}"
+                    android:textAppearance="@style/rp_title"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_finished_keys_label"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/guideline_3"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    tools:text="23" />
+
+                <TextView
+                    android:id="@+id/tv_finished_keys_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/rp_size_2"
+                    android:layout_marginBottom="@dimen/rp_size_16"
+                    android:gravity="center"
+                    android:text="@string/rp_used"
+                    android:textAppearance="@style/rp_body_small"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/guideline_3"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_finished_keys_value" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/rp_size_48"
+            android:background="@color/rp_blue_2" />
+    </FrameLayout>
+</layout>

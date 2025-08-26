@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.mandate.presentation.ui.mandateadd.viewmodel.ItemCouponVM" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/rp_size_4"
+        android:layout_margin="@dimen/rp_size_4"
+        app:cardElevation="@dimen/rp_size_2">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/rp_size_16"
+            android:minWidth="@dimen/rp_size_300">
+
+            <TextView
+                android:id="@+id/tv_coupon_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{vm.couponCodeText}"
+                android:textColor="@color/rp_grey_2"
+                android:letterSpacing="0.1"
+                android:textStyle="bold"
+                android:drawablePadding="@dimen/rp_size_8"
+                android:paddingVertical="@dimen/rp_size_4"
+                android:paddingHorizontal="@dimen/rp_size_8"
+                android:background="@drawable/rp_bg_rect_dotted"
+                tools:text="ICICI Bank"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:drawableStartCompat="@drawable/rp_ic_sale_outline"
+                app:layout_constraintEnd_toStartOf="@+id/btn_apply"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_apply"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:backgroundTint="@color/rp_grey_6"
+                android:backgroundTint="@{vm.isSelected() ? @color/rp_blue_1 : @color/rp_grey_6}"
+                android:includeFontPadding="false"
+                android:insetTop="@dimen/rp_size_0"
+                android:insetBottom="@dimen/rp_size_0"
+                android:minHeight="@dimen/rp_size_0"
+                android:minWidth="@dimen/rp_size_0"
+                android:onClick="@{() -> vm.onApplyClick()}"
+                android:text="@{vm.isSelected() ? @string/rp_applied : @string/rp_apply}"
+                tools:text="@string/rp_apply"
+                android:textAppearance="@style/rp_cta_small"
+                app:cornerRadius="@dimen/rp_size_16"
+                app:strokeColor="@color/rp_blue_1"
+                app:strokeWidth="@dimen/rp_size_1"
+                android:textColor="@{vm.isSelected() ? @color/rp_grey_6 : @color/rp_blue_2}"
+                tools:textColor="@color/rp_blue_2"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_coupon_code"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_coupon_code"
+                app:elevation="@dimen/rp_size_0"
+                android:elevation="@dimen/rp_size_0"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{vm.descriptionText}"
+                android:layout_marginTop="@dimen/rp_size_12"
+                android:textAppearance="@style/rp_body_small"
+                tools:text="ICICI Bank"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_coupon_code"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

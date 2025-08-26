@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.text.TextUtils" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.installment.presentation.ui.retry.viewmodel.SelectRetryPeriodUM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/rp_size_16">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:text="@string/rp_retry_installment"
+            android:textAppearance="@style/rp_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <LinearLayout
+            android:id="@+id/lyt_otp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/rp_size_16"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/btn_save"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/rp_size_4"
+                android:text="@string/rp_when_do_you_want_to_retry"
+                android:textAppearance="@style/rp_body_regular"
+                android:textColor="@color/rp_grey_1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/rp_size_4"
+                android:background="@drawable/rp_ripple_card"
+                android:onClick="@{() -> vm.onImmediateClick()}"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/rp_size_24"
+                    android:layout_height="@dimen/rp_size_24"
+                    android:layout_marginVertical="@dimen/rp_size_8"
+                    android:layout_marginEnd="@dimen/rp_size_8"
+                    android:src="@{vm.immediateDrawable}"
+                    app:tint="@color/rp_blue_2"
+                    tools:ignore="ContentDescription"
+                    tools:src="@drawable/rp_ic_radio_filled" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rp_immediate"
+                        android:textAppearance="@style/rp_title" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{vm.retryDate}"
+                        android:visibility="@{vm.retryOption == 0 ? View.VISIBLE : View.GONE}"
+                        tools:text="@string/rp_immediate"
+                        android:textAppearance="@style/rp_body_small" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/rp_size_4"
+                android:background="@drawable/rp_ripple_card"
+                android:onClick="@{() -> vm.onSelectDateClick()}"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/rp_size_24"
+                    android:layout_height="@dimen/rp_size_24"
+                    android:layout_marginVertical="@dimen/rp_size_8"
+                    android:layout_marginEnd="@dimen/rp_size_8"
+                    android:src="@{vm.selectDateDrawable}"
+                    app:tint="@color/rp_blue_2"
+                    tools:ignore="ContentDescription"
+                    tools:src="@drawable/rp_ic_radio_filled" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/rp_select_a_date"
+                        android:textAppearance="@style/rp_title" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{vm.retryDate}"
+                        android:visibility="@{vm.retryOption == 1 ? View.VISIBLE : View.GONE}"
+                        tools:text="@string/rp_immediate"
+                        android:textAppearance="@style/rp_body_small" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_save"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/rp_size_36"
+            android:includeFontPadding="false"
+            android:insetTop="@dimen/rp_size_0"
+            android:insetBottom="@dimen/rp_size_0"
+            android:minHeight="@dimen/rp_size_52"
+            android:onClick="@{() -> vm.onSubmitClick()}"
+            android:text="@string/rp_submit"
+            android:enabled="@{vm.isEnabled()}"
+            android:textAppearance="@style/rp_cta_regular"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lyt_otp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

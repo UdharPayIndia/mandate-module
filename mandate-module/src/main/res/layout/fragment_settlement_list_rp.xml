@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.settlements.presentation.ui.list.viewmodel.SettlementListUM" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/rp_green_6"
+        android:orientation="vertical">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/rp_size_12"
+            android:layout_marginTop="@dimen/rp_size_12"
+            android:layout_marginBottom="@dimen/rp_size_8">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingStart="@dimen/rp_size_12">
+
+                    <TextView
+                        android:id="@+id/tv_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/rp_size_12"
+                        android:gravity="start"
+                        android:text="@string/rp_amount_yet_to_be_settled"
+                        android:textAppearance="@style/rp_header"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_balance_keys_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/rp_size_12"
+                        android:gravity="start"
+                        android:includeFontPadding="false"
+                        android:text="@{vm.pendingSettlementAmount}"
+                        android:textAppearance="@style/rp_title"
+                        android:textSize="32sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_label"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        tools:text="23" />
+
+                    <ImageView
+                        android:layout_width="@dimen/rp_size_80"
+                        android:layout_height="0dp"
+                        android:src="@drawable/rp_ic_rupee"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/rp_orange_1"
+                    android:gravity="start"
+                    android:includeFontPadding="false"
+                    android:paddingHorizontal="@dimen/rp_size_16"
+                    android:paddingVertical="@dimen/rp_size_8"
+                    android:drawablePadding="@dimen/rp_size_16"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:onClick="@{() -> vm.onSettlementBannerClick()}"
+                    android:clickable="@{vm.settlementBannerClickable}"
+                    android:drawableEnd="@{vm.settlementBannerClickable ? @drawable/rp_ic_arrow_within_circle : null}"
+                    app:textWithEmptyCheck="@{vm.settlementBannerMessage}"
+                    android:textAppearance="@style/rp_body_regular"
+                    android:textColor="@color/rp_grey_6"
+                    tools:text="@string/rp_business_details" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refresh"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/rp_green_6">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:paddingBottom="@dimen/rp_size_72"
+                    android:visibility="@{vm.emptyStateVisibility ? View.GONE : View.VISIBLE}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_mandate_list_rp" />
+
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{vm.emptyStateVisibility ? View.VISIBLE : View.GONE}">
+
+                    <LinearLayout
+                        android:id="@+id/empty_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal|top"
+                        android:layout_marginTop="@dimen/rp_size_126"
+                        android:gravity="top|center_horizontal"
+                        android:orientation="vertical"
+                        android:padding="@dimen/rp_size_16">
+
+                        <ImageView
+                            android:id="@+id/illustration"
+                            android:layout_width="@dimen/rp_size_64"
+                            android:layout_height="@dimen/rp_size_64"
+                            android:src="@drawable/rp_ic_settlement"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/rp_size_8"
+                            android:gravity="center"
+                            android:text="@{vm.titleText}"
+                            android:textAppearance="@style/rp_title"
+                            tools:text="@string/rp_illustration_description_no_result_found" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@{vm.subText}"
+                            android:textAppearance="@style/rp_body_regular"
+                            tools:text="@string/rp_illustration_description_no_result_found" />
+                    </LinearLayout>
+                </androidx.core.widget.NestedScrollView>
+            </FrameLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </LinearLayout>
+</layout>

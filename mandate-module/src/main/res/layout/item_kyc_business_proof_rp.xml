@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.kyc.presentation.ui.kyc.viewmodel.ItemKycBusinessProofVM" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/rp_size_8"
+        android:background="@drawable/rp_background_card_8"
+        android:elevation="@dimen/rp_size_4"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/item_kyc_completed_rp"
+            app:vm="@{vm.itemKycCompletedVM}" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/rp_size_8"
+            android:paddingBottom="@dimen/rp_size_8"
+            android:visibility="@{vm.itemKycCompletedVM.detailLayoutVisibility}">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="@{vm.isCompleted() ? View.GONE : View.VISIBLE}">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/rp_size_8"
+                    android:adapter="@{vm.adapterObservable}"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="2"
+                    tools:listitem="@layout/item_text_input_rp" />
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/rp_size_48"
+                    android:layout_marginTop="@dimen/rp_size_16"
+                    android:layout_marginBottom="@dimen/rp_size_8"
+                    android:layout_marginHorizontal="@dimen/rp_size_8"
+                    app:icon="@drawable/rp_ic_chevron_right"
+                    app:iconGravity="textEnd"
+                    android:includeFontPadding="false"
+                    android:insetTop="@dimen/rp_size_0"
+                    android:insetBottom="@dimen/rp_size_0"
+                    android:onClick="@{() -> vm.onVerifyClick()}"
+                    android:text="@{vm.buttonText}"
+                    android:textAppearance="@style/rp_cta_regular"
+                    tools:text="@string/rp_verify" />
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/rp_size_8"
+                android:visibility="@{vm.isCompleted() ? View.VISIBLE : View.GONE}">
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:textAppearance="@style/rp_body_small"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rp_business_details"
+                    android:layout_marginEnd="@dimen/rp_size_16"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tvEdit"/>
+
+                <TextView
+                    android:id="@+id/tvSubTitle"
+                    android:textColor="@color/rp_green_2"
+                    android:textAppearance="@style/rp_body_small_medium"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@{vm.documentTypeText}"
+                    android:layout_marginEnd="@dimen/rp_size_16"
+                    tools:text="Please ensure you enter your correct PAN"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tvEdit"/>
+
+                <TextView
+                    android:id="@+id/tvEdit"
+                    android:textAppearance="@style/rp_cta_small"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:onClick="@{() -> vm.onVerifyClick()}"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rp_edit"
+                    android:layout_marginEnd="@dimen/rp_size_16"
+                    app:layout_constraintTop_toTopOf="@+id/tvTitle"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvSubTitle"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tvTitle2"
+                    android:textAppearance="@style/rp_body_small"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="@dimen/rp_size_16"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rp_owner_details"
+                    android:visibility="@{vm.isOwnerVisible() ? View.VISIBLE : View.GONE}"
+                    android:layout_marginEnd="@dimen/rp_size_16"
+                    app:layout_constraintTop_toBottomOf="@+id/tvSubTitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tvEdit2"/>
+
+                <TextView
+                    android:id="@+id/tvSubTitle2"
+                    android:textColor="@color/rp_green_2"
+                    android:textAppearance="@style/rp_body_small_medium"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@{vm.ownerNameText}"
+                    android:visibility="@{vm.isOwnerVisible() ? View.VISIBLE : View.GONE}"
+                    android:layout_marginEnd="@dimen/rp_size_16"
+                    tools:text="Please ensure you enter your correct PAN"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTitle2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tvEdit2"/>
+
+                <TextView
+                    android:id="@+id/tvEdit2"
+                    android:textAppearance="@style/rp_cta_small"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rp_edit"
+                    android:onClick="@{() -> vm.onEditOwnerClick()}"
+                    android:visibility="@{vm.isOwnerEditEnabled &amp;&amp; vm.isOwnerVisible()? View.VISIBLE : View.GONE}"
+                    android:layout_marginEnd="@dimen/rp_size_16"
+                    app:layout_constraintTop_toTopOf="@+id/tvTitle2"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvSubTitle2"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.installment.presentation.ui.paymentSchedule.main.viewmodel.PaymentTrackerMainUM" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/rp_size_4"
+            android:layout_margin="@dimen/rp_size_12">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_balance_keys_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/rp_size_2"
+                        android:layout_marginTop="@dimen/rp_size_16"
+                        android:gravity="center"
+                        android:text="@{vm.outstandingAmount}"
+                        android:textAppearance="@style/rp_title"
+                        app:layout_constraintBottom_toTopOf="@+id/tv_balance_keys_label"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline_1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        tools:text="23" />
+
+                    <TextView
+                        android:id="@+id/tv_balance_keys_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/rp_size_2"
+                        android:layout_marginBottom="@dimen/rp_size_16"
+                        android:gravity="center"
+                        android:textAppearance="@style/rp_body_small"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline_1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_balance_keys_value"
+                        android:text="@string/rp_outstanding" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.33" />
+
+                    <TextView
+                        android:id="@+id/tv_active_keys_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/rp_size_2"
+                        android:layout_marginTop="@dimen/rp_size_16"
+                        android:gravity="center"
+                        android:text="@{vm.upcomingAmount}"
+                        android:textAppearance="@style/rp_title"
+                        app:layout_constraintBottom_toTopOf="@+id/tv_active_keys_label"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline_2"
+                        app:layout_constraintStart_toEndOf="@+id/guideline_1"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        tools:text="23" />
+
+                    <TextView
+                        android:id="@+id/tv_active_keys_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/rp_size_2"
+                        android:layout_marginBottom="@dimen/rp_size_16"
+                        android:gravity="center"
+                        android:textAppearance="@style/rp_body_small"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline_2"
+                        app:layout_constraintStart_toEndOf="@+id/guideline_1"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_active_keys_value"
+                        android:text="@string/rp_upcoming" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.66" />
+
+                    <TextView
+                        android:id="@+id/tv_pending_keys_value"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/rp_size_2"
+                        android:layout_marginTop="@dimen/rp_size_16"
+                        android:gravity="center"
+                        android:text="@{vm.collectedAmount}"
+                        android:textAppearance="@style/rp_title"
+                        app:layout_constraintBottom_toTopOf="@+id/tv_pending_keys_label"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/guideline_2"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        tools:text="23" />
+
+                    <TextView
+                        android:id="@+id/tv_pending_keys_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/rp_size_2"
+                        android:layout_marginBottom="@dimen/rp_size_16"
+                        android:gravity="center"
+                        android:textAppearance="@style/rp_body_small"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/guideline_2"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_pending_keys_value"
+                        android:text="@string/rp_collected" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/rp_size_36"
+                    android:layout_marginTop="@dimen/rp_size_8"
+                    android:layout_marginHorizontal="@dimen/rp_size_16"
+                    android:layout_marginBottom="@dimen/rp_size_16"
+                    android:insetTop="@dimen/rp_size_0"
+                    android:insetBottom="@dimen/rp_size_0"
+                    android:textAllCaps="false"
+                    app:strokeColor="@color/rp_blue_2"
+                    app:strokeWidth="@dimen/rp_size_1"
+                    android:onClick="@{() -> vm.onViewSettlementsClick()}"
+                    android:backgroundTint="@color/rp_grey_6"
+                    android:textColor="@color/rp_blue_2"
+                    style="@style/rp_cta_small"
+                    android:text="@string/rp_view_settlements_dashboard"/>
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/rp_size_56"
+            android:background="@color/rp_blue_2"/>
+    </FrameLayout>
+</layout>

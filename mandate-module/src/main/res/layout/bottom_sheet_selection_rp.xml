@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.text.TextUtils"/>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.common.basemodule.common.presentation.bottomsheetselection.DialogBottomSheetSelectionVM"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/rp_background_card_radius_top">
+
+        <TextView
+            android:textColor="@color/rp_blue_2"
+            android:textAppearance="@style/rp_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/rp_size_16"
+            android:paddingHorizontal="@dimen/rp_size_16"
+            android:text="@{vm.title}"
+            tools:text="Select xyz" />
+
+        <TextView
+            android:textAppearance="@style/rp_body_regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/rp_size_4"
+            android:paddingHorizontal="@dimen/rp_size_16"
+            android:visibility="@{TextUtils.isEmpty(vm.subTitle) ? View.GONE : View.VISIBLE}"
+            android:text="@{vm.subTitle}"
+            tools:text="Select xyz" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_kyc_modes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/rp_size_16"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
+            tools:listitem="@layout/bottom_sheet_selection_item_rp"/>
+
+    </LinearLayout>
+
+</layout>

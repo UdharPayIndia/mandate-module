@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/refresh"
+        android:icon="@drawable/rp_ic_refresh"
+        android:title="@string/rp_refresh"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/call"
+        android:icon="@drawable/rp_ic_call"
+        android:actionMenuTextColor="@color/rp_grey_2"
+        app:iconTint="@color/rp_grey_2"
+        android:title="@string/rp_call"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_help"
+        android:icon="@drawable/rp_ic_support"
+        android:actionMenuTextColor="@color/rp_grey_2"
+        app:iconTint="@color/rp_grey_2"
+        app:showAsAction="never"
+        android:title="@string/rp_help"/>
+
+    <item
+        android:id="@+id/delete"
+        android:actionMenuTextColor="@color/rp_red_1"
+        android:icon="@drawable/rp_ic_delete"
+        app:iconTint="@color/rp_red_1"
+        android:title="@string/rp_delete"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/cancel"
+        android:actionMenuTextColor="@color/rp_red_1"
+        android:icon="@drawable/rp_ic_cross_round"
+        app:iconTint="@color/rp_red_1"
+        android:title="@string/rp_cancel"
+        app:showAsAction="never"/>
+
+</menu>

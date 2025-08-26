@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.kyc.presentation.ui.kyc.viewmodel.ItemKycDetailsVM" />
+    </data>
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/rp_size_4"
+        android:layout_margin="@dimen/rp_size_12">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/rp_grey_6">
+
+            <TextView
+                android:id="@+id/tvStatus"
+                android:textAppearance="@style/rp_header"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:paddingVertical="@dimen/rp_size_4"
+                android:paddingHorizontal="@dimen/rp_size_16"
+                android:background="@{vm.statusBackground}"
+                android:text="@{vm.statusText}"
+                tools:background="@color/rp_green_4"
+                tools:text="@string/rp_kyc_registration"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintGuide_percent="0.5"
+                android:orientation="vertical"/>
+
+            <TextView
+                android:id="@+id/tvNameLabel"
+                android:textAppearance="@style/rp_body_regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textColor="@color/rp_grey_3"
+                android:layout_marginHorizontal="@dimen/rp_size_16"
+                android:text="@string/rp_name"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintTop_toTopOf="@+id/tvName"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintBottom_toBottomOf="@+id/tvName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/guideline" />
+
+            <TextView
+                android:id="@+id/tvName"
+                android:textAppearance="@style/rp_body_regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:layout_marginTop="@dimen/rp_size_24"
+                tools:text="@string/rp_kyc_registration"
+                android:text="@{vm.nameText}"
+                android:layout_marginEnd="@dimen/rp_size_16"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintTop_toBottomOf="@+id/tvStatus"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/tvPhoneNumberLabel"
+                android:textAppearance="@style/rp_body_regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textColor="@color/rp_grey_3"
+                android:layout_marginHorizontal="@dimen/rp_size_16"
+                android:text="@string/rp_phone_number"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintTop_toTopOf="@+id/tvPhoneNumber"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintBottom_toBottomOf="@+id/tvPhoneNumber"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/guideline" />
+
+            <TextView
+                android:id="@+id/tvPhoneNumber"
+                android:textAppearance="@style/rp_body_regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:layout_marginTop="@dimen/rp_size_24"
+                tools:text="@string/rp_kyc_registration"
+                android:text="@{vm.phoneNumberText}"
+                android:layout_marginEnd="@dimen/rp_size_16"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintTop_toBottomOf="@+id/tvName"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/tvAadhaarLabel"
+                android:textAppearance="@style/rp_body_regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textColor="@color/rp_grey_3"
+                android:layout_marginHorizontal="@dimen/rp_size_16"
+                tools:text="@string/rp_aadhaar_number"
+                android:visibility="@{vm.identityVisibility}"
+                android:text="@{vm.identityDocumentName}"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintTop_toTopOf="@+id/tvAadhaar"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintBottom_toBottomOf="@+id/tvAadhaar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/guideline" />
+
+            <TextView
+                android:id="@+id/tvAadhaar"
+                android:textAppearance="@style/rp_body_regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                tools:text="@string/rp_kyc_registration"
+                android:visibility="@{vm.identityVisibility}"
+                android:text="@{vm.identityDocumentValue}"
+                android:layout_marginEnd="@dimen/rp_size_16"
+                app:layout_constraintTop_toBottomOf="@+id/tvPhoneNumberLabel"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/tvPan"/>
+
+            <TextView
+                android:id="@+id/tvPanLabel"
+                android:textAppearance="@style/rp_body_regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textColor="@color/rp_grey_3"
+                android:layout_marginHorizontal="@dimen/rp_size_16"
+                android:text="@string/rp_pan_number"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintTop_toTopOf="@+id/tvPan"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintBottom_toBottomOf="@+id/tvPan"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/guideline" />
+
+            <TextView
+                android:id="@+id/tvPan"
+                android:textAppearance="@style/rp_body_regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:layout_marginTop="@dimen/rp_size_24"
+                tools:text="@string/rp_kyc_registration"
+                android:text="@{vm.panNumberText}"
+                android:layout_marginBottom="@dimen/rp_size_24"
+                android:layout_marginEnd="@dimen/rp_size_16"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintBottom_toTopOf="@+id/tvBusiness"
+                app:layout_constraintTop_toBottomOf="@+id/tvAadhaarLabel"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/tvBusinessLabel"
+                android:textAppearance="@style/rp_body_regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textColor="@color/rp_grey_3"
+                android:layout_marginHorizontal="@dimen/rp_size_16"
+                tools:text="@string/rp_aadhaar_number"
+                android:visibility="@{vm.businessVisibility}"
+                android:text="@{vm.businessDocumentName}"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintTop_toTopOf="@+id/tvBusiness"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintBottom_toBottomOf="@+id/tvBusiness"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/guideline" />
+
+            <TextView
+                android:id="@+id/tvBusiness"
+                android:textAppearance="@style/rp_body_regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                tools:text="@string/rp_kyc_registration"
+                android:visibility="@{vm.businessVisibility}"
+                android:text="@{vm.businessDocumentValue}"
+                android:layout_marginEnd="@dimen/rp_size_16"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPanLabel"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

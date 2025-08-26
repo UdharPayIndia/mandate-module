@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_6"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".main.app.presentation.ui.view.MainActivity">
+
+    <Button
+        android:id="@+id/btnOpen"
+        android:layout_width="@dimen/size_300"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/size_0"
+        android:text="Open Mandate List"
+        android:layout_gravity="center"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etReference1"
+        android:layout_width="@dimen/size_300"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_64"
+        android:hint="Enter Reference Id"/>
+
+    <Button
+        android:id="@+id/btnMandateAdd"
+        android:layout_width="@dimen/size_300"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/size_0"
+        android:text="Add Mandate"
+        android:layout_gravity="center"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etReference2"
+        android:layout_width="@dimen/size_300"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_64"
+        android:hint="Enter Reference Id"/>
+
+    <Button
+        android:id="@+id/btnMandateDetails"
+        android:layout_width="@dimen/size_300"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/size_0"
+        android:text="View Mandate"
+        android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="@dimen/size_300"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_64"
+        android:elevation="@dimen/size_0"
+        android:text="Logout"
+        android:layout_gravity="center"/>
+</LinearLayout>

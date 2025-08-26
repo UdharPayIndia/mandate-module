@@ -1,0 +1,147 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    alias(libs.plugins.ksp)
+}
+
+android {
+    defaultConfig {
+        applicationId "com.udharpay"
+        minSdkVersion 24
+        compileSdk 35
+        targetSdkVersion 35
+        versionCode 1
+        versionName "1"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+    }
+
+    sourceSets {
+        androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            manifestPlaceholders.providerName = "com.udharpay.sdk"
+            buildConfigField "String", "PROVIDER_NAME", "\"com.udharpay.sdk.provider\""
+
+            applicationIdSuffix = '.sdk'
+
+        }
+
+        debug {
+            manifestPlaceholders.providerName = "com.udharpay.sdk.debug"
+            buildConfigField "String", "PROVIDER_NAME", "\"com.udharpay.sdk.debug.provider\""
+
+            applicationIdSuffix = '.sdk.debug'
+        }
+    }
+
+    buildFeatures {
+        dataBinding true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+    androidComponents {
+        onVariants(selector().all(), { variant ->
+            afterEvaluate {
+                // This is a workaround for https://issuetracker.google.com/301245705 which depends on internal
+                // implementations of the android gradle plugin and the ksp gradle plugin which might change in the future
+                // in an unpredictable way.
+                project.tasks.getByName("ksp" + variant.name.capitalize() + "Kotlin") {
+                    def dataBindingTask = (com.android.build.gradle.internal.tasks.databinding.DataBindingGenBaseClassesTask) project.tasks.getByName("dataBindingGenBaseClasses" + variant.name.capitalize())
+
+                    ((org.jetbrains.kotlin.gradle.tasks.AbstractKotlinCompileTool) it).setSource(
+                            dataBindingTask.sourceOutFolder
+                    )
+                }
+            }
+        })
+    }
+    namespace 'com.udharpay'
+}
+
+dependencies {
+
+    // Multi dex support for android version < 21
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'androidx.core:core-ktx:1.16.0'
+    implementation "androidx.activity:activity:1.10.1"
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation libs.androidx.swiperefreshlayout
+    implementation libs.play.services.location
+    implementation libs.play.services.auth.api.phone
+
+    implementation project(":kernel-common")
+    implementation project(":network-manager")
+    implementation project(":sync-manager-core")
+    implementation project(':mandate-module')
+
+    // Gson
+    implementation libs.gson
+
+    // Retrofit
+    implementation(libs.converter.gson)
+
+    // Chuck - Network Debugger
+    debugImplementation "com.github.chuckerteam.chucker:library:3.5.2"
+    releaseImplementation "com.github.chuckerteam.chucker:library-no-op:3.5.2"
+
+    // Dagger
+    implementation libs.dagger
+    implementation libs.dagger.android
+    ksp libs.dagger.compiler
+    ksp libs.dagger.android.processor
+
+    // Glide
+    implementation files('libs/glide4-1.0.0.aar')
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    kapt "com.github.bumptech.glide:compiler:4.11.0"
+    kapt "android.arch.lifecycle:compiler:1.1.1"
+    implementation "com.caverock:androidsvg:1.2.1"
+
+    // Lottie Animation
+    implementation 'com.airbnb.android:lottie:5.2.0'
+
+    // Room
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+    androidTestImplementation(libs.room.testing)
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test:runner:1.6.1'
+    androidTestImplementation 'androidx.test:rules:1.6.1'
+
+    // Google
+    implementation libs.play.services.auth
+    implementation libs.play.services.base
+    //QrCodegenerator
+    implementation libs.play.services.vision
+
+
+    //Shimmer
+    implementation libs.shimmer
+
+    implementation(libs.gms.play.services.ads.identifier)
+
+}
+

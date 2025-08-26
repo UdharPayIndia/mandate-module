@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.mandate.presentation.ui.mandatedetail.viewmodel.MandateDetailUM" />
+
+        <import type="android.view.View" />
+    </data>
+    <LinearLayout
+        style="@style/rp_surface_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/rp_size_16"
+            android:paddingVertical="@dimen/rp_size_12"
+            android:foreground="?attr/selectableItemBackground"
+            android:onClick="@{() -> vm.onChangeOtherDetailState()}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text="@string/rp_other_details"
+                android:textAppearance="@style/rp_header"
+                android:textColor="@color/rp_grey_3" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:rotation="180"
+                android:rotation="@{vm.isOtherDetailsExpanded() ? 180 : 0}"
+                android:src="@drawable/rp_ic_arrow_down" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/rp_size_16"
+            android:layout_marginEnd="@dimen/rp_size_16"
+            android:layout_marginBottom="@dimen/rp_size_12"
+            android:orientation="vertical"
+            android:visibility="@{vm.isOtherDetailsExpanded() ? View.VISIBLE : View.GONE}">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/rp_payment_mode"
+                    android:textAppearance="@style/rp_body_small"
+                    android:textColor="@color/rp_grey_3" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAppearance="@style/rp_body_large"
+                    app:textWithNullCheck="@{vm.paymentMode}"
+                    tools:text="UPI (8877168861@oksbi)" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/rp_size_16"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/rp_order_note"
+                    android:textAppearance="@style/rp_body_small"
+                    android:textColor="@color/rp_grey_3" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAppearance="@style/rp_body_large"
+                    app:textWithNullCheck="@{vm.orderNote}"
+                    tools:text="iPhone 13 pro" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/rp_size_16"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="@{vm.creationTime}"
+                android:textAppearance="@style/rp_body_small"
+                android:textColor="@color/rp_grey_3"
+                tools:text="Mandate created on 20 April 22" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>
