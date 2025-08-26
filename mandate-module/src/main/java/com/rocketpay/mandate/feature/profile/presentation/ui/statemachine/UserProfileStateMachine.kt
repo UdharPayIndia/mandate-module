@@ -93,8 +93,4 @@ internal class UserProfileStateMachine(
             }
         }
     }
-
-    fun getSharedMessage(shortLinkURL: String): String {
-        return ResourceManager.getInstance().getString(R.string.rp_share_app_download_now, shortLinkURL)
-    }
 }

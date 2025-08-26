@@ -7,6 +7,7 @@ import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableFloat
 import androidx.databinding.ObservableInt
+import com.rocketpay.mandate.BuildConfig
 import com.rocketpay.mandate.R
 import com.rocketpay.mandate.feature.mandate.data.entities.ChargeResponseDto
 import com.rocketpay.mandate.feature.mandate.domain.entities.Coupon
@@ -385,12 +386,14 @@ internal class MandateAddUM (private val dispatchEvent: (MandateAddEvent) -> Uni
         val freeByTokenization = state.isTokenizationEnabled && charges == 0.0
         if(merchantCharges != null && (freeByTokenization)){
             if(state.chargeResponse?.showAtMandateLevel == true || installment <= 1){
-                handlingChargeLabel.set(ResourceManager.getInstance().getString(R.string.rp_merchant_charges_at_zero))
+                handlingChargeLabel.set(ResourceManager.getInstance().getString(
+                    R.string.rp_merchant_charges_at_zero, BuildConfig.APP_NAME))
             }else{
-                handlingChargeLabel.set(ResourceManager.getInstance().getString(R.string.rp_merchant_charges_per_installment_at_zero))
+                handlingChargeLabel.set(ResourceManager.getInstance().getString(
+                    R.string.rp_merchant_charges_per_installment_at_zero, BuildConfig.APP_NAME))
             }
-            subscriptionInfoText.set(ResourceManager.getInstance().getString(R.string.rp_saved_with_rocketpay_plan,
-                AmountUtils.format(merchantCharges.discount)))
+            subscriptionInfoText.set(ResourceManager.getInstance().getString(R.string.rp_saved_with_app_plan,
+                AmountUtils.format(merchantCharges.discount), BuildConfig.APP_NAME))
         }else{
             if(state.chargeResponse?.showAtMandateLevel == true || installment <= 1){
                 handlingChargeLabel.set(ResourceManager.getInstance().getString(R.string.rp_merchant_charges))

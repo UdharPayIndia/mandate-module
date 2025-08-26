@@ -2,14 +2,19 @@ package com.rocketpay.mandate.feature.installment.presentation.ui.penalty.viewmo
 
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
+import com.rocketpay.mandate.BuildConfig
+import com.rocketpay.mandate.R
 import com.rocketpay.mandate.feature.installment.presentation.ui.penalty.statemachine.EnterPenaltyAmountEvent
 import com.rocketpay.mandate.feature.installment.presentation.ui.penalty.statemachine.EnterPenaltyAmountState
 import com.rocketpay.mandate.common.basemodule.common.presentation.progressdialog.ProgressDialogStatus
 import com.rocketpay.mandate.common.basemodule.common.presentation.progressdialog.ProgressDialogVM
 import com.rocketpay.mandate.common.basemodule.main.viewmodel.BaseMainUM
+import com.rocketpay.mandate.common.resourcemanager.ResourceManager
 
 internal class EnterPenaltyAmountUM (private val dispatchEvent: (EnterPenaltyAmountEvent) -> Unit) : BaseMainUM() {
 
+    val penaltySubText = ObservableField<String>(ResourceManager.getInstance().getString(R.string.rp_allow_app_to_charge,
+        BuildConfig.APP_NAME))
     val penaltyAmount = ObservableField("")
     val penaltyAmountError = ObservableField<String>()
 

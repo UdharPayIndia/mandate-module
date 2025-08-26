@@ -1030,7 +1030,7 @@ internal class MandateAddStateMachine(
                 && state.note.isNotEmpty() && state.amountError.isNullOrEmpty()
                 && state.amount.isNotEmpty() && state.installment != null
                 && state.installmentFrequency != null && state.startDate != null
-                && state.installment >= abs(state.productWallet?.outstanding.double())
+                && state.installment > abs(state.productWallet?.outstanding.double())
                 && (state.paymentMethod is PaymentMethod.Nach || state.paymentMethod is PaymentMethod.Upi)
     }
 

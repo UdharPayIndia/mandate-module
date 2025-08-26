@@ -5,6 +5,7 @@ import android.view.View
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
+import com.rocketpay.mandate.BuildConfig
 import com.rocketpay.mandate.R
 import com.rocketpay.mandate.feature.installment.domain.entities.InstallmentState
 import com.rocketpay.mandate.feature.installment.presentation.ui.installmentdetail.statemachine.InstallmentDetailEvent
@@ -12,7 +13,6 @@ import com.rocketpay.mandate.feature.installment.presentation.ui.installmentdeta
 import com.rocketpay.mandate.feature.mandate.domain.entities.PaymentMethod
 import com.rocketpay.mandate.feature.mandate.presentation.ui.mandateadd.viewmodel.ChargeBearer
 import com.rocketpay.mandate.feature.settlements.presentation.ui.utils.SettlementUtils
-import com.rocketpay.mandate.main.init.MandateManager
 import com.rocketpay.mandate.common.basemodule.common.presentation.progressdialog.ProgressDialogStatus
 import com.rocketpay.mandate.common.basemodule.common.presentation.progressdialog.ProgressDialogVM
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.AmountUtils
@@ -28,6 +28,8 @@ internal class InstallmentDetailUM(val dispatchEvent: (InstallmentDetailEvent) -
     val stateColor = ObservableInt()
     val amount = ObservableField<String>()
     val fromParty = ObservableField<String>()
+    val installmentUtrLabel = ObservableField<String>(ResourceManager.getInstance().getString(R.string.rp_app_transaction_id,
+        BuildConfig.APP_NAME))
     val installmentUtr = ObservableField<String>()
     val fromDetail = ObservableField<String>()
     val toDetail = ObservableField<String>()
@@ -70,6 +72,8 @@ internal class InstallmentDetailUM(val dispatchEvent: (InstallmentDetailEvent) -
     val settlementButtonVisibility = ObservableBoolean()
 
     val penaltyDetailVisibility = ObservableBoolean(false)
+    val penaltyTitleText = ObservableField<String>(ResourceManager.getInstance().getString(R.string.rp_app_bounce_penalty_collected,
+        BuildConfig.APP_NAME))
     val penaltyDetailText = ObservableField<String>()
 
     val manualSummaryVisibility = ObservableBoolean(false)

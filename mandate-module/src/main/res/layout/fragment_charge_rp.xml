@@ -122,7 +122,8 @@
                     android:textColor="@color/rp_grey_3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/rp_customer_bank_charge_subtitle"/>
+                    android:text="@{vm.customerFlowTitle}"
+                    tools:text="@string/rp_customer_bank_charge_subtitle"/>
 
                 <ImageView
                     android:layout_width="348dp"

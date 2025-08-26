@@ -354,7 +354,8 @@
                                 android:layout_gravity="center_vertical"
                                 android:singleLine="true"
                                 android:ellipsize="end"
-                                android:text="@string/rp_rocketpay_transaction_id"/>
+                                android:text="@{vm.installmentUtrLabel}"
+                                tools:text="@string/rp_app_transaction_id"/>
 
                             <TextView
                                 android:textAppearance="@style/rp_body_large"
@@ -509,7 +510,8 @@
                     android:layout_marginStart="@dimen/rp_size_16"
                     android:layout_marginEnd="@dimen/rp_size_16"
                     android:ellipsize="end"
-                    android:text="@string/rp_rocketpay_bounce_penalty_collected"/>
+                    android:text="@{vm.penaltyTitleText}"
+                    tools:text="@string/rp_app_bounce_penalty_collected"/>
 
                 <TextView
                     android:textAppearance="@style/rp_body_large"

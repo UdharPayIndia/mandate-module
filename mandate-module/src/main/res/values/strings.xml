@@ -155,7 +155,7 @@
     <string name="rp_customers_bank_charges">Customer’s bank charges</string>
     <string name="rp_copied_link">Link copied</string>
     <string name="rp_copy_link">Copy link</string>
-    <string name="rp_customer_bank_charge_subtitle">These charges are charged by customer’s bank, not by RocketPay</string>
+    <string name="rp_customer_bank_charge_subtitle">These charges are charged by customer’s bank, not by %1$s</string>
     <string name="rp_dismiss">Dismiss</string>
     <string name="rp_share_payment_link_authorise">Share link &amp; ask customer to authorise</string>
     <string name="rp_payment_schedule">Payment schedule</string>
@@ -202,7 +202,7 @@
     <string name="rp_from">From</string>
     <string name="rp_to">To</string>
     <string name="rp_transaction_id">Bank Transaction ID (UTR)</string>
-    <string name="rp_rocketpay_transaction_id">RocketPay transaction ID</string>
+    <string name="rp_app_transaction_id">%1$s transaction ID</string>
     <string name="rp_symbol_rupee">₹</string>
     <string name="rp_installment_details">Installment details</string>
     <string name="rp_transaction_details">Transaction details</string>
@@ -268,7 +268,6 @@
     <string name="rp_create_installment_get_otp">Send OTP</string>
     <string name="rp_create_installment_verify_otp">Create installment</string>
     <string name="rp_due_date">Due date</string>
-    <string name="rp_share_app_download_now">🙏, I am using India\'s first automatic credit &amp; emi collection app - RocketPay, It is 100%% Safe &amp; Secure. It is trusted by 20,000+ businesses. Make your payment collection automatic using RocketPay. Download now 👇👇👇👇👇👇 \n\n %s</string>
     <string name="rp_no_apps_to_support_contact_selection">Contact selection failed, No apps support contact selection</string>
     <string name="rp_kyc_profile_title">KYC registration details</string>
     <string name="rp_kyc_profile_subtitle_not_success">Get fast settlement &amp; customer support</string>
@@ -423,10 +422,10 @@
     <string name="rp_discount_coupons"><![CDATA[Discount coupons ->]]></string>
     <string name="rp_applied">Applied</string>
     <string name="rp_merchant_charges">Merchant charges</string>
-    <string name="rp_saved_with_rocketpay_plan">%1$s saved! With RocketPay+</string>
+    <string name="rp_saved_with_app_plan">%1$s saved! With %2$s+</string>
     <string name="rp_saved_with_superkey">%1$s saved! With Superkey</string>
-    <string name="rp_merchant_charges_at_zero">Merchant charges @ ₹0 with RocketPay+</string>
-    <string name="rp_merchant_charges_per_installment_at_zero">Merchant charges per installment @ ₹0 with RocketPay+</string>
+    <string name="rp_merchant_charges_at_zero">Merchant charges @ ₹0 with %1$s+</string>
+    <string name="rp_merchant_charges_per_installment_at_zero">Merchant charges per installment @ ₹0 with %1$s+</string>
     <string name="rp_merchant_charges_at_zero_with_superkey">Merchant charges @ ₹0 with Superkey</string>
     <string name="rp_please_enter_sales_details">Please enter sales details</string>
     <string name="rp_down_payment">Down payment</string>
@@ -443,12 +442,12 @@
     <string name="rp_retry_not_available">Retry not available</string>
     <string name="rp_no_internet_connectivity_please_connect_to_internet">No internet connectivity, please connect to internet.</string>
     <string name="rp_otp_request_failed">OTP request failed</string>
-    <string name="rp_allow_rocketpay_to_charge">Allow RocketPay to charge penalty for every bounced installment.</string>
+    <string name="rp_allow_app_to_charge">Allow %1$s to charge penalty for every bounced installment.</string>
     <string name="rp_penalty_details">penalty details</string>
-    <string name="rp_rocketpay_bounce_penalty_collected">RocketPay Bounce Penalty Collected</string>
+    <string name="rp_app_bounce_penalty_collected">%1$S Bounce Penalty Collected</string>
     <string name="rp_charge_penalty">Charge Penalty</string>
     <string name="rp_confirm_penalty">Confirm penalty</string>
-    <string name="rp_allow_rocketpay_to_charge_bounce_charge">Allow RocketPay to collect %1$s bounce charges?</string>
+    <string name="rp_allow_app_to_charge_bounce_charge">Allow %2$s to collect %1$s bounce charges?</string>
     <string name="rp_initaiting_chrge_penalty">Initiating charge penalty...</string>
     <string name="rp_yes">Yes</string>
     <string name="rp_charge_penalty_failed">Charge penalty failed</string>
@@ -486,7 +485,7 @@
     <string name="rp_skip_installment_detail_super_key">If you skip a payment, you can\'t collect it later with mandate, and it will be removed from payment schedule</string>
     <string name="rp_payment_tracker">Payment tracker</string>
     <string name="rp_share_link_and_ask_customer_to_authorize"><![CDATA[Share link & ask customer to authorise]]></string>
-    <string name="rp_by_accepting_this_mandate_i_consent_to_rocketpay_term">By accepting this mandate I consent to RocketPay’s %1$s</string>
+    <string name="rp_by_accepting_this_mandate_i_consent_to_term">By accepting this mandate I consent to %1$s’s %2$s</string>
     <string name="rp_scan_this_qr_and_authorise_using"><![CDATA[Scan this QR & authorise using]]></string>
     <string name="rp_view_payment_details">View payment details</string>
     <string name="rp_share_via_whatsapp">Share via WhatsApp</string>

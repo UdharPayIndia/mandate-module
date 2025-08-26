@@ -5,6 +5,7 @@ import android.view.View
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
+import com.rocketpay.mandate.BuildConfig
 import com.rocketpay.mandate.R
 import com.rocketpay.mandate.feature.charge.presentation.ui.statemachine.ChargeEvent
 import com.rocketpay.mandate.feature.charge.presentation.ui.statemachine.ChargeState
@@ -19,6 +20,8 @@ internal class ChargeUM(private val dispatchEvent: (ChargeEvent) -> Unit) : Base
 
     val businessFlowBaseVisibility = ObservableInt(View.GONE)
     val customerFlowBaseVisibility = ObservableInt(View.GONE)
+    val customerFlowTitle = ObservableField<String>(ResourceManager.getInstance().getString(R.string.rp_customer_bank_charge_subtitle,
+        BuildConfig.APP_NAME))
     val autopayBaseVisibility = ObservableInt(View.GONE)
     val isCashFreeEnabled = ObservableBoolean(false)
 

@@ -1,5 +1,6 @@
 package com.rocketpay.mandate.feature.installment.presentation.ui.penalty.statemachine
 
+import com.rocketpay.mandate.BuildConfig
 import com.rocketpay.mandate.R
 import com.rocketpay.mandate.feature.installment.domain.usecase.InstallmentUseCase
 import com.rocketpay.mandate.feature.mandate.data.MandateSyncer
@@ -65,8 +66,9 @@ internal class EnterPenaltyAmountStateMachine  (
                         ResourceManager.getInstance().getDrawable(R.color.rp_yellow_1),
                         ResourceManager.getInstance().getString(R.string.rp_confirm_penalty),
                         ResourceManager.getInstance().getString(
-                            R.string.rp_allow_rocketpay_to_charge_bounce_charge,
-                            AmountUtils.format(AmountUtils.stringToDouble(state.penaltyAmount))
+                            R.string.rp_allow_app_to_charge_bounce_charge,
+                            AmountUtils.format(AmountUtils.stringToDouble(state.penaltyAmount)),
+                            BuildConfig.APP_NAME
                         ),
                         ResourceManager.getInstance().getString(R.string.rp_yes),
                         ResourceManager.getInstance().getString(R.string.rp_dismiss)

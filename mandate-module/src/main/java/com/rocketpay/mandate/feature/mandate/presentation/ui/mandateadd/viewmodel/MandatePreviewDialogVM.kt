@@ -1,11 +1,10 @@
 package com.rocketpay.mandate.feature.mandate.presentation.ui.mandateadd.viewmodel
 
 import android.graphics.Bitmap
-import android.os.Handler
-import android.os.Looper
 import android.text.SpannableString
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
+import com.rocketpay.mandate.BuildConfig
 import com.rocketpay.mandate.R
 import com.rocketpay.mandate.feature.mandate.domain.entities.Mandate
 import com.rocketpay.mandate.feature.mandate.presentation.ui.mandateadd.statemachine.MandateAddEvent
@@ -97,7 +96,10 @@ internal class MandatePreviewDialogVM(val mandate: Mandate, val showSkip: Boolea
         linkText.set(mandate.mandateUrl.getSpannable().underline(mandate.mandateUrl))
 
         val termsAndCondition = ResourceManager.getInstance().getString(R.string.rp_terms_n_condition)
-        val termsAndConditionSubtitle = ResourceManager.getInstance().getString(R.string.rp_by_accepting_this_mandate_i_consent_to_rocketpay_term, termsAndCondition)
+        val termsAndConditionSubtitle = ResourceManager.getInstance().getString(
+            R.string.rp_by_accepting_this_mandate_i_consent_to_term,
+            BuildConfig.APP_NAME,
+            termsAndCondition)
             .getSpannable()
             .setTextColor(termsAndCondition, ResourceManager.getInstance().getColor(R.color.rp_blue_2))
             .underline(termsAndCondition)
