@@ -113,7 +113,7 @@ internal class InstallmentDetailUM(val dispatchEvent: (InstallmentDetailEvent) -
     }
 
     fun onRocketPayTransactionIdCopyClick() {
-        dispatchEvent(InstallmentDetailEvent.RocketPayTransactionIdCopyClick(ResourceManager.getInstance().getString(R.string.rp_rocket_pay_transaction_id_copied),installmentUtr.get() ?: ""))
+        dispatchEvent(InstallmentDetailEvent.RocketPayTransactionIdCopyClick(ResourceManager.getInstance().getString(R.string.copied),installmentUtr.get() ?: ""))
     }
 
     fun onContactUsClick() {

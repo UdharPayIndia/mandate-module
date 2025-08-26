@@ -46,7 +46,7 @@ internal class ProductOrderDetailUM(val dispatchEvent: (ProductOrderDetailEvent)
         dispatchEvent(
             ProductOrderDetailEvent.RocketPayTransactionIdCopyClick(
                 ResourceManager.getInstance().getString(
-                    R.string.rp_rocket_pay_transaction_id_copied),installmentUtr.get() ?: ""))
+                    R.string.copied),installmentUtr.get() ?: ""))
     }
 
     fun onActionRefreshClick(){

@@ -223,7 +223,7 @@
     <string name="rp_next">Next</string>
     <string name="rp_skip">Skip</string>
     <string name="rp_help">Help</string>
-    <string name="rp_rocket_pay_transaction_id_copied">Rocket pay transaction id copied</string>
+    <string name="copied">Copied</string>
     <string name="rp_transaction_id_copied">Transaction id copied</string>
     <string name="rp_retry_installment_title">Retry installment?</string>
     <string name="rp_retry_installment_detail_other">"Your installment collection will be retried on %1$s. please ensure your customer has sufficient balance to avoid failure and penalties. "</string>
