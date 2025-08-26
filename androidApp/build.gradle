@@ -100,8 +100,7 @@ dependencies {
     implementation(libs.converter.gson)
 
     // Chuck - Network Debugger
-    debugImplementation "com.github.chuckerteam.chucker:library:3.5.2"
-    releaseImplementation "com.github.chuckerteam.chucker:library-no-op:3.5.2"
+    implementation "com.github.chuckerteam.chucker:library:3.5.2"
 
     // Dagger
     implementation libs.dagger

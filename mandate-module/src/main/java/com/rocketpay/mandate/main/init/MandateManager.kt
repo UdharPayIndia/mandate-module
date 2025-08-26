@@ -29,7 +29,8 @@ class MandateManager private constructor(
     private val appName: String,
     private var loginMobileNumber: String,
     private val customerSupportNumber: String,
-    private val skipKyc: Boolean
+    private val skipKyc: Boolean,
+    private val isDebug: Boolean
 ){
 
     //Config
@@ -64,19 +65,21 @@ class MandateManager private constructor(
 
     private fun initNetworkManager() {
         val userDataStore = LoginDataStore(DataStore(context, LoginDataStore.LOGIN_DATA_STORE))
-        NetworkManager.Builder()
-            .setBaseUrl(if(BuildConfig.DEBUG){
+        val builder = NetworkManager.Builder()
+            .setBaseUrl(if(isDebug){
                 "https://api-staging.rocketpay.co.in"
             }else{
                 "https://api.rocketpay.co.in"
             })
             .addNetworkRequestInterceptor(TokenRequestInterceptor(userDataStore))
-            .addRequestInterceptor(ChuckerInterceptor(context))
             .addNetworkResponseInterceptor(EventResponseInterceptor())
             .addNetworkResponseInterceptor(NetworkResponseInterceptor())
             .setConverterFactory(JsonConverter.getInstance().getFactory())
             .setJsonHandler(JsonHandlerImpl())
-            .build()
+        if(isDebug){
+            builder.addRequestInterceptor(ChuckerInterceptor(context))
+        }
+        builder.build()
     }
 
     private fun initSyncManager() {
@@ -127,6 +130,9 @@ class MandateManager private constructor(
         return skipKyc && BuildConfig.DEBUG
     }
 
+    fun isDebug(): Boolean {
+        return isDebug
+    }
 
     /*********
      * Builder
@@ -138,6 +144,7 @@ class MandateManager private constructor(
         private var customerSupportNumber: String = ""
         private var skipKyc: Boolean = false
         private var appName: String = ""
+        private var isDebug: Boolean = false
 
         fun setContext(context: Context) = apply {
             this.context = context.applicationContext
@@ -163,6 +170,10 @@ class MandateManager private constructor(
             this.skipKyc = flag
         }
 
+        fun isDebug(flag: Boolean)= apply{
+            this.isDebug = flag
+        }
+
         fun build() {
             if(enterpriseId.isNullOrEmpty()){
                 throw Exception("MandateManager is not built, Enterprise Id is missing")
@@ -170,7 +181,7 @@ class MandateManager private constructor(
             if (instance != null) {
                 throw Exception("MandateManager is already built, it can not be re built")
             }
-            instance = MandateManager(context, enterpriseId,appName, loginMobileNumber, customerSupportNumber, skipKyc)
+            instance = MandateManager(context, enterpriseId,appName, loginMobileNumber, customerSupportNumber, skipKyc, isDebug)
         }
     }
 

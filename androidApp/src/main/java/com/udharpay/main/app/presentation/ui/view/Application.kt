@@ -28,6 +28,7 @@ class Application: MultiDexApplication(), LifecycleOwner {
             .setEnterpriseId("00000198-bd64-6c3a-b857-49bc88b0ed9b")
             .setAppName("EMI Safe Pro")
             .skipKyc(true)
+            .isDebug(true)
             .build()
     }
 
