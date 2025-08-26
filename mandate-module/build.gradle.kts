@@ -77,7 +77,6 @@ android {
             val versionCode = project.findProperty("versionCode") as String?
             val versionName = project.findProperty("versionName") as String?
 
-            buildConfigField("String", "API_BASE_URL", "\"https://api.rocketpay.co.in\"")
             buildConfigField("String", "VERSION_CODE", "\"$versionCode\"")
             buildConfigField("String", "VERSION_NAME", "\"$versionName\"")
 
@@ -86,7 +85,6 @@ android {
             val versionCode = project.findProperty("versionCode") as String?
             val versionName = project.findProperty("versionName") as String?
 
-            buildConfigField("String", "API_BASE_URL", "\"https://api-staging.rocketpay.co.in\"")
             buildConfigField("String", "VERSION_CODE", "\"$versionCode\"")
             buildConfigField("String", "VERSION_NAME", "\"$versionName\"")
         }

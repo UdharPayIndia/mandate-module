@@ -65,7 +65,11 @@ class MandateManager private constructor(
     private fun initNetworkManager() {
         val userDataStore = LoginDataStore(DataStore(context, LoginDataStore.LOGIN_DATA_STORE))
         NetworkManager.Builder()
-            .setBaseUrl(BuildConfig.API_BASE_URL)
+            .setBaseUrl(if(BuildConfig.DEBUG){
+                "https://api-staging.rocketpay.co.in"
+            }else{
+                "https://api.rocketpay.co.in"
+            })
             .addNetworkRequestInterceptor(TokenRequestInterceptor(userDataStore))
             .addRequestInterceptor(ChuckerInterceptor(context))
             .addNetworkResponseInterceptor(EventResponseInterceptor())
