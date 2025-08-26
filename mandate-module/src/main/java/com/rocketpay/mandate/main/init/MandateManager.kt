@@ -151,6 +151,10 @@ class MandateManager private constructor(
             this.customerSupportNumber = customerSupportNumber
         }
 
+        fun setAppName(appName: String)= apply{
+            this.appName = appName
+        }
+
         fun skipKyc(flag: Boolean)= apply{
             this.skipKyc = flag
         }

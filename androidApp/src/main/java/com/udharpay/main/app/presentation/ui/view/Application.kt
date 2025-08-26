@@ -26,6 +26,7 @@ class Application: MultiDexApplication(), LifecycleOwner {
         MandateManager.Builder()
             .setContext(applicationContext)
             .setEnterpriseId("00000198-bd64-6c3a-b857-49bc88b0ed9b")
+            .setAppName("EMI Safe Pro")
             .skipKyc(true)
             .build()
     }

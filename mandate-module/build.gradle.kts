@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.ksp)
     kotlin("kapt")
     id("maven-publish")
+    id("kotlin-parcelize")
 }
 
 afterEvaluate {
