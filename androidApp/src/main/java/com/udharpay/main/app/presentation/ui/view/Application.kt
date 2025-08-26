@@ -26,7 +26,6 @@ class Application: MultiDexApplication(), LifecycleOwner {
         MandateManager.Builder()
             .setContext(applicationContext)
             .setEnterpriseId("00000198-bd64-6c3a-b857-49bc88b0ed9b")
-            .setLoginMobileNumber("8285404235")
             .skipKyc(true)
             .build()
     }
