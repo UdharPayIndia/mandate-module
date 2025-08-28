@@ -47,9 +47,11 @@
 
         <activity
             android:name=".main.presentation.view.RpMainActivity"
+            android:screenOrientation="portrait"
             android:exported="false"/>
         <activity
             android:name=".feature.kyc.presentation.ui.kyc.view.RpKycActivity"
+            android:screenOrientation="portrait"
             android:exported="false"/>
     </application>
 </manifest>

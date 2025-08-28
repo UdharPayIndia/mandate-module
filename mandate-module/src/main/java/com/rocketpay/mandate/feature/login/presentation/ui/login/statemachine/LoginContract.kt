@@ -46,7 +46,7 @@ internal sealed class LoginEvent(name: String? = null) : BaseEvent(name) {
     data class RequestOtpFailed(val errorCode: String, val message: String): LoginEvent("request_otp_failed")
     object RequestOtpSuccess: LoginEvent("request_otp_success")
     data class VerifyOtpFailed(val message: String): LoginEvent("otp_verification_failed")
-    data class VerifyOtpSuccess(val user: User): LoginEvent(EVENT_SIGNED_UP)
+    data class VerifyOtpSuccess(val user: User, val isKyced: Boolean): LoginEvent(EVENT_SIGNED_UP)
 
     object OtpTimeout : LoginEvent("otp_timeout")
     data class UpdateTimeLeft(val time: Long): LoginEvent()
@@ -71,7 +71,7 @@ internal sealed class LoginASF : AsyncSideEffect {
 
 internal sealed class LoginUSF : UiSideEffect {
     data class StartSmsListener(val otpTimeout: Long, val interval: Long) : LoginUSF()
-    object GotoHome : LoginUSF()
+    data class GotoHome(val isKyced: Boolean) : LoginUSF()
     data class ShowError(val header: String, val message: String) : LoginUSF()
     data class ShowInProgress(val header: String, val message: String) : LoginUSF()
     object CloseProgressDialog: LoginUSF()

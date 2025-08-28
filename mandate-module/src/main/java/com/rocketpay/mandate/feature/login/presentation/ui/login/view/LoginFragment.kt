@@ -116,7 +116,7 @@ internal class LoginFragment : BaseMainFragment<LoginEvent, LoginState, LoginUSF
             is LoginUSF.GotoHome -> {
                 requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
                 progressDialog.dismiss()
-                FragmentResultBus.fire(RESULT_LOGGED_IN, null)
+                FragmentResultBus.fire(RESULT_LOGGED_IN, sideEffect.isKyced)
             }
             is LoginUSF.ShowError -> {
                 vm.progressDialogVM.setErrorState(sideEffect.header, sideEffect.message)

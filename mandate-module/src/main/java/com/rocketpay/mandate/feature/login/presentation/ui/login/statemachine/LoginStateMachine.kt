@@ -115,7 +115,7 @@ internal class LoginStateMachine(
             }
             is LoginEvent.VerifyOtpSuccess -> {
                 GlobalState.isLogin.value = true
-                next(LoginUSF.GotoHome)
+                next(LoginUSF.GotoHome(event.isKyced))
             }
             is LoginEvent.UpdateTimeLeft -> {
                 next(state.copy(timeLeftToResendOtp = event.time))
@@ -193,10 +193,10 @@ internal class LoginStateMachine(
             is LoginASF.CheckKyc -> {
                 when(kycUseCase.fetchKyc(propertyUseCase)){
                     is Outcome.Success -> {
-                        dispatchEvent(LoginEvent.VerifyOtpSuccess(sideEffect.user))
+                        dispatchEvent(LoginEvent.VerifyOtpSuccess(sideEffect.user, kycUseCase.isKycCompleted()))
                     }
                     is Outcome.Error -> {
-                        dispatchEvent(LoginEvent.VerifyOtpSuccess(sideEffect.user))
+                        dispatchEvent(LoginEvent.VerifyOtpSuccess(sideEffect.user, kycUseCase.isKycCompleted()))
                     }
                 }
             }

@@ -102,7 +102,12 @@ internal class RpMainActivity : AppCompatActivity(), BaseFragmentListener {
         super.onStart()
 
         FragmentResultBus.register(LoginFragment.RESULT_LOGGED_IN) {
-            launchFragment()
+            val data = it as Boolean?
+            if(data == true) {
+                handleMandateRedirection()
+            }else{
+                launchFragment()
+            }
         }
         FragmentResultBus.register(KycFragment.UPDATE_KYC_STATE) {
             launchFragment()
@@ -138,27 +143,31 @@ internal class RpMainActivity : AppCompatActivity(), BaseFragmentListener {
                 onNavigate(KycFragment.newInstance(bundle), fragmentTag = KycScreen.name, addToBackStack = false)
             }
             else -> {
-                GlobalState.isLogin.value = true
-                when{
-                    mViewModel.flowType == MANDATE_DETAIL && mViewModel.referenceId.isNotEmpty() -> {
-                        val bundle = Bundle()
-                        bundle.putString(MandateDetailFragment.BUNDLE_SUPER_KEY_ID, mViewModel.referenceId)
-                        onNavigate(MandateDetailFragment.newInstance(bundle), fragmentTag = MandateDetailScreen.name)
-                    }
-                    mViewModel.flowType == MANDATE_ADDITION -> {
-                        val bundle = Bundle()
-                        bundle.putString(MandateAddFragment.BUNDLE_REFERENCE_ID, mViewModel.referenceId)
-                        bundle.putString(MandateAddFragment.BUNDLE_REFERENCE_TYPE, "SDK")
-                        bundle.putString(MandateAddFragment.BUNDLE_CUSTOMER_NAME, mViewModel.customerName)
-                        bundle.putString(MandateAddFragment.BUNDLE_CUSTOMER_NUMBER, mViewModel.customerNumber)
-                        bundle.putString(MandateAddFragment.BUNDLE_NOTE, mViewModel.note)
-                        bundle.putDouble(MandateAddFragment.BUNDLE_AMOUNT, mViewModel.amount.toDouble())
-                        onNavigate(MandateAddFragment.newInstance(bundle), fragmentTag = MandateAddScreen.name)
-                    }
-                    else -> {
-                        onNavigate(MandateListFragment.newInstance(null), fragmentTag = MandateListScreen.name)
-                    }
-                }
+                handleMandateRedirection()
+            }
+        }
+    }
+
+    private fun handleMandateRedirection(){
+        GlobalState.isLogin.value = true
+        when{
+            mViewModel.flowType == MANDATE_DETAIL && mViewModel.referenceId.isNotEmpty() -> {
+                val bundle = Bundle()
+                bundle.putString(MandateDetailFragment.BUNDLE_SUPER_KEY_ID, mViewModel.referenceId)
+                onNavigate(MandateDetailFragment.newInstance(bundle), fragmentTag = MandateDetailScreen.name)
+            }
+            mViewModel.flowType == MANDATE_ADDITION -> {
+                val bundle = Bundle()
+                bundle.putString(MandateAddFragment.BUNDLE_REFERENCE_ID, mViewModel.referenceId)
+                bundle.putString(MandateAddFragment.BUNDLE_REFERENCE_TYPE, "SDK")
+                bundle.putString(MandateAddFragment.BUNDLE_CUSTOMER_NAME, mViewModel.customerName)
+                bundle.putString(MandateAddFragment.BUNDLE_CUSTOMER_NUMBER, mViewModel.customerNumber)
+                bundle.putString(MandateAddFragment.BUNDLE_NOTE, mViewModel.note)
+                bundle.putDouble(MandateAddFragment.BUNDLE_AMOUNT, mViewModel.amount.toDouble())
+                onNavigate(MandateAddFragment.newInstance(bundle), fragmentTag = MandateAddScreen.name)
+            }
+            else -> {
+                onNavigate(MandateListFragment.newInstance(null), fragmentTag = MandateListScreen.name)
             }
         }
     }
