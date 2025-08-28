@@ -84,8 +84,8 @@
     <string name="rp_request_otp_in_progress_detail">Requesting OTP, Please wait…</string>
     <string name="rp_otp_verification_in_progress">Verifying OTP…</string>
     <string name="rp_otp_verification_in_progress_detail">Verifying OTP, Please wait…</string>
-    <string name="rp_payment_link_share_message_one_time">Dear customer, MERCHANT_NAME has requested\nTOTAL_AMOUNT\nDue date:START_DATE\nClick on this link to view details:\nLINK</string>
-    <string name="rp_payment_link_share_message">Dear customer, MERCHANT_NAME has requested\nTOTAL_AMOUNT\nNO_OF_INSTALLMENT x INSTALLMENT_AMOUNT in INSTALLMENT_FREQUENCY installments\nStarting from: START_DATE\nClick on this link to view details:\nLINK</string>
+    <string name="rp_payment_link_share_message_one_time">Dear customer, MERCHANT_NAME has requested\nTOTAL_AMOUNT\nDue date:START_DATE\nScan the above QR using the UPI apps.</string>
+    <string name="rp_payment_link_share_message">Dear customer, MERCHANT_NAME has requested\nTOTAL_AMOUNT\n\nNO_OF_INSTALLMENT x INSTALLMENT_AMOUNT in INSTALLMENT_FREQUENCY installments\nStarting from: START_DATE\nScan the above QR using the UPI apps.</string>
     <string name="rp_otp_send_on">OTP sent on %s</string>
     <string name="rp_failed">Failed</string>
     <string name="rp_ask_customer_to_accept">Ask customer to accept</string>

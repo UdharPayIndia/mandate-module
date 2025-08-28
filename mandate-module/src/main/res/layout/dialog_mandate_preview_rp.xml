@@ -155,66 +155,66 @@
                             app:layout_constraintTop_toBottomOf="@+id/iv_illustration"
                             tools:text="@string/rp_by_accepting_this_mandate_i_consent_to_term" />
 
-                        <View
-                            android:id="@+id/viewSeparator"
-                            android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:layout_marginTop="@dimen/rp_size_28"
-                            android:background="@drawable/rp_divider_dotted_line_horizontal"
-                            android:backgroundTint="@color/rp_grey_3"
-                            android:visibility="@{vm.qrVisibility ? View.VISIBLE : View.GONE}"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/tvTerms" />
+<!--                        <View-->
+<!--                            android:id="@+id/viewSeparator"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="2dp"-->
+<!--                            android:layout_marginTop="@dimen/rp_size_28"-->
+<!--                            android:background="@drawable/rp_divider_dotted_line_horizontal"-->
+<!--                            android:backgroundTint="@color/rp_grey_3"-->
+<!--                            android:visibility="@{vm.qrVisibility ? View.VISIBLE : View.GONE}"-->
+<!--                            app:layout_constraintEnd_toEndOf="parent"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"-->
+<!--                            app:layout_constraintTop_toBottomOf="@+id/tvTerms" />-->
 
-                        <TextView
-                            android:id="@+id/tv_or"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/rp_size_16"
-                            android:background="@color/rp_grey_6"
-                            android:gravity="center_horizontal"
-                            android:paddingHorizontal="@dimen/rp_size_8"
-                            android:text="@string/rp_or"
-                            android:textAllCaps="true"
-                            android:textAppearance="@style/rp_body_small"
-                            android:textColor="@color/rp_grey_3"
-                            android:visibility="@{vm.qrVisibility ? View.VISIBLE : View.GONE}"
-                            app:layout_constraintBottom_toBottomOf="@+id/viewSeparator"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/viewSeparator" />
+<!--                        <TextView-->
+<!--                            android:id="@+id/tv_or"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginHorizontal="@dimen/rp_size_16"-->
+<!--                            android:background="@color/rp_grey_6"-->
+<!--                            android:gravity="center_horizontal"-->
+<!--                            android:paddingHorizontal="@dimen/rp_size_8"-->
+<!--                            android:text="@string/rp_or"-->
+<!--                            android:textAllCaps="true"-->
+<!--                            android:textAppearance="@style/rp_body_small"-->
+<!--                            android:textColor="@color/rp_grey_3"-->
+<!--                            android:visibility="@{vm.qrVisibility ? View.VISIBLE : View.GONE}"-->
+<!--                            app:layout_constraintBottom_toBottomOf="@+id/viewSeparator"-->
+<!--                            app:layout_constraintEnd_toEndOf="parent"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"-->
+<!--                            app:layout_constraintTop_toTopOf="@+id/viewSeparator" />-->
 
-                        <TextView
-                            android:id="@+id/tvShare"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginHorizontal="@dimen/rp_size_8"
-                            android:layout_marginTop="@dimen/rp_size_24"
-                            android:gravity="center"
-                            android:text="@string/rp_share_link_and_ask_customer_to_authorize"
-                            android:textAppearance="@style/rp_title"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_or" />
+<!--                        <TextView-->
+<!--                            android:id="@+id/tvShare"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:layout_marginHorizontal="@dimen/rp_size_8"-->
+<!--                            android:layout_marginTop="@dimen/rp_size_24"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="@string/rp_share_link_and_ask_customer_to_authorize"-->
+<!--                            android:textAppearance="@style/rp_title"-->
+<!--                            app:layout_constraintEnd_toEndOf="parent"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"-->
+<!--                            app:layout_constraintTop_toBottomOf="@+id/tv_or" />-->
 
-                        <TextView
-                            android:id="@+id/tvLink"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginHorizontal="@dimen/rp_size_8"
-                            android:layout_marginTop="@dimen/rp_size_2"
-                            android:gravity="center"
-                            android:text="@{vm.linkText}"
-                            android:linksClickable="false"
-                            android:textAppearance="@style/rp_body_regular"
-                            android:textColor="@color/rp_blue_2"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/tvShare"
-                            tools:text="@string/rp_share_link_and_ask_customer_to_authorize" />
+<!--                        <TextView-->
+<!--                            android:id="@+id/tvLink"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:layout_marginHorizontal="@dimen/rp_size_8"-->
+<!--                            android:layout_marginTop="@dimen/rp_size_2"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="@{vm.linkText}"-->
+<!--                            android:linksClickable="false"-->
+<!--                            android:textAppearance="@style/rp_body_regular"-->
+<!--                            android:textColor="@color/rp_blue_2"-->
+<!--                            app:layout_constraintEnd_toEndOf="parent"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"-->
+<!--                            app:layout_constraintTop_toBottomOf="@+id/tvShare"-->
+<!--                            tools:text="@string/rp_share_link_and_ask_customer_to_authorize" />-->
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </ScrollView>
@@ -229,7 +229,7 @@
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnWhatsapp"
                         style="@style/Widget.MaterialComponents.Button"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/rp_size_16"
                         android:includeFontPadding="false"
@@ -246,68 +246,68 @@
                         app:icon="@drawable/rp_ic_whatsapp"
                         app:iconGravity="textStart"
                         app:iconSize="@dimen/rp_size_24"
-                        app:layout_constraintEnd_toStartOf="@+id/btnSms"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnSms"
-                        style="@style/Widget.MaterialComponents.Button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/rp_size_16"
-                        android:layout_marginTop="@dimen/rp_size_16"
-                        android:backgroundTint="@color/rp_grey_6"
-                        android:includeFontPadding="false"
-                        android:insetTop="0dp"
-                        android:insetBottom="0dp"
-                        android:minWidth="@dimen/rp_size_96"
-                        android:minHeight="@dimen/rp_size_0"
-                        android:onClick="@{() -> vm.onSharePaymentViaSmsClick()}"
-                        android:paddingTop="@dimen/rp_size_8"
-                        android:paddingBottom="@dimen/rp_size_8"
-                        android:text="@string/rp_sms"
-                        android:textAppearance="@style/rp_cta_small"
-                        android:textColor="@color/rp_blue_2"
-                        app:cornerRadius="@dimen/rp_size_24"
-                        app:elevation="@dimen/rp_size_0"
-                        app:icon="@drawable/rp_ic_sms_special"
-                        app:iconGravity="textStart"
-                        app:iconPadding="@dimen/rp_size_0"
-                        app:iconSize="@dimen/rp_size_24"
-                        app:iconTint="@color/rp_blue_2"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/btnWhatsapp"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:strokeColor="@color/rp_blue_2"
-                        app:strokeWidth="@dimen/rp_size_1" />
+<!--                    <com.google.android.material.button.MaterialButton-->
+<!--                        android:id="@+id/btnSms"-->
+<!--                        style="@style/Widget.MaterialComponents.Button"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="@dimen/rp_size_16"-->
+<!--                        android:layout_marginTop="@dimen/rp_size_16"-->
+<!--                        android:backgroundTint="@color/rp_grey_6"-->
+<!--                        android:includeFontPadding="false"-->
+<!--                        android:insetTop="0dp"-->
+<!--                        android:insetBottom="0dp"-->
+<!--                        android:minWidth="@dimen/rp_size_96"-->
+<!--                        android:minHeight="@dimen/rp_size_0"-->
+<!--                        android:onClick="@{() -> vm.onSharePaymentViaSmsClick()}"-->
+<!--                        android:paddingTop="@dimen/rp_size_8"-->
+<!--                        android:paddingBottom="@dimen/rp_size_8"-->
+<!--                        android:text="@string/rp_sms"-->
+<!--                        android:textAppearance="@style/rp_cta_small"-->
+<!--                        android:textColor="@color/rp_blue_2"-->
+<!--                        app:cornerRadius="@dimen/rp_size_24"-->
+<!--                        app:elevation="@dimen/rp_size_0"-->
+<!--                        app:icon="@drawable/rp_ic_sms_special"-->
+<!--                        app:iconGravity="textStart"-->
+<!--                        app:iconPadding="@dimen/rp_size_0"-->
+<!--                        app:iconSize="@dimen/rp_size_24"-->
+<!--                        app:iconTint="@color/rp_blue_2"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintStart_toEndOf="@+id/btnWhatsapp"-->
+<!--                        app:layout_constraintTop_toTopOf="parent"-->
+<!--                        app:strokeColor="@color/rp_blue_2"-->
+<!--                        app:strokeWidth="@dimen/rp_size_1" />-->
 
-                    <TextView
-                        android:id="@+id/tvSecondary"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginHorizontal="@dimen/rp_size_16"
-                        android:layout_marginTop="@dimen/rp_size_16"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:gravity="center"
-                        android:onClick="@{() -> vm.onSecondaryButtonClick()}"
-                        android:textAppearance="@style/rp_body_regular_medium"
-                        android:textColor="@color/rp_blue_2"
-                        app:layout_constraintTop_toBottomOf="@+id/btnWhatsapp"
-                        app:textWithNullCheck="@{vm.secondaryButtonText}"
-                        tools:text="@string/rp_share_request_via_sms" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvSecondary"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center_horizontal"-->
+<!--                        android:layout_marginHorizontal="@dimen/rp_size_16"-->
+<!--                        android:layout_marginTop="@dimen/rp_size_16"-->
+<!--                        android:foreground="?attr/selectableItemBackground"-->
+<!--                        android:gravity="center"-->
+<!--                        android:onClick="@{() -> vm.onSecondaryButtonClick()}"-->
+<!--                        android:textAppearance="@style/rp_body_regular_medium"-->
+<!--                        android:textColor="@color/rp_blue_2"-->
+<!--                        app:layout_constraintTop_toBottomOf="@+id/btnWhatsapp"-->
+<!--                        app:textWithNullCheck="@{vm.secondaryButtonText}"-->
+<!--                        tools:text="@string/rp_share_request_via_sms" />-->
 
-                    <ImageView
-                        android:layout_width="@dimen/rp_size_140"
-                        android:layout_height="2dp"
-                        android:layout_gravity="center_horizontal"
-                        android:src="@drawable/rp_divider_dotted_line_horizontal"
-                        android:visibility="@{!TextUtils.isEmpty(vm.secondaryButtonText) ? View.VISIBLE : View.GONE}"
-                        app:layout_constraintEnd_toEndOf="@+id/tvSecondary"
-                        app:layout_constraintStart_toStartOf="@+id/tvSecondary"
-                        app:layout_constraintTop_toBottomOf="@+id/tvSecondary"
-                        app:tint="@color/rp_blue_3" />
+<!--                    <ImageView-->
+<!--                        android:layout_width="@dimen/rp_size_140"-->
+<!--                        android:layout_height="2dp"-->
+<!--                        android:layout_gravity="center_horizontal"-->
+<!--                        android:src="@drawable/rp_divider_dotted_line_horizontal"-->
+<!--                        android:visibility="@{!TextUtils.isEmpty(vm.secondaryButtonText) ? View.VISIBLE : View.GONE}"-->
+<!--                        app:layout_constraintEnd_toEndOf="@+id/tvSecondary"-->
+<!--                        app:layout_constraintStart_toStartOf="@+id/tvSecondary"-->
+<!--                        app:layout_constraintTop_toBottomOf="@+id/tvSecondary"-->
+<!--                        app:tint="@color/rp_blue_3" />-->
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
 

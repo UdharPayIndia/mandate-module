@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.rocketpay.mandate.R
 import com.rocketpay.mandate.databinding.FragmentMandateDetailRpBinding
@@ -34,10 +35,14 @@ import com.rocketpay.mandate.common.basemodule.common.eventbus.activityresultcal
 import com.rocketpay.mandate.common.basemodule.common.presentation.ext.getSpannable
 import com.rocketpay.mandate.common.basemodule.common.presentation.ext.setTextColor
 import com.rocketpay.mandate.common.basemodule.common.presentation.progressdialog.ProgressDialog
+import com.rocketpay.mandate.common.basemodule.common.presentation.utils.BitmapUtils
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.ShareUtils
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.ShowUtils
 import com.rocketpay.mandate.common.basemodule.main.view.BaseMainFragment
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 internal class MandateDetailFragment : BaseMainFragment<MandateDetailEvent, MandateDetailState, MandateDetailUSF>() {
@@ -219,8 +224,35 @@ internal class MandateDetailFragment : BaseMainFragment<MandateDetailEvent, Mand
                 ShowUtils.shortToast(requireContext(), ResourceManager.getInstance().getString(R.string.rp_copied_link))
             }
             is MandateDetailUSF.ShareOnWhatsApp -> {
-                if (!ShareUtils.sendWhatsApp(requireContext(), sideEffect.message, sideEffect.mobileNumber)) {
-                    ShowUtils.shortToast(requireContext(), ResourceManager.getInstance().getString(R.string.rp_no_apps_found_to_handle_data))
+                lifecycleScope.launch {
+                    var uri: Uri? = null
+                    val view: View? = binding.lytSummary.ivIllustration
+                    if (view != null) {
+                        val bitmapFromView = BitmapUtils.getBitmapFromView(view)
+                        if (bitmapFromView != null) {
+                            uri = withContext(Dispatchers.Default) {
+                                BitmapUtils.getUriFromBitmap(
+                                    requireContext(),
+                                    bitmapFromView,
+                                    "QrCode_${System.currentTimeMillis()}",
+                                    ".jpeg"
+                                )
+                            }
+                        }
+                    }
+                    if (!ShareUtils.sendWhatsApp(
+                            requireContext(),
+                            sideEffect.message,
+                            uri,
+                            sideEffect.mobileNumber
+                        )
+                    ) {
+                        ShowUtils.shortToast(
+                            requireContext(),
+                            ResourceManager.getInstance()
+                                .getString(R.string.rp_no_apps_found_to_handle_data)
+                        )
+                    }
                 }
             }
             is MandateDetailUSF.UpdateHeader -> {

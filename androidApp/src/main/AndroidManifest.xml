@@ -50,4 +50,26 @@
         android:name="com.google.android.gms.vision.DEPENDENCIES"
         android:value="barcode" />
 
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.PICK" />
+            <data android:mimeType="image/*" />
+        </intent>
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.PICK" />
+            <data android:mimeType="application/pdf" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.GET_CONTENT" />
+            <data android:mimeType="application/pdf" />
+        </intent>
+        <!-- Explicit apps you know in advance about: -->
+        <package android:name="com.whatsapp"/>
+        <package android:name="com.whatsapp.w4b"/>
+
+    </queries>
+
 </manifest>

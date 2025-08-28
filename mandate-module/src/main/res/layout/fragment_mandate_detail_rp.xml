@@ -53,8 +53,8 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
-
                         <include
+                            android:id="@+id/lyt_summary"
                             style="@style/rp_surface_1"
                             layout="@layout/layout_mandate_detail_summary_rp"
                             android:layout_width="match_parent"

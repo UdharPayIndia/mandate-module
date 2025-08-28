@@ -323,7 +323,7 @@ internal class MandateAddStateMachine(
             }
 
             is MandateAddEvent.SharePaymentLinkClick -> {
-                next(MandateAddASF.ShareOnWhatsAppClick(event.mandate, event.viaSms))
+                next(MandateAddASF.ShareOnWhatsAppClick(event.mandate))
             }
 
             is MandateAddEvent.SkipSharePaymentLinkClick -> {
@@ -332,27 +332,15 @@ internal class MandateAddStateMachine(
 
             is MandateAddEvent.WhatsAppTemplateCreated -> {
                 val isManual = event.mandate.paymentMethodDetail.method == PaymentMethod.Manual
-                if (event.visSms) {
-                    next(
-                        MandateAddUSF.ShareOnSms(
-                            event.mandate.customerDetail.mobileNumber,
-                            event.messageTemplate,
-                            event.mandate.id,
-                            state.referenceId,
-                            isManual
-                        )
+                next(
+                    MandateAddUSF.ShareOnWhatsApp(
+                        event.mandate.customerDetail.mobileNumber,
+                        event.messageTemplate,
+                        event.mandate.id,
+                        state.referenceId,
+                        isManual
                     )
-                } else {
-                    next(
-                        MandateAddUSF.ShareOnWhatsApp(
-                            event.mandate.customerDetail.mobileNumber,
-                            event.messageTemplate,
-                            event.mandate.id,
-                            state.referenceId,
-                            isManual
-                        )
-                    )
-                }
+                )
             }
 
             is MandateAddEvent.ContactSelected -> {
@@ -1071,7 +1059,6 @@ internal class MandateAddStateMachine(
                         sideEffect.mandate,
                         whatsAppMessageConfig.experiment,
                         messageTemplate,
-                        sideEffect.visSms
                     )
                 )
             }

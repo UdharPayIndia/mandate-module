@@ -3,6 +3,7 @@ package com.rocketpay.mandate.feature.mandate.presentation.ui.mandateadd.view
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.text.SpannableString
@@ -14,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.rocketpay.mandate.R
@@ -43,6 +45,7 @@ import com.rocketpay.mandate.common.basemodule.common.presentation.ext.openWebPa
 import com.rocketpay.mandate.common.basemodule.common.presentation.ext.showDialogFragment
 import com.rocketpay.mandate.common.basemodule.common.presentation.progressdialog.ProgressDialog
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.AmountUtils
+import com.rocketpay.mandate.common.basemodule.common.presentation.utils.BitmapUtils
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.DatePickerUtils
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.DateUtils
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.KeyboardUtils
@@ -51,6 +54,9 @@ import com.rocketpay.mandate.common.basemodule.common.presentation.utils.ShowUti
 import com.rocketpay.mandate.databinding.BottomSheetEnterRpBinding
 import com.rocketpay.mandate.common.basemodule.main.view.BaseMainFragment
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 internal class MandateAddFragment : BaseMainFragment<MandateAddEvent, MandateAddState, MandateAddUSF>() {
@@ -266,12 +272,27 @@ internal class MandateAddFragment : BaseMainFragment<MandateAddEvent, MandateAdd
             }
             is MandateAddUSF.ShareOnWhatsApp -> {
                 skipRedirection = false
-                if (!ShareUtils.sendWhatsApp(requireContext(), sideEffect.message, sideEffect.mobileNumber)) {
-                    ShowUtils.shortToast(requireContext(), ResourceManager.getInstance().getString(R.string.rp_no_apps_found_to_handle_data))
+                lifecycleScope.launch {
+                    var uri : Uri? = null
+                    val view: View? = mandatePreviewDialog?.findViewById(R.id.iv_illustration)
+                    if(view != null){
+                        val bitmapFromView = BitmapUtils.getBitmapFromView(view)
+                        if(bitmapFromView != null){
+                            uri = withContext(Dispatchers.Default) { BitmapUtils.getUriFromBitmap(
+                                requireContext(), bitmapFromView, "QrCode_${System.currentTimeMillis()}", ".jpeg") }
+                        }
+                    }
+                    if (!ShareUtils.sendWhatsApp(
+                            requireContext(),
+                            sideEffect.message,
+                            uri,
+                            sideEffect.mobileNumber)) {
+                        ShowUtils.shortToast(requireContext(), ResourceManager.getInstance().getString(R.string.rp_no_apps_found_to_handle_data))
+                    }
+                    progressDialog.dismiss()
+                    mandatePreviewDialog?.dismiss()
+                    gotoMandateDetail(sideEffect.mandateId, sideEffect.referenceId, sideEffect.isManual)
                 }
-                progressDialog.dismiss()
-                mandatePreviewDialog?.dismiss()
-                gotoMandateDetail(sideEffect.mandateId, sideEffect.referenceId, sideEffect.isManual)
             }
             is MandateAddUSF.ShowToast -> {
                 ShowUtils.shortToast(requireContext(), sideEffect.message)

@@ -54,7 +54,7 @@ internal object ShareUtils {
             shareIntent
         } else {
             if (mobileNumber != null) {
-                shareIntent.putExtra("jid", "$mobileNumber@s.whatsapp.net")
+                shareIntent.putExtra("jid", "${mobileNumber.replace("+", "")}@s.whatsapp.net")
             }
             shareIntent.setPackage(packageName)
         }

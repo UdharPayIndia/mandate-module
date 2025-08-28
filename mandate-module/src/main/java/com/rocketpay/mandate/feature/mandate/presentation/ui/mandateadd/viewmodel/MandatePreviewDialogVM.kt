@@ -60,11 +60,6 @@ internal class MandatePreviewDialogVM(val mandate: Mandate, val showSkip: Boolea
         dispatchEvent(MandateAddEvent.SharePaymentLinkClick(mandate))
     }
 
-    fun onSharePaymentViaSmsClick() {
-        updatePaymentDetailsState(false)
-        dispatchEvent(MandateAddEvent.SharePaymentLinkClick(mandate, viaSms = true))
-    }
-
 
     fun onSecondaryButtonClick() {
         updatePaymentDetailsState(false)

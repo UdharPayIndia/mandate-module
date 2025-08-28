@@ -117,66 +117,67 @@
                         android:src="@mipmap/rp_upi_2" />
 
                     <ImageView
+                        android:id="@+id/iv_illustration"
                         android:layout_width="240dp"
                         android:layout_height="240dp"
                         android:layout_gravity="center_horizontal"
                         android:scaleType="centerCrop"
                         app:bitmap="@{vm.qrBitmapObservable}"
                         tools:ignore="ContentDescription"
-                        tools:src="@mipmap/rp_illustration_kyc_personal" />
+                        tools:src="@mipmap/rp_illustration_aadhaar" />
                 </LinearLayout>
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/rp_size_16"
-                    android:visibility="@{vm.qrVisibility ? View.VISIBLE : View.GONE}">
+<!--                <FrameLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginVertical="@dimen/rp_size_16"-->
+<!--                    android:visibility="@{vm.qrVisibility ? View.VISIBLE : View.GONE}">-->
 
-                    <View
-                        android:id="@+id/viewSeparator"
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_gravity="center"
-                        android:background="@drawable/rp_divider_dotted_line_horizontal"
-                        android:backgroundTint="@color/rp_grey_6"
-                        android:visibility="@{vm.qrVisibility ? View.VISIBLE : View.GONE}" />
+<!--                    <View-->
+<!--                        android:id="@+id/viewSeparator"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="2dp"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:background="@drawable/rp_divider_dotted_line_horizontal"-->
+<!--                        android:backgroundTint="@color/rp_grey_6"-->
+<!--                        android:visibility="@{vm.qrVisibility ? View.VISIBLE : View.GONE}" />-->
 
-                    <TextView
-                        android:id="@+id/tv_or"
-                        style="@style/rp_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginHorizontal="@dimen/rp_size_16"
-                        android:background="@color/rp_blue_2"
-                        android:gravity="center_horizontal"
-                        android:paddingHorizontal="@dimen/rp_size_8"
-                        android:text="@string/rp_or"
-                        android:textAllCaps="true"
-                        android:textAppearance="@style/rp_body_small"
-                        android:textColor="@color/rp_grey_6"
-                        android:visibility="@{vm.qrVisibility ? View.VISIBLE : View.GONE}" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/tv_or"-->
+<!--                        style="@style/rp_title"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_marginHorizontal="@dimen/rp_size_16"-->
+<!--                        android:background="@color/rp_blue_2"-->
+<!--                        android:gravity="center_horizontal"-->
+<!--                        android:paddingHorizontal="@dimen/rp_size_8"-->
+<!--                        android:text="@string/rp_or"-->
+<!--                        android:textAllCaps="true"-->
+<!--                        android:textAppearance="@style/rp_body_small"-->
+<!--                        android:textColor="@color/rp_grey_6"-->
+<!--                        android:visibility="@{vm.qrVisibility ? View.VISIBLE : View.GONE}" />-->
 
-                </FrameLayout>
+<!--                </FrameLayout>-->
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@{vm.headerTitle}"
-                    android:textAppearance="@style/rp_title"
-                    android:textColor="@color/rp_grey_6"
-                    tools:text="@string/rp_upi_autopay_request_sent_to" />
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="@{vm.headerTitle}"-->
+<!--                    android:textAppearance="@style/rp_title"-->
+<!--                    android:textColor="@color/rp_grey_6"-->
+<!--                    tools:text="@string/rp_upi_autopay_request_sent_to" />-->
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/rp_size_4"
-                    android:gravity="center"
-                    android:text="@{vm.headerSubtitle}"
-                    android:textAppearance="@style/rp_body_regular"
-                    android:textColor="@color/rp_grey_6"
-                    tools:text="http://future.pay/32980ye_9823" />
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="@dimen/rp_size_4"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="@{vm.headerSubtitle}"-->
+<!--                    android:textAppearance="@style/rp_body_regular"-->
+<!--                    android:textColor="@color/rp_grey_6"-->
+<!--                    tools:text="http://future.pay/32980ye_9823" />-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -223,40 +224,40 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="38dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/rp_size_16"
-                        android:background="@drawable/rp_background_card_cta_small_light"
-                        android:onClick="@{() -> vm.onCopyClick()}"
-                        android:orientation="horizontal"
-                        android:paddingStart="@dimen/rp_size_6"
-                        android:paddingEnd="@dimen/rp_size_6">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="38dp"-->
+<!--                        android:layout_gravity="center_vertical"-->
+<!--                        android:layout_marginStart="@dimen/rp_size_16"-->
+<!--                        android:background="@drawable/rp_background_card_cta_small_light"-->
+<!--                        android:onClick="@{() -> vm.onCopyClick()}"-->
+<!--                        android:orientation="horizontal"-->
+<!--                        android:paddingStart="@dimen/rp_size_6"-->
+<!--                        android:paddingEnd="@dimen/rp_size_6">-->
 
-                        <ImageView
-                            android:layout_width="@dimen/rp_size_12"
-                            android:layout_height="@dimen/rp_size_12"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="@dimen/rp_size_6"
-                            android:layout_marginTop="@dimen/rp_size_6"
-                            android:layout_marginEnd="@dimen/rp_size_4"
-                            android:layout_marginBottom="@dimen/rp_size_6"
-                            android:src="@drawable/rp_ic_copy_filled"
-                            tools:ignore="ContentDescription" />
+<!--                        <ImageView-->
+<!--                            android:layout_width="@dimen/rp_size_12"-->
+<!--                            android:layout_height="@dimen/rp_size_12"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:layout_marginStart="@dimen/rp_size_6"-->
+<!--                            android:layout_marginTop="@dimen/rp_size_6"-->
+<!--                            android:layout_marginEnd="@dimen/rp_size_4"-->
+<!--                            android:layout_marginBottom="@dimen/rp_size_6"-->
+<!--                            android:src="@drawable/rp_ic_copy_filled"-->
+<!--                            tools:ignore="ContentDescription" />-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginEnd="@dimen/rp_size_6"
-                            android:gravity="center"
-                            android:includeFontPadding="false"
-                            android:text="@string/rp_copy_link"
-                            android:textAppearance="@style/rp_cta_small"
-                            android:textColor="@color/rp_grey_6" />
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:layout_marginEnd="@dimen/rp_size_6"-->
+<!--                            android:gravity="center"-->
+<!--                            android:includeFontPadding="false"-->
+<!--                            android:text="@string/rp_copy_link"-->
+<!--                            android:textAppearance="@style/rp_cta_small"-->
+<!--                            android:textColor="@color/rp_grey_6" />-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
                 </LinearLayout>
 
