@@ -108,64 +108,64 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/rp_size_12"
-                android:layout_marginBottom="@dimen/rp_size_4"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:onClick="@{() -> vm.onNashClick()}"
-                android:background="@drawable/rp_ripple_card">
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/rp_size_12"-->
+<!--                android:layout_marginBottom="@dimen/rp_size_4"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:gravity="center"-->
+<!--                android:onClick="@{() -> vm.onNashClick()}"-->
+<!--                android:background="@drawable/rp_ripple_card">-->
 
-                <ImageView
-                    android:layout_width="@dimen/rp_size_24"
-                    android:layout_height="@dimen/rp_size_24"
-                    android:layout_marginEnd="@dimen/rp_size_8"
-                    android:layout_marginVertical="@dimen/rp_size_8"
-                    android:src="@{vm.nashDrawable}"
-                    app:tint="@color/rp_blue_2"
-                    tools:src="@drawable/rp_ic_radio_filled"
-                    tools:ignore="ContentDescription" />
+<!--                <ImageView-->
+<!--                    android:layout_width="@dimen/rp_size_24"-->
+<!--                    android:layout_height="@dimen/rp_size_24"-->
+<!--                    android:layout_marginEnd="@dimen/rp_size_8"-->
+<!--                    android:layout_marginVertical="@dimen/rp_size_8"-->
+<!--                    android:src="@{vm.nashDrawable}"-->
+<!--                    app:tint="@color/rp_blue_2"-->
+<!--                    tools:src="@drawable/rp_ic_radio_filled"-->
+<!--                    tools:ignore="ContentDescription" />-->
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/rp_size_8"
-                    android:orientation="vertical">
+<!--                <LinearLayout-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="@dimen/rp_size_8"-->
+<!--                    android:orientation="vertical">-->
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content">-->
 
-                        <ImageView
-                            android:layout_width="@dimen/rp_size_72"
-                            android:layout_height="@dimen/rp_size_24"
-                            android:src="@drawable/rp_ic_nach_logo"
-                            tools:ignore="ContentDescription" />
+<!--                        <ImageView-->
+<!--                            android:layout_width="@dimen/rp_size_72"-->
+<!--                            android:layout_height="@dimen/rp_size_24"-->
+<!--                            android:src="@drawable/rp_ic_nach_logo"-->
+<!--                            tools:ignore="ContentDescription" />-->
 
-                        <TextView
-                            android:textAppearance="@style/rp_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/rp_size_8"
-                            android:text="@string/rp_net_banking_debit_card" />
+<!--                        <TextView-->
+<!--                            android:textAppearance="@style/rp_title"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginStart="@dimen/rp_size_8"-->
+<!--                            android:text="@string/rp_net_banking_debit_card" />-->
 
-                    </LinearLayout>
+<!--                    </LinearLayout>-->
 
-                </LinearLayout>
+<!--                </LinearLayout>-->
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
-            <TextView
-                android:textAppearance="@style/rp_cta_small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/rp_size_8"
-                android:layout_marginStart="@dimen/rp_size_8"
-                android:onClick="@{() -> vm.onChargeClick()}"
-                android:text="@string/rp_what_is_upi_auto_pay_nach" />
+<!--            <TextView-->
+<!--                android:textAppearance="@style/rp_cta_small"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/rp_size_8"-->
+<!--                android:layout_marginStart="@dimen/rp_size_8"-->
+<!--                android:onClick="@{() -> vm.onChargeClick()}"-->
+<!--                android:text="@string/rp_what_is_upi_auto_pay_nach" />-->
 
         </LinearLayout>
 

@@ -27,6 +27,7 @@ import com.udharpay.core.networkmanager.domain.entities.GenericSuccessResponse
 import com.udharpay.core.networkmanager.domain.entities.Outcome
 import com.rocketpay.mandate.common.syncmanager.client.SyncManager
 import com.rocketpay.mandate.feature.mandate.presentation.ui.utils.WhatsAppMessageParserUtils
+import com.rocketpay.mandate.feature.product.data.ProductWalletSyncer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.transform
@@ -69,6 +70,7 @@ internal class MandateRepositoryImpl(
             is Outcome.Error -> outcome
             is Outcome.Success -> {
                 SyncManager.getInstance().enqueue(MandateSyncer.TYPE)
+                SyncManager.getInstance().enqueue(ProductWalletSyncer.TYPE)
                 val mandateEntity = mandateDtoToEntMapper.map(outcome.data)
                 Outcome.Success(mandateEntToDomMapper.map(mandateEntity))
             }
@@ -166,6 +168,7 @@ internal class MandateRepositoryImpl(
             is Outcome.Error -> outcome
             is Outcome.Success -> {
                 SyncManager.getInstance().enqueue(MandateSyncer.TYPE)
+                SyncManager.getInstance().enqueue(ProductWalletSyncer.TYPE)
                 mandateDao.deleteMandate(mandateId, true)
                 val mandateEntity = mandateDtoToEntMapper.map(outcome.data)
                 return Outcome.Success(mandateEntToDomMapper.map(mandateEntity))

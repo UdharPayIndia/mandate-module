@@ -133,7 +133,7 @@ internal class MandateAddUM (private val dispatchEvent: (MandateAddEvent) -> Uni
 
     val upiLayoutVisibility = ObservableInt()
 
-    val nashDrawable = ObservableField<Drawable>()
+//    val nashDrawable = ObservableField<Drawable>()
     val upiDrawable = ObservableField<Drawable>()
 
     val generatePaymentButtonEnabled = ObservableBoolean(true)
@@ -207,9 +207,9 @@ internal class MandateAddUM (private val dispatchEvent: (MandateAddEvent) -> Uni
         }
     }
 
-    fun onNashClick() {
-        dispatchEvent(MandateAddEvent.NachClick)
-    }
+//    fun onNashClick() {
+//        dispatchEvent(MandateAddEvent.NachClick)
+//    }
 
     fun onUpiClick() {
         dispatchEvent(MandateAddEvent.UpiClick)
@@ -306,26 +306,28 @@ internal class MandateAddUM (private val dispatchEvent: (MandateAddEvent) -> Uni
             }
 
             when (state.paymentMethod) {
-                PaymentMethod.Nach -> {
-                    nashDrawable.set(
-                        ResourceManager.getInstance().getDrawable(R.drawable.rp_ic_radio_filled)
-                    )
-                    upiDrawable.set(
-                        ResourceManager.getInstance().getDrawable(R.drawable.rp_ic_radio_empty)
-                    )
-                }
+//                PaymentMethod.Nach -> {
+//                    nashDrawable.set(
+//                        ResourceManager.getInstance().getDrawable(R.drawable.rp_ic_radio_filled)
+//                    )
+//                    upiDrawable.set(
+//                        ResourceManager.getInstance().getDrawable(R.drawable.rp_ic_radio_empty)
+//                    )
+//                }
 
                 PaymentMethod.Upi -> {
-                    nashDrawable.set(
-                        ResourceManager.getInstance().getDrawable(R.drawable.rp_ic_radio_empty)
-                    )
+//                    nashDrawable.set(
+//                        ResourceManager.getInstance().getDrawable(R.drawable.rp_ic_radio_empty)
+//                    )
                     upiDrawable.set(
                         ResourceManager.getInstance().getDrawable(R.drawable.rp_ic_radio_filled)
                     )
                 }
 
                 else -> {
-
+                    upiDrawable.set(
+                        ResourceManager.getInstance().getDrawable(R.drawable.rp_ic_radio_empty)
+                    )
                 }
             }
         }

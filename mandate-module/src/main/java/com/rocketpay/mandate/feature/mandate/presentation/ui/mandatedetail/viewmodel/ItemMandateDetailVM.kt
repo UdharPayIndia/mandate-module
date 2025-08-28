@@ -17,7 +17,6 @@ internal class ItemMandateDetailVM(
     val installment: Installment,
     nextInstallmentId: String?,
     val itemClick: (MandateDetailEvent) -> Unit,
-    val showMandateTag: Boolean,
     val manualMandate: Boolean
 ) : RecyclerViewAdapter.RecyclerViewItemViewModel {
 

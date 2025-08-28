@@ -113,8 +113,8 @@ internal class MandateAddStateMachine(
                 next(MandateAddASF.LoadProductWallet)
             }
             is MandateAddEvent.UpdateProductWallet -> {
-                val balanceKeyCount = abs(event.productWallet?.outstanding.double())
-                if(balanceKeyCount > 0){
+                val balanceCount = abs(event.productWallet?.outstanding.double())
+                if(balanceCount != 0.0){
                     next(state.copy(productWallet = event.productWallet))
                 }else{
                     next(state.copy(productWallet = event.productWallet),
@@ -612,14 +612,15 @@ internal class MandateAddStateMachine(
                         val errorPair = getStateBasedOnCollectionDetailError(state)
                         if (errorPair.first) {
                             if (state.paymentMethod != PaymentMethod.Manual) {
-                                if (state.installmentFrequency !is InstallmentFrequency.Adhoc) {
+                                if (errorPair.second.paymentMethod != null
+                                    && state.installmentFrequency !is InstallmentFrequency.Adhoc) {
                                     next(
                                         errorPair.second, MandateAddASF.CheckChargeAndDiscount(
                                             amount = AmountUtils.stringToDouble(errorPair.second.amount),
                                             frequency = errorPair.second.installmentFrequency!!.value,
                                             installments = errorPair.second.installment!!,
                                             chargeBearer = getChargeBearer(errorPair.second.chargeResponse, errorPair.second.isCustomerChargeBearer),
-                                            paymentMethod = errorPair.second.paymentMethod
+                                            paymentMethod = errorPair.second.paymentMethod!!
                                         )
                                     )
                                 } else {
@@ -763,7 +764,7 @@ internal class MandateAddStateMachine(
                         frequency = state.installmentFrequency!!.value,
                         installments = state.installment!!,
                         chargeBearer = getChargeBearer(state.chargeResponse, state.isCustomerChargeBearer),
-                        paymentMethod = state.paymentMethod,
+                        paymentMethod = state.paymentMethod!!,
                         coupon = state.selectedCoupon,
                         referenceId = state.referenceId,
                         referenceType = state.referenceType
@@ -805,7 +806,7 @@ internal class MandateAddStateMachine(
                         amount = AmountUtils.stringToDouble(state.amount),
                         installments = state.installment!!,
                         frequency = state.installmentFrequency!!.value,
-                        paymentMethod = state.paymentMethod,
+                        paymentMethod = state.paymentMethod!!,
                         chargeBearer = getChargeBearer(state.chargeResponse, state.isCustomerChargeBearer),
                         coupon = state.selectedCoupon,
                         isCouponSelectedByUser = true,
@@ -889,7 +890,7 @@ internal class MandateAddStateMachine(
                     state.installment!!,
                     state.startDate!!,
                     state.installmentFrequency!!.value,
-                    state.paymentMethod,
+                    state.paymentMethod!!,
                     state.upiId,
                     amountWithoutCharges,
                     chargeBearer,
@@ -994,7 +995,7 @@ internal class MandateAddStateMachine(
                         ResourceManager.getInstance()
                             .getString(R.string.rp_minimum_installment_required)
                     }"
-            }else if(state.installment > abs(state.productWallet?.outstanding.double())){
+            } else if(state.installment > abs(state.productWallet?.outstanding.double())){
                 installmentError = ResourceManager.getInstance().getString(R.string.rp_not_enough_token_available)
             }
         }
@@ -1197,7 +1198,7 @@ internal class MandateAddStateMachine(
             installmentFrequency: InstallmentFrequency?,
             paymentMethod: PaymentMethod?,
             maxUpiAmountLimit: Int
-        ): Pair<Boolean, PaymentMethod> {
+        ): Pair<Boolean, PaymentMethod?> {
             return if (paymentMethod != PaymentMethod.Manual) {
                 val isUpiEnable = AmountUtils.stringToDouble(amount).div(
                     installment ?: 1
@@ -1205,7 +1206,7 @@ internal class MandateAddStateMachine(
                 val paymentMethod = if (isUpiEnable) {
                     PaymentMethod.Upi
                 } else {
-                    PaymentMethod.Nach
+                    null
                 }
                 Pair(isUpiEnable, paymentMethod)
             } else {

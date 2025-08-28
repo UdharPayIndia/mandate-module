@@ -40,7 +40,7 @@ internal data class MandateAddState(
     val installmentFrequency: InstallmentFrequency? = null,
     val installmentFrequencyError: String? = null,
     val product: MandateProduct = MandateProduct.Default,
-    val paymentMethod: PaymentMethod = PaymentMethod.Upi,
+    val paymentMethod: PaymentMethod? = PaymentMethod.Upi,
     val isGeneratePaymentLinkEnable: Boolean = false,
     val isContactSelected: Boolean = false,
     val installmentFrequencies: List<ItemDialogBottomSheet> = emptyList(),

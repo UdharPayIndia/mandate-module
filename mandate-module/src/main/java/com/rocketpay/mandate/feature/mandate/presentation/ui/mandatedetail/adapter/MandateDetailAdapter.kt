@@ -40,7 +40,7 @@ internal class MandateDetailAdapter : RecyclerViewAdapter() {
             else -> {
                 ItemMandateDetailVM(
                     list[position].any as Installment, nextInstallmentId,
-                    itemClick, showMandateTag, manualMandate
+                    itemClick, manualMandate
                 )
             }
         }

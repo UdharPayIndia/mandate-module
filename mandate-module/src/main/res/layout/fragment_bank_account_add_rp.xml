@@ -198,41 +198,6 @@
             android:layout_gravity="bottom"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="@{vm.isFromOnBoarding() ? View.VISIBLE : View.GONE}"
-                android:background="@color/rp_green_5"
-                android:gravity="center">
-
-                <TextView
-                    android:textAppearance="@style/rp_body_small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textColor="@color/rp_green_1"
-                    android:text="@string/rp_your_data_is_100_safe_with" />
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="@dimen/rp_size_4"
-                    android:layout_margin="@dimen/rp_size_8"
-                    app:cardElevation="@dimen/rp_size_1">
-
-                    <ImageView
-                        android:id="@+id/iv_call_us"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/rp_ic_rocket_safe"
-                        tools:ignore="ContentDescription"/>
-
-                </com.google.android.material.card.MaterialCardView>
-
-            </LinearLayout>
-
             <com.google.android.material.button.MaterialButton
                 style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="match_parent"

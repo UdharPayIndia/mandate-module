@@ -65,7 +65,7 @@ internal class ProductOrderDetailUM(val dispatchEvent: (ProductOrderDetailEvent)
             val quantity = state.productOrder?.benefit?.sp.double().roundToInt()
             when(state.productType){
                 ProductTypeEnum.Mandate.value -> {
-                    iconDrawable.set(ResourceManager.getInstance().getDrawable(R.drawable.rp_ic_rocket_pay_small))
+                    iconDrawable.set(ResourceManager.getInstance().getDrawable(R.drawable.rp_ic_token))
                     setTitle(order, ResourceManager.getInstance().getString(R.string.rp_mandate))
                     quantityText.set(if(quantity > 1){
                         "$quantity ${ResourceManager.getInstance().getString(R.string.rp_mandates)}"
@@ -74,7 +74,7 @@ internal class ProductOrderDetailUM(val dispatchEvent: (ProductOrderDetailEvent)
                     })
                 }
                 ProductTypeEnum.Installment.value -> {
-                    iconDrawable.set(ResourceManager.getInstance().getDrawable(R.drawable.rp_ic_rocket_pay_small))
+                    iconDrawable.set(ResourceManager.getInstance().getDrawable(R.drawable.rp_ic_token))
                     setTitle(order, ResourceManager.getInstance().getString(R.string.rp_token))
                     quantityText.set(if(quantity > 1){
                         "$quantity ${ResourceManager.getInstance().getString(R.string.rp_tokens)}"

@@ -27,11 +27,6 @@ internal class ItemInstallmentListVM(
     val footerTitle = ObservableField<String>()
     val footerDrawable = ObservableField<Drawable>()
     val footerTitleTextColor = ObservableField<ColorStateList>(ResourceManager.getInstance().getColorStateList(R.color.rp_grey_1))
-    val showMandateTag = ObservableBoolean()
-    val showAutoReminderTag = ObservableBoolean()
-    val showSuperKeyTag = ObservableBoolean()
-    val showTag = ObservableBoolean(false)
-    val showTagIconsOnly = ObservableBoolean(false)
 
     init {
         headerTitle.set(installment.customerName)
@@ -68,10 +63,6 @@ internal class ItemInstallmentListVM(
             footerDrawable.set(null)
             footerTitleTextColor.set(ResourceManager.getInstance().getColorStateList(R.color.rp_grey_1))
         }
-
-        showMandateTag.set(false)
-        showAutoReminderTag.set(false)
-        showSuperKeyTag.set(false)
     }
 
     fun onItemClick() {

@@ -168,8 +168,6 @@
                 tools:text="@string/rp_generate_payment_link"
                 android:textAppearance="@style/rp_cta_regular" />
 
-
-
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
