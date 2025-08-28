@@ -18,7 +18,6 @@ import com.rocketpay.mandate.R
 import com.rocketpay.mandate.common.basemodule.common.BackPressListener
 import com.rocketpay.mandate.common.basemodule.common.BaseFragmentListener
 import com.rocketpay.mandate.common.basemodule.common.eventbus.activityresultcallback.FragmentResultBus
-import com.rocketpay.mandate.common.basemodule.common.presentation.ext.double
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
 import com.rocketpay.mandate.common.syncmanager.client.SyncManager
 import com.rocketpay.mandate.feature.bankaccount.data.BankAccountSyncer
