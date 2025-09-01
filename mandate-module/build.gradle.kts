@@ -10,40 +10,40 @@ plugins {
     id("kotlin-parcelize")
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            val versionName = project.findProperty("versionName") as String?
-
-            create<MavenPublication>("release") {
-                groupId = "com.rocketpay"
-                artifactId = "mandate"
-                version = versionName
-
-                afterEvaluate {
-                    from(components["release"])
-                }
-            }
-            create<MavenPublication>("debug") {
-                from(components["debug"])
-                groupId = "com.rocketpay"
-                artifactId = "mandate-debug"
-                version = "$versionName"
-            }
-        }
-        repositories {
-            maven {
-                // GitHub Packages example
-                name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/UdharPayIndia/mandate-module")
-                credentials {
-                    username = project.findProperty("gpr.user") as String?
-                    password = project.findProperty("gpr.key") as String?
-                }
-            }
-        }
-    }
-}
+//afterEvaluate {
+//    publishing {
+//        publications {
+//            val versionName = project.findProperty("versionName") as String?
+//
+//            create<MavenPublication>("release") {
+//                groupId = "com.rocketpay"
+//                artifactId = "mandate"
+//                version = versionName
+//
+//                afterEvaluate {
+//                    from(components["release"])
+//                }
+//            }
+//            create<MavenPublication>("debug") {
+//                from(components["debug"])
+//                groupId = "com.rocketpay"
+//                artifactId = "mandate-debug"
+//                version = "$versionName"
+//            }
+//        }
+//        repositories {
+//            maven {
+//                // GitHub Packages example
+//                name = "GitHubPackages"
+//                url = uri("https://maven.pkg.github.com/UdharPayIndia/mandate-module")
+//                credentials {
+//                    username = project.findProperty("gpr.user") as String?
+//                    password = project.findProperty("gpr.key") as String?
+//                }
+//            }
+//        }
+//    }
+//}
 
 android {
     namespace = "com.rocketpay.mandate"

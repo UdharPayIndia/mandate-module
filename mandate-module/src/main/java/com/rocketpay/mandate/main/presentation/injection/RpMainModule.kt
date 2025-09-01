@@ -9,7 +9,7 @@ import dagger.Provides
 
 
 @Module(includes = [LoginModule::class, KycModule::class])
-open class RpMainModule {
+internal open class RpMainModule {
 
     @Provides
     internal fun provideMainActivityVMFactory(

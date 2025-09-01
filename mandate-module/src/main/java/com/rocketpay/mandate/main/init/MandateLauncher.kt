@@ -2,18 +2,16 @@ package com.rocketpay.mandate.main.init
 
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.rocketpay.mandate.common.basemodule.common.data.cache.DataStore
 import com.rocketpay.mandate.feature.kyc.data.datasource.local.KycDataStore
 import com.rocketpay.mandate.feature.login.data.datasource.local.LoginDataStore
 import com.rocketpay.mandate.feature.mandate.presentation.ui.mandateadd.view.MandateAddFragment
-import com.rocketpay.mandate.feature.mandate.presentation.ui.mandatedetail.view.MandateDetailFragment
+import com.rocketpay.mandate.feature.mandate.presentation.ui.mandatelist.view.MandateListFragment
 import com.rocketpay.mandate.main.database.MandateDatabase
 import com.rocketpay.mandate.main.presentation.view.RpMainActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
 
 object MandateLauncher {
 
@@ -46,6 +44,10 @@ object MandateLauncher {
         intent.putExtra(MandateAddFragment.BUNDLE_NOTE, description)
         intent.putExtra(MandateAddFragment.BUNDLE_AMOUNT, amount)
         context.startActivity(intent)
+    }
+
+    fun getMandateList(context: Context): Fragment {
+        return MandateListFragment.newInstance(null)
     }
 
     suspend fun logoutUser(){
