@@ -7,7 +7,6 @@ import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableFloat
 import androidx.databinding.ObservableInt
-import com.rocketpay.mandate.BuildConfig
 import com.rocketpay.mandate.R
 import com.rocketpay.mandate.feature.mandate.data.entities.ChargeResponseDto
 import com.rocketpay.mandate.feature.mandate.domain.entities.Coupon
@@ -254,7 +253,7 @@ internal class MandateAddUM (private val dispatchEvent: (MandateAddEvent) -> Uni
             if(state.installmentFrequency is InstallmentFrequency.OneTimePayment){
                 startDate.set(ResourceManager.getInstance().getString(R.string.rp_collection_date))
             }else{
-                startDate.set(ResourceManager.getInstance().getString(R.string.rp_start_date))
+                startDate.set(ResourceManager.getInstance().getString(R.string.rp_collection_start_date))
             }
         } else {
             startDate.set(DateUtils.getDate(state.startDate, DateUtils.SLASH_DATE_FORMAT_WITH_TWO_DIGIT_YEAR))

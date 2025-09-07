@@ -181,3 +181,18 @@ internal fun ArrayList<String>.removeIfMatchesString(id: String?): ArrayList<Str
     }
     return this
 }
+
+internal fun String.getFileNameFromUrl(): String? {
+    val lastSlashIndex = this.lastIndexOf('/')
+    if (lastSlashIndex != -1 && lastSlashIndex < this.length - 1) {
+        var fileName = this.substring(lastSlashIndex + 1)
+
+        // Remove query parameters if present
+        val queryParamIndex = fileName.indexOf('?')
+        if (queryParamIndex != -1) {
+            fileName = fileName.substring(0, queryParamIndex)
+        }
+        return fileName
+    }
+    return null
+}

@@ -12,6 +12,8 @@ import com.rocketpay.mandate.feature.product.data.ProductOrderSync
 import com.rocketpay.mandate.feature.product.data.ProductOrderSyncer
 import com.rocketpay.mandate.feature.product.data.ProductWalletSync
 import com.rocketpay.mandate.feature.product.data.ProductWalletSyncer
+import com.rocketpay.mandate.feature.settlements.data.PaymentOrderReportSync
+import com.rocketpay.mandate.feature.settlements.data.PaymentOrderReportSyncer
 import com.rocketpay.mandate.feature.settlements.data.PaymentOrderSync
 import com.rocketpay.mandate.feature.settlements.data.PaymentOrderSyncer
 import com.udharpay.core.syncmanager.domain.repositories.Sync
@@ -26,5 +28,6 @@ internal class SyncRegister: Register<String, Sync>() {
         register(ProductOrderSyncer.TYPE, ProductOrderSync())
         register(ProductWalletSyncer.TYPE, ProductWalletSync())
         register(BusinessPropertySyncer.TYPE, BusinessPropertySync())
+        register(PaymentOrderReportSyncer.TYPE, PaymentOrderReportSync())
     }
 }

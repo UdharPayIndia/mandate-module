@@ -41,6 +41,8 @@ internal sealed class SettlementListEvent(name: String? = null) : BaseEvent(name
     data class UpdateBannerMessage(val message: String): SettlementListEvent()
     data object SettlementBannerClick: SettlementListEvent("settlement_kyc_banner_click")
     data object SettlementAccountBannerClick: SettlementListEvent("settlement_account_banner_click")
+    data object DownloadReportClick: SettlementListEvent()
+
 }
 
 internal sealed class SettlementListASF : AsyncSideEffect {
@@ -64,6 +66,7 @@ internal sealed class SettlementListUSF : UiSideEffect {
     data class OpenSettlementDetails(val settlementId: String): SettlementListUSF()
     data object OpenKyc: SettlementListUSF()
     data object OpenBankAccount: SettlementListUSF()
+    data object OpenDownloadReportScreen: SettlementListUSF()
 }
 
 internal object SettlementListScreen : Screen("settlement_list")

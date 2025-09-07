@@ -7,17 +7,23 @@ import android.view.WindowManager
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.rocketpay.mandate.R
 import com.rocketpay.mandate.common.basemodule.common.BackPressListener
 import com.rocketpay.mandate.common.basemodule.common.BaseFragmentListener
 import com.rocketpay.mandate.common.basemodule.common.eventbus.activityresultcallback.FragmentResultBus
+import com.rocketpay.mandate.common.basemodule.common.presentation.ext.ifNullOrEmpty
+import com.rocketpay.mandate.common.basemodule.common.presentation.progressdialog.ProgressDialogStatus
+import com.rocketpay.mandate.common.basemodule.common.presentation.utils.UiUtils
+import com.rocketpay.mandate.common.mvistatemachine.contract.collectIn
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
 import com.rocketpay.mandate.common.syncmanager.client.SyncManager
 import com.rocketpay.mandate.feature.bankaccount.data.BankAccountSyncer
@@ -26,6 +32,7 @@ import com.rocketpay.mandate.feature.bankaccount.presentation.ui.bankaccountadd.
 import com.rocketpay.mandate.feature.bankaccount.presentation.ui.bankaccountlist.statemachine.BankAccountListScreen
 import com.rocketpay.mandate.feature.bankaccount.presentation.ui.bankaccountlist.view.BankAccountListFragment
 import com.rocketpay.mandate.feature.business.data.BusinessPropertySyncer
+import com.rocketpay.mandate.feature.image.presentation.utils.FileUtils
 import com.rocketpay.mandate.feature.installment.presentation.ui.paymentSchedule.main.statemachine.PaymentTrackerMainScreen
 import com.rocketpay.mandate.feature.installment.presentation.ui.paymentSchedule.main.view.PaymentTrackerMainFragment
 import com.rocketpay.mandate.feature.kyc.data.KycSyncer
@@ -86,11 +93,11 @@ internal class RpMainActivity : AppCompatActivity(), BaseFragmentListener {
         registerBackStackChangedListener()
         initSync()
         initValueFromRemoteConfig {
-            handleAppLock()
             if (savedInstanceState == null) {
                 launchFragment()
             }
         }
+        initListener()
     }
 
     private fun retrieveExtras(){
@@ -139,9 +146,6 @@ internal class RpMainActivity : AppCompatActivity(), BaseFragmentListener {
         SyncManager.getInstance().enqueue(ProductWalletSyncer.TYPE)
         SyncManager.getInstance().enqueue(ProductOrderSyncer.TYPE)
         SyncManager.getInstance().enqueue(BusinessPropertySyncer.TYPE)
-    }
-
-    private fun handleAppLock() {
     }
 
     private fun launchFragment() {
@@ -199,6 +203,63 @@ internal class RpMainActivity : AppCompatActivity(), BaseFragmentListener {
             }
         }
     }
+
+    private fun initListener() {
+        GlobalState.isReportStatus.collectIn(lifecycleScope){ data ->
+            when(data.first){
+                ProgressDialogStatus.Progress -> {
+                    if(UiUtils.isActivityInCorrectState(this)) {
+                        Snackbar.make(
+                            findViewById(android.R.id.content),
+                            data.second.ifNullOrEmpty(
+                                ResourceManager.getInstance()
+                                    .getString(R.string.rp_download_report_has_been_initiated)
+                            ),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
+                    GlobalState.isReportStatus.value = ProgressDialogStatus.Init to null
+                }
+                ProgressDialogStatus.Error -> {
+                    if(UiUtils.isActivityInCorrectState(this)) {
+                        Snackbar.make(
+                            findViewById(android.R.id.content),
+                            data.second.ifNullOrEmpty(
+                                ResourceManager.getInstance()
+                                    .getString(R.string.rp_report_generation_failed)
+                            ),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                    }
+                    GlobalState.isReportStatus.value = ProgressDialogStatus.Init to null
+                }
+                ProgressDialogStatus.Success -> {
+                    if(UiUtils.isActivityInCorrectState(this)) {
+                        val snackbar = Snackbar.make(
+                            findViewById(android.R.id.content),
+                            ResourceManager.getInstance()
+                                .getString(R.string.rp_report_generated_successfully),
+                            Snackbar.LENGTH_SHORT
+                        )
+                        snackbar.setAction(
+                            ResourceManager.getInstance().getString(R.string.rp_open),
+                            {
+                                data.second?.let {
+                                    FileUtils.openFile(this, it.toUri())
+                                }
+                            })
+                        snackbar.show()
+
+                    }
+                    GlobalState.isReportStatus.value = ProgressDialogStatus.Init to null
+                }
+                else ->{
+
+                }
+            }
+        }
+    }
+
 
     private fun registerBackStackChangedListener() {
         supportFragmentManager.addOnBackStackChangedListener {

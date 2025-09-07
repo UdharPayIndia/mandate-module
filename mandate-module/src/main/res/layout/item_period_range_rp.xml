@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.settlements.presentation.ui.report.viewmodel.ItemPeriodRangeVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?attr/selectableItemBackground"
+        android:onClick="@{() -> vm.onItemClick()}"
+        android:orientation="horizontal"
+        android:padding="@dimen/rp_size_12">
+
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@{vm.radioDrawable}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/rp_blue_2"
+            tools:src="@drawable/rp_ic_radio_empty" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/rp_size_12"
+            android:layout_marginEnd="@dimen/rp_size_12"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{vm.titleText}"
+            android:textAppearance="@style/rp_body_regular_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_logo"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Rahulkumar" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_from"
+            style="@style/RpMyTextInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/rp_size_8"
+            android:layout_marginBottom="@dimen/rp_size_20"
+            android:hint="@string/rp_start_date"
+            android:visibility="@{vm.fromToVisibility ? View.VISIBLE : View.GONE}"
+            app:errorIconDrawable="@null"
+            app:endIconDrawable="@drawable/rp_ic_calendar"
+            app:endIconTint="@color/rp_grey_3"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name"
+            app:layout_constraintStart_toStartOf="@+id/tv_name"
+            app:layout_constraintEnd_toStartOf="@+id/til_to">
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/RpMyCompactEditText"
+                android:layout_width="match_parent"
+                android:inputType="textCapWords|textNoSuggestions"
+                android:focusableInTouchMode="false"
+                android:focusable="false"
+                android:onClick="@{() -> vm.onFromDateClick()}"
+                android:text="@{vm.fromText}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_to"
+            style="@style/RpMyTextInput"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/rp_size_8"
+            android:layout_marginBottom="@dimen/rp_size_20"
+            android:visibility="@{vm.fromToVisibility ? View.VISIBLE : View.GONE}"
+            android:layout_marginStart="@dimen/rp_size_16"
+            android:hint="@string/rp_end_date"
+            app:errorIconDrawable="@null"
+            app:endIconDrawable="@drawable/rp_ic_calendar"
+            app:endIconTint="@color/rp_grey_3"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name"
+            app:layout_constraintStart_toEndOf="@+id/til_from"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/RpMyCompactEditText"
+                android:layout_width="match_parent"
+                android:inputType="textCapWords|textNoSuggestions"
+                android:focusableInTouchMode="false"
+                android:focusable="false"
+                android:onClick="@{() -> vm.onToDateClick()}"
+                android:text="@{vm.toText}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

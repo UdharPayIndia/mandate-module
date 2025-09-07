@@ -8,6 +8,7 @@ import com.rocketpay.mandate.feature.settlements.presentation.ui.detail.statemac
 import com.rocketpay.mandate.feature.settlements.presentation.ui.list.statemachine.SettlementListStateMachine
 import com.rocketpay.mandate.feature.settlements.presentation.ui.main.statemachine.SettlementMainStateMachine
 import com.rocketpay.mandate.feature.property.domain.usecase.PropertyUseCase
+import com.rocketpay.mandate.feature.settlements.presentation.ui.report.statemachine.DownloadReportStateMachine
 
 @Suppress("UNCHECKED_CAST")
 internal open class SettlementStateMachineFactory(
@@ -21,6 +22,7 @@ internal open class SettlementStateMachineFactory(
             modelClass.isAssignableFrom(SettlementMainStateMachine::class.java) -> SettlementMainStateMachine(paymentOrderUseCase) as T
             modelClass.isAssignableFrom(SettlementListStateMachine::class.java) -> SettlementListStateMachine(paymentOrderUseCase, propertyUseCase) as T
             modelClass.isAssignableFrom(SettlementDetailStateMachine::class.java) -> SettlementDetailStateMachine(paymentOrderUseCase, installmentUseCase) as T
+            modelClass.isAssignableFrom(DownloadReportStateMachine::class.java) -> DownloadReportStateMachine() as T
             else -> throw IllegalArgumentException("ViewModel Not Found")
         }
     }

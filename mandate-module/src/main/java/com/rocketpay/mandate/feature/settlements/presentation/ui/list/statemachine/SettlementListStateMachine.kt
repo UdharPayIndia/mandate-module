@@ -129,6 +129,9 @@ internal class SettlementListStateMachine(
             is SettlementListEvent.SettlementAccountBannerClick -> {
                 next(SettlementListUSF.OpenBankAccount)
             }
+            is SettlementListEvent.DownloadReportClick -> {
+                next(SettlementListUSF.OpenDownloadReportScreen)
+            }
         }
     }
 

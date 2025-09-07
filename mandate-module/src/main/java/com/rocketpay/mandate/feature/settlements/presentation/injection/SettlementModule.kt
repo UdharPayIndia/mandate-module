@@ -14,12 +14,18 @@ import com.rocketpay.mandate.feature.settlements.domain.repositories.PaymentOrde
 import com.rocketpay.mandate.feature.settlements.domain.usecase.PaymentOrderUseCase
 import com.rocketpay.mandate.feature.settlements.presentation.ui.detail.adapter.SettledInstallmentListAdapter
 import com.rocketpay.mandate.feature.settlements.presentation.ui.list.adapter.SettlementListAdapter
+import com.rocketpay.mandate.feature.settlements.presentation.ui.report.adpater.PeriodRangeAdapter
 import com.rocketpay.mandate.main.database.MandateDatabase
 import dagger.Module
 import dagger.Provides
 
 @Module(includes = [PropertyModule::class, InstallmentModule::class])
 internal open class SettlementModule {
+
+    @Provides
+    fun providePeriodRangeAdapter(): PeriodRangeAdapter {
+        return PeriodRangeAdapter()
+    }
 
     @Provides
     internal fun provideSettledInstallmentListAdapter(): SettledInstallmentListAdapter {

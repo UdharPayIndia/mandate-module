@@ -16,6 +16,7 @@ import com.rocketpay.mandate.feature.settlements.domain.entities.PaymentOrderTyp
 import com.rocketpay.mandate.feature.settlements.domain.repositories.PaymentOrderRepository
 import com.udharpay.core.networkmanager.domain.entities.Outcome
 import com.rocketpay.mandate.common.jsonconverter.JsonConverter
+import com.rocketpay.mandate.feature.settlements.data.entities.PaymentOrderReportDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.transform
 
@@ -42,6 +43,10 @@ internal class PaymentOrderRepositoryImpl(
             paymentOrderDao.updatePaymentOrderReference(paymentOrderId, referenceString)
         }
         return outcome
+    }
+
+    override suspend fun fetchPaymentOrderReport(fromTimeStamp: Long, toTimeStamp: Long): Outcome<PaymentOrderReportDto>{
+        return paymentOrderService.fetchPaymentOrderReport(fromTimeStamp, toTimeStamp)
     }
 
     override suspend fun getPaymentOrdersCorrespondsToRefund(paymentOrderType: String, paymentOrderIds: List<String>): List<String>{

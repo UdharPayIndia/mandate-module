@@ -9,6 +9,8 @@ import com.rocketpay.mandate.feature.settlements.presentation.ui.list.viewmodel.
 import com.rocketpay.mandate.common.basemodule.common.presentation.adapter.RecyclerViewAdapter
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.DateUtils
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
+import com.rocketpay.mandate.feature.settlements.presentation.ui.list.viewmodel.ItemSettlementHeaderVM
+import kotlin.collections.get
 
 internal class SettlementListAdapter : RecyclerViewAdapter() {
 
@@ -25,7 +27,7 @@ internal class SettlementListAdapter : RecyclerViewAdapter() {
     override fun getItemViewType(position: Int): Int {
         return when(list[position].viewType){
             VIEW_TYPE_DATE -> {
-                R.layout.item_date_rp
+                R.layout.item_settlement_header_rp
             }
             VIEW_TYPE_END -> {
                 R.layout.item_end_of_list_rp
@@ -42,7 +44,7 @@ internal class SettlementListAdapter : RecyclerViewAdapter() {
     override fun getViewModel(position: Int): RecyclerViewItemViewModel {
         return when(list[position].viewType){
             VIEW_TYPE_DATE -> {
-                ItemDateListVM(list[position].any as String, false)
+                ItemSettlementHeaderVM(list[position].any as String, position == 0, itemClick)
             }
             VIEW_LOADING -> {
                 ItemDateListVM("", true)

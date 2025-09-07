@@ -26,9 +26,12 @@ import com.rocketpay.mandate.feature.settlements.presentation.ui.list.statemachi
 import com.rocketpay.mandate.feature.settlements.presentation.ui.list.statemachine.SettlementListUSF
 import com.rocketpay.mandate.feature.settlements.presentation.ui.list.viewmodel.SettlementListUM
 import com.rocketpay.mandate.common.basemodule.common.presentation.adapter.DividerItemDecoration
+import com.rocketpay.mandate.common.basemodule.common.presentation.ext.showDialogFragment
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.ShowUtils
 import com.rocketpay.mandate.common.basemodule.main.view.BaseMainFragment
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
+import com.rocketpay.mandate.feature.settlements.presentation.ui.report.statemachine.DownloadReportScreen
+import com.rocketpay.mandate.feature.settlements.presentation.ui.report.view.DownloadReportFragment
 import javax.inject.Inject
 
 internal class SettlementListFragment : BaseMainFragment<SettlementListEvent, SettlementListState, SettlementListUSF>(){
@@ -138,6 +141,9 @@ internal class SettlementListFragment : BaseMainFragment<SettlementListEvent, Se
                     BankAccountAddFragment.newInstance(bundle),
                     fragmentTag = BankAccountAddScreen.name
                 )
+            }
+            is SettlementListUSF.OpenDownloadReportScreen -> {
+                showDialogFragment(DownloadReportScreen.name, DownloadReportFragment.newInstance(null))
             }
         }
     }

@@ -2,6 +2,7 @@ package com.rocketpay.mandate.feature.settlements.data.datasource.remote
 
 import com.rocketpay.mandate.feature.settlements.data.entities.PaymentOrderDto
 import com.rocketpay.mandate.feature.settlements.data.entities.PaymentOrderReferenceDto
+import com.rocketpay.mandate.feature.settlements.data.entities.PaymentOrderReportDto
 import com.rocketpay.mandate.feature.settlements.data.entities.SettlementBannerDto
 import com.udharpay.core.networkmanager.data.NetworkRequestBuilder
 import com.udharpay.core.networkmanager.data.get
@@ -32,6 +33,15 @@ internal class PaymentOrderService {
             .subUrl("/common/payment-orders/v1/batch-maps")
             .queryParameter("entity_type", "PAYOUT_ORDER")
             .queryParameter("entity_id", settlementId)
+            .build()
+            .get()
+    }
+
+    suspend fun fetchPaymentOrderReport(fromTimeStamp: Long, toTimeStamp: Long): Outcome<PaymentOrderReportDto> {
+        return NetworkRequestBuilder()
+            .subUrl("/common/party/v1/report/SETTLEMENT")
+            .queryParameter("from", fromTimeStamp.toString())
+            .queryParameter("to", toTimeStamp.toString())
             .build()
             .get()
     }

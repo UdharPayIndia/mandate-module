@@ -79,7 +79,7 @@
                             android:text="@{vm.dueDate}"
                             android:textAppearance="@style/rp_cta_regular"
                             android:textColor="@color/rp_blue_2"
-                            tools:text="@string/rp_start_date" />
+                            tools:text="@string/rp_collection_start_date" />
 
                     </LinearLayout>
 

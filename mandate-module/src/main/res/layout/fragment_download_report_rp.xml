@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.settlements.presentation.ui.report.viewmodel.DownloadReportUM"/>
+    </data>
+    <LinearLayout
+        android:id="@+id/lyt_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintHeight_max="@dimen/rp_size_600"
+        android:background="@drawable/rp_background_card_radius_top"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:textAppearance="@style/rp_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/rp_size_16"
+            android:layout_marginHorizontal="@dimen/rp_size_16"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/black"
+            android:gravity="start"
+            android:text="@string/rp_download_report" />
+
+        <TextView
+            android:textAppearance="@style/rp_body_small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/rp_size_16"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/black"
+            android:gravity="start"
+            android:text="@string/rp_select_report_period" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/rp_size_12"
+            android:padding="@dimen/rp_size_8"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            tools:itemCount="3"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_period_range_rp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_marginHorizontal="@dimen/rp_size_16"
+            android:layout_marginTop="@dimen/rp_size_16"
+            android:layout_marginBottom="@dimen/rp_size_16"
+            android:minHeight="@dimen/rp_size_48"
+            style="@style/Widget.MaterialComponents.Button"
+            android:textAppearance="@style/rp_cta_regular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:gravity="center"
+            android:onClick="@{() -> vm.onDownloadClick()}"
+            android:text="@string/rp_download"
+            android:textColor="@color/rp_grey_6"
+            android:background="@drawable/rp_background_card_4" />
+
+    </LinearLayout>
+</layout>

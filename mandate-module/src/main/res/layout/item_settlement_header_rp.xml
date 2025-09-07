@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.Gravity"/>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.settlements.presentation.ui.list.viewmodel.ItemSettlementHeaderVM"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/rp_size_16"
+        android:paddingTop="@dimen/rp_size_20"
+        android:paddingBottom="@dimen/rp_size_6"
+        android:orientation="horizontal"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:background="@color/rp_grey_8">
+
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:textAppearance="@style/rp_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:gravity="start"
+            android:text="@{vm.dateText}"
+            tools:text="Rahulkumar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_download"/>
+
+        <TextView
+            android:id="@+id/tv_download"
+            android:textAppearance="@style/rp_cta_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="end|center_vertical"
+            android:visibility="@{vm.downloadVisibility  ?View.VISIBLE : View.GONE}"
+            android:drawableStart="@drawable/rp_ic_download_report"
+            android:drawablePadding="@dimen/rp_size_4"
+            android:onClick="@{() -> vm.onDownloadReportClick()}"
+            android:text="@string/rp_download_report_underline"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_name"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>
