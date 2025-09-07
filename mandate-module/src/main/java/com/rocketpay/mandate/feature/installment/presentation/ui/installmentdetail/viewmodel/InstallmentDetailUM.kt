@@ -109,6 +109,22 @@ internal class InstallmentDetailUM(val dispatchEvent: (InstallmentDetailEvent) -
         }
     )
 
+    val retryInstallmentConfirmDialogVM = ProgressDialogVM(
+        {
+            when(it) {
+                ProgressDialogStatus.Init -> dispatchEvent(InstallmentDetailEvent.RetryInstallmentConfirmed)
+                ProgressDialogStatus.Progress -> {
+                    // No action required
+                }
+                ProgressDialogStatus.Success -> dispatchEvent(InstallmentDetailEvent.RetryInstallmentDismiss)
+                ProgressDialogStatus.Error -> dispatchEvent(InstallmentDetailEvent.RetryInstallmentDismiss)
+            }
+        },
+        {
+            dispatchEvent(InstallmentDetailEvent.RetryInstallmentDismiss)
+        }
+    )
+
     fun onTransactionIdCopyClick() {
         dispatchEvent(InstallmentDetailEvent.TransactionIdCopyClick(ResourceManager.getInstance().getString(R.string.rp_transaction_id_copied), utr.get() ?: ""))
     }

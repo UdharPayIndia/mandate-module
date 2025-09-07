@@ -305,7 +305,6 @@
                                     tools:background="@drawable/rp_background_card_cta"
                                     android:onClick="@{() -> vm.onRetryClick()}"
                                     android:orientation="horizontal"
-                                    android:clickable="@{vm.retryEnable}"
                                     android:padding="@dimen/rp_size_8">
 
                                     <ImageView
@@ -335,7 +334,6 @@
                                     android:background="@{vm.skipCtaBackground}"
                                     tools:background="@drawable/rp_background_card_cta"
                                     android:onClick="@{() -> vm.onSkipClick()}"
-                                    android:clickable="@{vm.skipEnable}"
                                     android:orientation="horizontal"
                                     android:padding="@dimen/rp_size_8">
 

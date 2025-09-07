@@ -6,7 +6,6 @@ import com.rocketpay.mandate.feature.installment.presentation.ui.installmentupda
 import com.rocketpay.mandate.feature.installment.presentation.ui.paymentSchedule.list.view.PaymentTrackerListFragment
 import com.rocketpay.mandate.feature.installment.presentation.ui.paymentSchedule.main.view.PaymentTrackerMainFragment
 import com.rocketpay.mandate.feature.installment.presentation.ui.penalty.view.EnterPenaltyAmountFragment
-import com.rocketpay.mandate.feature.installment.presentation.ui.retry.view.SelectRetryPeriodFragment
 import com.rocketpay.mandate.feature.mandate.data.MandateSyncer
 import com.rocketpay.mandate.feature.mandate.presentation.ui.mandateadd.view.MandateAddFragment
 import com.rocketpay.mandate.feature.mandate.presentation.ui.mandatedetail.view.MandateDetailFragment
@@ -28,7 +27,6 @@ internal interface MandateComponent {
 
     fun inject(mandateAddFragment: MandateAddFragment)
     fun inject(enterPenaltyAmountFragment: EnterPenaltyAmountFragment)
-    fun inject(selectRetryPeriodFragment: SelectRetryPeriodFragment)
 
     object Initializer {
 

@@ -19,91 +19,107 @@
         android:clipChildren="false"
         android:clipToPadding="false">
 
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:id="@+id/scrollView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/rp_grey_6"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:descendantFocusability="beforeDescendants"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:paddingBottom="@dimen/rp_size_16">
+            android:orientation="vertical">
 
-            <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/app_bar"
+            <include
+                style="@style/rp_surface_1"
+                layout="@layout/layout_mandate_detail_summary_rp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/rp_grey_6"
-                android:fitsSystemWindows="true"
-                app:elevation="@dimen/rp_size_0"
-                app:expanded="true">
+                app:vm="@{vm}" />
 
-                <com.google.android.material.appbar.CollapsingToolbarLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clipChildren="false"
-                    android:clipToPadding="false"
-                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                    app:statusBarScrim="@color/rp_grey_6">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <include
-                            android:id="@+id/lyt_summary"
-                            style="@style/rp_surface_1"
-                            layout="@layout/layout_mandate_detail_summary_rp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:vm="@{vm}" />
-
-                        <include
-                            android:id="@+id/lyt_other"
-                            layout="@layout/layout_mandate_other_details_rp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/rp_size_8"
-                            app:vm="@{vm}" />
-
-                    </LinearLayout>
-
-                </com.google.android.material.appbar.CollapsingToolbarLayout>
-            </com.google.android.material.appbar.AppBarLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:id="@+id/scrollView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="@dimen/rp_size_8"
                 android:background="@color/rp_grey_6"
                 android:clipChildren="false"
                 android:clipToPadding="false"
-                android:orientation="vertical"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                android:descendantFocusability="beforeDescendants"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:paddingBottom="@dimen/rp_size_16">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_list"
-                    style="@style/rp_surface_1"
+                <com.google.android.material.appbar.AppBarLayout
+                    android:id="@+id/app_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/rp_grey_6"
+                    android:fitsSystemWindows="true"
+                    app:elevation="@dimen/rp_size_0"
+                    app:expanded="true">
+
+                    <com.google.android.material.appbar.CollapsingToolbarLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipChildren="false"
+                        android:clipToPadding="false"
+                        app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                        app:statusBarScrim="@color/rp_grey_6">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <include
+                                android:id="@+id/lyt_summary"
+                                style="@style/rp_surface_1"
+                                android:layout_margin="@dimen/rp_size_8"
+                                layout="@layout/layout_mandate_detail_qr_rp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:vm="@{vm}" />
+
+                            <include
+                                android:id="@+id/lyt_other"
+                                layout="@layout/layout_mandate_other_details_rp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/rp_size_8"
+                                app:vm="@{vm}" />
+
+                        </LinearLayout>
+
+                    </com.google.android.material.appbar.CollapsingToolbarLayout>
+                </com.google.android.material.appbar.AppBarLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_margin="@dimen/rp_size_8"
+                    android:background="@color/rp_grey_6"
                     android:clipChildren="false"
                     android:clipToPadding="false"
-                    android:padding="@dimen/rp_size_8"
-                    android:visibility="@{vm.installmentListVisibility}"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
-                    tools:listitem="@layout/item_mandate_detail_rp" />
+                    android:orientation="vertical"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_list"
+                        style="@style/rp_surface_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clipChildren="false"
+                        android:clipToPadding="false"
+                        android:padding="@dimen/rp_size_8"
+                        android:visibility="@{vm.installmentListVisibility}"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0"
+                        tools:listitem="@layout/item_mandate_detail_rp" />
 
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/efb_add_customer"

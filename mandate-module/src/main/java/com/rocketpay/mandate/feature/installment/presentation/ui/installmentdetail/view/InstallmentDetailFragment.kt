@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import com.rocketpay.mandate.R
 import com.rocketpay.mandate.databinding.FragmentInstallmentDetailRpBinding
 import com.rocketpay.mandate.feature.bankaccount.presentation.ui.bankaccountadd.statemachine.BankAccountAddScreen
@@ -24,8 +25,6 @@ import com.rocketpay.mandate.feature.installment.presentation.ui.installmentupda
 import com.rocketpay.mandate.feature.installment.presentation.ui.installmentupdate.view.InstallmentUpdateFragment
 import com.rocketpay.mandate.feature.installment.presentation.ui.penalty.statemachine.EnterPenaltyAmountScreen
 import com.rocketpay.mandate.feature.installment.presentation.ui.penalty.view.EnterPenaltyAmountFragment
-import com.rocketpay.mandate.feature.installment.presentation.ui.retry.statemachine.SelectRetryPeriodScreen
-import com.rocketpay.mandate.feature.installment.presentation.ui.retry.view.SelectRetryPeriodFragment
 import com.rocketpay.mandate.feature.kyc.presentation.ui.kyc.statemachine.KycScreen
 import com.rocketpay.mandate.feature.kyc.presentation.ui.kyc.view.KycFragment
 import com.rocketpay.mandate.feature.mandate.presentation.injection.MandateComponent
@@ -36,6 +35,8 @@ import com.rocketpay.mandate.feature.settlements.presentation.ui.main.view.Settl
 import com.rocketpay.mandate.common.basemodule.common.eventbus.activityresultcallback.FragmentResultBus
 import com.rocketpay.mandate.common.basemodule.common.presentation.ext.showDialogFragment
 import com.rocketpay.mandate.common.basemodule.common.presentation.progressdialog.ProgressDialog
+import com.rocketpay.mandate.common.basemodule.common.presentation.utils.DatePickerUtils
+import com.rocketpay.mandate.common.basemodule.common.presentation.utils.DateUtils
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.ShareUtils
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.ShowUtils
 import com.rocketpay.mandate.common.basemodule.main.view.BaseMainFragment
@@ -52,6 +53,7 @@ internal class InstallmentDetailFragment : BaseMainFragment<InstallmentDetailEve
     internal lateinit var mandateStateMachineFactory: InstallmentStateMachineFactory
     private val skipInstallmentConfirmationDialog by lazy { ProgressDialog(requireContext(), vm.skipInstallmentConfirmationDialogVM) }
     private val progressDialog by lazy { ProgressDialog(requireContext(), vm.progressDialogVM) }
+    private val retryInstallmentConfirmDialog by lazy { ProgressDialog(requireContext(), vm.retryInstallmentConfirmDialogVM) }
 
     companion object {
         const val MANDATE_ID = "mandate_id"
@@ -132,6 +134,9 @@ internal class InstallmentDetailFragment : BaseMainFragment<InstallmentDetailEve
             is InstallmentDetailUSF.ShowToast -> {
                 progressDialog.dismiss()
                 ShowUtils.shortToast(requireContext(), sideEffect.message)
+            }
+            is InstallmentDetailUSF.ShowSnackBar -> {
+                Snackbar.make(binding.root, sideEffect.message, Snackbar.LENGTH_SHORT).show()
             }
             is InstallmentDetailUSF.Copy -> {
                 ShareUtils.copyToClipboard(requireContext(), sideEffect.link)
@@ -217,13 +222,31 @@ internal class InstallmentDetailFragment : BaseMainFragment<InstallmentDetailEve
                 val fragment = EnterPenaltyAmountFragment.newInstance(bundle)
                 showDialogFragment(EnterPenaltyAmountScreen.name, fragment)
             }
-            is InstallmentDetailUSF.OpenSelectRetryDateBottomSheet -> {
-                val bundle = Bundle()
-                bundle.putString(SelectRetryPeriodFragment.BUNDLE_MANDATE_ID, sideEffect.mandateId)
-                bundle.putString(SelectRetryPeriodFragment.BUNDLE_INSTALLMENT_ID, sideEffect.installmentId)
-                val fragment = SelectRetryPeriodFragment.newInstance(bundle)
-                showDialogFragment(SelectRetryPeriodScreen.name, fragment)
-
+            is InstallmentDetailUSF.OpenRetryDateSelection -> {
+                val minDate = DateUtils.getDate(DateUtils.addDay(System.currentTimeMillis(), 1))
+                DatePickerUtils.showDatePicker(requireContext(), minDate = minDate, addRemoveButton = false) { _, time ->
+                    stateMachine.dispatchEvent(InstallmentDetailEvent.RetryDateSelected(time))
+                }
+            }
+            is InstallmentDetailUSF.ShowRetryConfirmation -> {
+                vm.retryInstallmentConfirmDialogVM.setInitState(
+                    headerIcon = sideEffect.headerDrawable,
+                    headerBackground = sideEffect.headerBackground,
+                    titleText = SpannableString(sideEffect.title),
+                    detailText = sideEffect.detail,
+                    actionText = sideEffect.actionText,
+                    secondaryBtnText = sideEffect.secondaryBtnText
+                )
+                retryInstallmentConfirmDialog.show()
+            }
+            is InstallmentDetailUSF.RetryInstallmentInProgress -> {
+                vm.retryInstallmentConfirmDialogVM.setProgressState(sideEffect.title, sideEffect.detail)
+            }
+            is InstallmentDetailUSF.UnableToRetryInstallment -> {
+                vm.retryInstallmentConfirmDialogVM.setErrorState(sideEffect.title, sideEffect.detail)
+            }
+            is InstallmentDetailUSF.DismissRetryConfirmDialog -> {
+                retryInstallmentConfirmDialog.dismiss()
             }
         }
     }

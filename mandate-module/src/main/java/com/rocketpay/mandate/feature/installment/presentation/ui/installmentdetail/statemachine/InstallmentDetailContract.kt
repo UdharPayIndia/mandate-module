@@ -24,7 +24,8 @@ internal data class InstallmentDetailState(
     val installmentPenalty: InstallmentPenalty? = null,
     val isManual: Boolean = false,
     val settlementBannerMessage: String = "",
-    val paymentOrder: PaymentOrder? = null
+    val paymentOrder: PaymentOrder? = null,
+    val retryDate: Long? = null
 ) : BaseState(InstallmentDetailScreen)
 
 
@@ -68,6 +69,15 @@ internal sealed class InstallmentDetailEvent(name: String? = null) : BaseEvent(n
     data object DismissLoader: InstallmentDetailEvent()
     data class ActionFailed(val errorMessage: String): InstallmentDetailEvent()
     data object ActionSuccess: InstallmentDetailEvent()
+    data class RetryDateSelected(val retryDate: Long?) : InstallmentDetailEvent()
+    data object RetryInstallmentConfirmed: InstallmentDetailEvent("installment_retry_confirm_click")
+    data object RetryInstallmentDismiss: InstallmentDetailEvent()
+    data class RetryInstallmentFailed(
+        val errorCode: String,
+        val errorMessage: String
+    ): InstallmentDetailEvent()
+    data object RetryInstallmentSucceed: InstallmentDetailEvent("installment_retried")
+
 }
 
 
@@ -81,6 +91,11 @@ internal sealed class InstallmentDetailASF : AsyncSideEffect {
     data object LoadSettlementBannerInfo: InstallmentDetailASF()
     data class LoadPenaltyAndPaymentOrder(val installment: Installment?): InstallmentDetailASF()
     data class RefreshInstallment(val installmentId: String): InstallmentDetailASF()
+    data class RetryInstallment(
+        val mandateId: String,
+        val installmentId: String,
+        val retryDate: Long
+    ): InstallmentDetailASF()
 }
 
 
@@ -92,6 +107,7 @@ internal sealed class InstallmentDetailUSF : UiSideEffect {
                               val dueDate: Long,
                               val isMerchantCollected: Boolean): InstallmentDetailUSF()
     data class ShowToast(val message: String) : InstallmentDetailUSF()
+    data class ShowSnackBar(val message: String): InstallmentDetailUSF()
     data class Copy(val message: String, val link: String) : InstallmentDetailUSF()
     object ContactUsClick: InstallmentDetailUSF()
 
@@ -126,7 +142,25 @@ internal sealed class InstallmentDetailUSF : UiSideEffect {
     data class ShowError(val header: String, val message: String): InstallmentDetailUSF()
     data object DismissLoader: InstallmentDetailUSF()
     data class OpenEnterPenaltyBottomSheet(val mandateId: String, val installmentId: String, val installmentAmount: Double): InstallmentDetailUSF()
-    data class OpenSelectRetryDateBottomSheet(val mandateId: String, val installmentId: String): InstallmentDetailUSF()
+    data object OpenRetryDateSelection: InstallmentDetailUSF()
+    data class ShowRetryConfirmation(
+        val headerDrawable: Drawable,
+        val headerBackground: Drawable,
+        val title: String,
+        val detail: String,
+        val actionText: String,
+        val secondaryBtnText: String
+    ): InstallmentDetailUSF()
+    data class RetryInstallmentInProgress(
+        val title: String,
+        val detail: String
+    ): InstallmentDetailUSF()
+    data class UnableToRetryInstallment(
+        val title: String,
+        val detail: String
+    ): InstallmentDetailUSF()
+    data object DismissRetryConfirmDialog: InstallmentDetailUSF()
+
 }
 
 internal object InstallmentDetailScreen : Screen("installment_detail")

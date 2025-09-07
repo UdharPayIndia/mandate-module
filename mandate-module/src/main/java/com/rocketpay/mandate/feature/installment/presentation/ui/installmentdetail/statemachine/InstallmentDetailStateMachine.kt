@@ -1,25 +1,26 @@
 package com.rocketpay.mandate.feature.installment.presentation.ui.installmentdetail.statemachine
 
 import com.rocketpay.mandate.R
-import com.rocketpay.mandate.feature.installment.data.mapper.TimeState
-import com.rocketpay.mandate.feature.installment.domain.entities.InstallmentState
-import com.rocketpay.mandate.feature.installment.domain.usecase.InstallmentUseCase
-import com.rocketpay.mandate.feature.mandate.data.MandateSyncer
-import com.rocketpay.mandate.feature.mandate.domain.entities.PaymentMethod
-import com.rocketpay.mandate.feature.mandate.domain.usecase.MandateUseCase
-import com.rocketpay.mandate.feature.settlements.domain.usecase.PaymentOrderUseCase
-import com.rocketpay.mandate.feature.settlements.presentation.ui.utils.SettlementUtils
-import com.rocketpay.mandate.feature.property.domain.usecase.PropertyUseCase
-import com.udharpay.core.networkmanager.domain.entities.Outcome
 import com.rocketpay.mandate.common.basemodule.common.presentation.ext.ifNullOrEmpty
+import com.rocketpay.mandate.common.basemodule.common.presentation.ext.long
 import com.rocketpay.mandate.common.basemodule.common.presentation.statemachine.BaseAnalyticsHandler
+import com.rocketpay.mandate.common.basemodule.common.presentation.utils.DateUtils
 import com.rocketpay.mandate.common.mvistatemachine.contract.Next
 import com.rocketpay.mandate.common.mvistatemachine.contract.collectIn
 import com.rocketpay.mandate.common.mvistatemachine.viewmodel.simple.SimpleStateMachineImpl
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
 import com.rocketpay.mandate.common.syncmanager.client.SyncManager
+import com.rocketpay.mandate.feature.installment.data.mapper.TimeState
+import com.rocketpay.mandate.feature.installment.domain.entities.InstallmentState
+import com.rocketpay.mandate.feature.installment.domain.usecase.InstallmentUseCase
+import com.rocketpay.mandate.feature.mandate.data.MandateSyncer
+import com.rocketpay.mandate.feature.mandate.domain.entities.MandateState
+import com.rocketpay.mandate.feature.mandate.domain.entities.PaymentMethod
+import com.rocketpay.mandate.feature.mandate.domain.usecase.MandateUseCase
 import com.rocketpay.mandate.feature.product.presentation.ui.utils.ProductUtils
-import com.rocketpay.mandate.feature.property.presentation.utils.PropertyUtils
+import com.rocketpay.mandate.feature.property.domain.usecase.PropertyUseCase
+import com.rocketpay.mandate.feature.settlements.domain.usecase.PaymentOrderUseCase
+import com.udharpay.core.networkmanager.domain.entities.Outcome
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 
@@ -128,29 +129,110 @@ internal class InstallmentDetailStateMachine(
             }
 
             InstallmentDetailEvent.RetryInstallmentClick -> {
-                next(
-                    InstallmentDetailUSF.OpenSelectRetryDateBottomSheet(
-                        state.mandateId.orEmpty(),
-                        state.installmentId.orEmpty()
+                if(state.installment?.retryEnable == true) {
+                    next(
+                        InstallmentDetailUSF.OpenRetryDateSelection
+                    )
+                }else {
+                    if(state.installment?.state != InstallmentState.CollectionFailed){
+                        next(InstallmentDetailUSF.ShowSnackBar(
+                            ResourceManager.getInstance().getString(
+                                R.string.rp_you_can_only_retry_an_installment_after_their_collection_is_failed))
+                        )
+                    }else{
+                        noChange()
+                    }
+                }
+            }
+
+            is InstallmentDetailEvent.RetryDateSelected -> {
+                next(state.copy(retryDate = event.retryDate),
+                    InstallmentDetailUSF.ShowRetryConfirmation(
+                        ResourceManager.getInstance().getDrawable(R.drawable.rp_ic_refresh,
+                            ResourceManager.getInstance().getColor(R.color.rp_grey_6)),
+                        ResourceManager.getInstance().getDrawable(R.color.rp_blue_2),
+                        ResourceManager.getInstance().getString(R.string.rp_retry_installment_title),
+                        ResourceManager.getInstance().getString(R.string.rp_retry_installment_detail_other,
+                            DateUtils.getDate(event.retryDate.long(), DateUtils.MONTH_DATE_FORMAT)),
+                        ResourceManager.getInstance().getString(R.string.rp_retry),
+                        ResourceManager.getInstance().getString(R.string.rp_cancel)
                     )
                 )
             }
 
-            InstallmentDetailEvent.SkipInstallmentClick -> {
+            is InstallmentDetailEvent.RetryInstallmentConfirmed -> {
                 next(
-                    InstallmentDetailUSF.ShowSkipInstallmentConfirmation(
-                        ResourceManager.getInstance().getDrawable(R.drawable.rp_ic_delete_filled),
-                        ResourceManager.getInstance().getDrawable(R.color.rp_blue_2),
-                        ResourceManager.getInstance().getString(R.string.rp_skip_installment_title),
-                        if(!state.referenceId.isNullOrEmpty()){
-                            ResourceManager.getInstance().getString(R.string.rp_skip_installment_detail_super_key)
-                        }else{
-                            ResourceManager.getInstance().getString(R.string.rp_skip_installment_detail)
-                        },
-                        ResourceManager.getInstance().getString(R.string.rp_skip_installment),
-                        ResourceManager.getInstance().getString(R.string.rp_do_not_skip)
+                    InstallmentDetailASF.RetryInstallment(
+                        state.mandateId.orEmpty(), state.installmentId.orEmpty(), state.retryDate.long()),
+                    InstallmentDetailUSF.RetryInstallmentInProgress(
+                        ResourceManager.getInstance().getString(R.string.rp_retrying_installment_title),
+                        ResourceManager.getInstance().getString(R.string.rp_retrying_installment_detail),
                     )
                 )
+            }
+            is InstallmentDetailEvent.RetryInstallmentDismiss -> {
+                next(InstallmentDetailUSF.DismissRetryConfirmDialog)
+            }
+
+            is InstallmentDetailEvent.RetryInstallmentFailed -> {
+                next(
+                    InstallmentDetailUSF.UnableToRetryInstallment(
+                        if(event.errorCode == "RETRY_NOT_AVAILABLE" || event.errorCode == "RETRY_NOT_AVAILABLE_FOR_THE_DATE"){
+                            ResourceManager.getInstance()
+                                .getString(R.string.rp_retry_not_available)
+                        }else if(event.errorCode == "RETRY_OPERATION_LIMIT_REACHED_FOR_THE_DATE"){
+                            ResourceManager.getInstance()
+                                .getString(R.string.rp_retry_limit_for_date_reached,
+                                    DateUtils.getDate(state.retryDate.long(), DateUtils.MONTH_DATE_FORMAT))
+                        } else{
+                            ResourceManager.getInstance()
+                                .getString(R.string.rp_retry_installment_failed)
+                        },
+                        event.errorMessage
+                    )
+                )
+            }
+            is InstallmentDetailEvent.RetryInstallmentSucceed -> {
+                next(InstallmentDetailUSF.DismissRetryConfirmDialog)
+            }
+
+
+            InstallmentDetailEvent.SkipInstallmentClick -> {
+                if(state.installment?.skipEnable == true){
+                    next(
+                        InstallmentDetailUSF.ShowSkipInstallmentConfirmation(
+                            ResourceManager.getInstance().getDrawable(R.drawable.rp_ic_delete_filled),
+                            ResourceManager.getInstance().getDrawable(R.color.rp_blue_2),
+                            ResourceManager.getInstance().getString(R.string.rp_skip_installment_title),
+                            if(!state.referenceId.isNullOrEmpty()){
+                                ResourceManager.getInstance().getString(R.string.rp_skip_installment_detail_super_key)
+                            }else{
+                                ResourceManager.getInstance().getString(R.string.rp_skip_installment_detail)
+                            },
+                            ResourceManager.getInstance().getString(R.string.rp_skip_installment),
+                            ResourceManager.getInstance().getString(R.string.rp_do_not_skip)
+                        )
+                    )
+                }else{
+                    if(state.mandate?.state == MandateState.Pending) {
+                        next(InstallmentDetailUSF.ShowSnackBar(
+                            ResourceManager.getInstance().getString(
+                                R.string.rp_you_can_only_skip_an_installment_when_mandate_is_active))
+                        )
+                    }else if(state.installment?.state != InstallmentState.Created){
+                        next(InstallmentDetailUSF.ShowSnackBar(
+                            ResourceManager.getInstance().getString(
+                                R.string.rp_you_can_only_skip_an_installment_before_its_collection_is_initiated))
+                        )
+                    }else if(state.mandate?.state == MandateState.Expired) {
+                        next(InstallmentDetailUSF.ShowSnackBar(
+                            ResourceManager.getInstance().getString(
+                                R.string.rp_you_can_only_skip_an_installment_when_mandate_is_active))
+                        )
+                    }else {
+                        noChange()
+                    }
+                }
             }
             InstallmentDetailEvent.SkipInstallmentConfirmed -> {
                 if (state.installmentId == null || state.mandateId == null) {
@@ -318,6 +400,18 @@ internal class InstallmentDetailStateMachine(
                     }
                     is Outcome.Success -> {
                         dispatchEvent(InstallmentDetailEvent.ActionSuccess)
+                    }
+                }
+            }
+            is InstallmentDetailASF.RetryInstallment -> {
+                when(val outcome = installmentUseCase.retryInstallment(sideEffect.mandateId, sideEffect.installmentId,
+                    DateUtils.getDate(sideEffect.retryDate, DateUtils.SLASH_DATE_FORMAT))) {
+                    is Outcome.Error -> {
+                        dispatchEvent(InstallmentDetailEvent.RetryInstallmentFailed(outcome.error.code.orEmpty(), outcome.error.message.orEmpty()))
+                    }
+                    is Outcome.Success -> {
+                        installmentUseCase.fetchInstallmentActions(sideEffect.installmentId)
+                        dispatchEvent(InstallmentDetailEvent.RetryInstallmentSucceed)
                     }
                 }
             }

@@ -9,7 +9,6 @@ import com.rocketpay.mandate.feature.installment.presentation.ui.installmentupda
 import com.rocketpay.mandate.feature.installment.presentation.ui.paymentSchedule.list.statemachine.PaymentTrackerListStateMachine
 import com.rocketpay.mandate.feature.installment.presentation.ui.paymentSchedule.main.statemachine.PaymentTrackerMainStateMachine
 import com.rocketpay.mandate.feature.installment.presentation.ui.penalty.statemachine.EnterPenaltyAmountStateMachine
-import com.rocketpay.mandate.feature.installment.presentation.ui.retry.statemachine.SelectRetryPeriodStateMachine
 import com.rocketpay.mandate.feature.mandate.domain.usecase.MandateUseCase
 import com.rocketpay.mandate.feature.settlements.domain.usecase.PaymentOrderUseCase
 import com.rocketpay.mandate.feature.property.domain.usecase.PropertyUseCase
@@ -30,7 +29,6 @@ internal open class InstallmentStateMachineFactory(
             modelClass.isAssignableFrom(InstallmentAddStateMachine::class.java) -> InstallmentAddStateMachine(mandateUseCase, installmentUseCase, dataValidator) as T
             modelClass.isAssignableFrom(InstallmentUpdateStateMachine::class.java) -> InstallmentUpdateStateMachine(installmentUseCase) as T
             modelClass.isAssignableFrom(EnterPenaltyAmountStateMachine::class.java) -> EnterPenaltyAmountStateMachine(installmentUseCase) as T
-            modelClass.isAssignableFrom(SelectRetryPeriodStateMachine::class.java) -> SelectRetryPeriodStateMachine(installmentUseCase) as T
             modelClass.isAssignableFrom(PaymentTrackerListStateMachine::class.java) -> PaymentTrackerListStateMachine(installmentUseCase) as T
             modelClass.isAssignableFrom(PaymentTrackerMainStateMachine::class.java) -> PaymentTrackerMainStateMachine(installmentUseCase) as T
             else -> throw IllegalArgumentException("ViewModel Not Found")
