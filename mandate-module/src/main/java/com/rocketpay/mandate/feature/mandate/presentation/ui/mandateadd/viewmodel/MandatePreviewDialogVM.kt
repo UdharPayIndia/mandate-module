@@ -6,6 +6,7 @@ import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import com.rocketpay.mandate.BuildConfig
 import com.rocketpay.mandate.R
+import com.rocketpay.mandate.common.basemodule.common.presentation.ext.double
 import com.rocketpay.mandate.feature.mandate.domain.entities.Mandate
 import com.rocketpay.mandate.feature.mandate.presentation.ui.mandateadd.statemachine.MandateAddEvent
 import com.rocketpay.mandate.common.basemodule.common.presentation.ext.getSpannable
@@ -17,8 +18,12 @@ import com.rocketpay.mandate.common.basemodule.common.presentation.utils.QrGener
 import com.rocketpay.mandate.common.basemodule.main.viewmodel.BaseMainUM
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
 import com.rocketpay.mandate.main.init.MandateManager
+import kotlin.text.format
 
-internal class MandatePreviewDialogVM(val mandate: Mandate, val showSkip: Boolean, private val dispatchEvent: (MandateAddEvent) -> Unit) : BaseMainUM() {
+internal class MandatePreviewDialogVM(val mandate: Mandate,
+                                      val showSkip: Boolean,
+                                      val maximumPenaltyAmount: Int,
+                                      private val dispatchEvent: (MandateAddEvent) -> Unit) : BaseMainUM() {
 
     val contactDetails = ObservableField<String>()
     val amount = ObservableField<String>()
@@ -44,6 +49,8 @@ internal class MandatePreviewDialogVM(val mandate: Mandate, val showSkip: Boolea
     val paymentDetailStateText = ObservableField<String>(ResourceManager.getInstance().getString(R.string.rp_view_payment_details))
     val secondaryButtonText = ObservableField<String>(ResourceManager.getInstance().getString(R.string.rp_share_request_via_sms))
     val termsAndConditions = ObservableField<SpannableString>()
+    val penaltyVisibility = ObservableBoolean()
+    val penaltyChargesText = ObservableField<String>()
 
     fun onTermsAndConditionClick() {
         updatePaymentDetailsState(false)
@@ -141,5 +148,17 @@ internal class MandatePreviewDialogVM(val mandate: Mandate, val showSkip: Boolea
         }else{
             null
         })
+
+        if(mandate.meta?.penaltyMetaDto?.isEnabled == true){
+            penaltyVisibility.set(true)
+            if(mandate?.meta?.penaltyMetaDto?.isAuto == true){
+                penaltyChargesText.set(ResourceManager.getInstance().getString(R.string.rp_upto,
+                    AmountUtils.format(maximumPenaltyAmount.toDouble())))
+            }else{
+                penaltyChargesText.set(AmountUtils.format(mandate.meta?.penaltyMetaDto?.amountInRs.double()))
+            }
+        }else{
+            penaltyVisibility.set(false)
+        }
     }
 }

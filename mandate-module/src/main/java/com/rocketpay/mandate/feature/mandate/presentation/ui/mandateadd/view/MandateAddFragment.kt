@@ -236,7 +236,9 @@ internal class MandateAddFragment : BaseMainFragment<MandateAddEvent, MandateAdd
                 progressDialog.dismiss()
             }
             is MandateAddUSF.OpenMandatePreview -> {
-                showSharePaymentLinkPopUp(sideEffect.mandate, sideEffect.referenceId, sideEffect.showSkip, sideEffect.isManual)
+                showSharePaymentLinkPopUp(sideEffect.mandate,
+                    sideEffect.referenceId, sideEffect.showSkip,
+                    sideEffect.isManual, sideEffect.maximumPenaltyAmount)
                 progressDialog.dismiss()
             }
             is MandateAddUSF.OpenUpiApp -> {
@@ -402,10 +404,11 @@ internal class MandateAddFragment : BaseMainFragment<MandateAddEvent, MandateAdd
         }
     }
 
-    private fun showSharePaymentLinkPopUp(mandate: Mandate, referenceId: String?, showSkip: Boolean, isManual: Boolean) {
+    private fun showSharePaymentLinkPopUp(mandate: Mandate,
+                                          referenceId: String?, showSkip: Boolean, isManual: Boolean, maximumPenaltyAmount: Int) {
         if (mandatePreviewDialog == null) {
             skipRedirection = !referenceId.isNullOrEmpty()
-            val mandatePreviewDialogVM = MandatePreviewDialogVM(mandate, showSkip) {
+            val mandatePreviewDialogVM = MandatePreviewDialogVM(mandate, showSkip, maximumPenaltyAmount) {
                 stateMachine.dispatchEvent(it)
             }
             mandatePreviewDialog = MandatePreviewDialog(requireContext(), mandatePreviewDialogVM)

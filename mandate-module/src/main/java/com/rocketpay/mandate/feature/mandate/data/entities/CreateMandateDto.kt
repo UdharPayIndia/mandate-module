@@ -57,7 +57,21 @@ internal data class CreateMandateDto(
 @Keep
 internal class MetaData(
 	@SerializedName("charges") val charges: ChargeResponseDto?,
-	@SerializedName("self_checkout") val selfCheckoutDto: SelfCheckoutDto?
+	@SerializedName("self_checkout") val selfCheckoutDto: SelfCheckoutDto?,
+	@SerializedName("penalty_meta") val penaltyMetaDto: PenaltyMetaDto?,
+	@SerializedName("retry_installment_meta") val retryInstallmentMeta: RetryInstallmentMetaDto?
+)
+
+@Keep
+class PenaltyMetaDto(
+	@SerializedName("enabled") val isEnabled: Boolean?,
+	@SerializedName("is_auto") val isAuto: Boolean?,
+	@SerializedName("amount_in_rs") val amountInRs: Double?
+)
+
+@Keep
+class RetryInstallmentMetaDto(
+	@SerializedName("is_auto") val isAuto: Boolean?,
 )
 
 @Keep

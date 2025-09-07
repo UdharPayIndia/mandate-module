@@ -22,6 +22,7 @@ import com.rocketpay.mandate.common.basemodule.common.presentation.utils.AmountU
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.DateUtils
 import com.rocketpay.mandate.common.basemodule.main.viewmodel.BaseMainUM
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
+import com.rocketpay.mandate.feature.mandate.presentation.ui.mandateadd.statemachine.MandateAddStateMachine
 import com.rocketpay.mandate.main.init.MandateManager
 
 internal class MandateAddUM (private val dispatchEvent: (MandateAddEvent) -> Unit) : BaseMainUM() {
@@ -77,6 +78,14 @@ internal class MandateAddUM (private val dispatchEvent: (MandateAddEvent) -> Uni
         { dispatchEvent(MandateAddEvent.CloseScreen) },
         { dispatchEvent(MandateAddEvent.CloseScreen) }
     )
+
+    val itemPenaltyVm = ItemPenaltyVM({ isEnabled, isAuto ->
+        dispatchEvent(MandateAddEvent.UpdatePenaltyFlag(
+            isEnabled, isAuto
+        ))
+    },{
+        dispatchEvent(MandateAddEvent.PenaltyAmountChanged(it))
+    })
 
     val isPersonalDetailExpanded = ObservableBoolean()
     val isPersonalEditEnabled = ObservableBoolean(true)
@@ -272,6 +281,13 @@ internal class MandateAddUM (private val dispatchEvent: (MandateAddEvent) -> Uni
         setPaymentDetails(state)
         showMonetization(state)
 
+        itemPenaltyVm.setData(state.isPenaltyEnabled,
+            state.isPenaltyAuto,
+            state.penaltyEnableError,
+            state.penaltyAmount,
+            state.penaltyAmountError,
+            state.minimumPenaltyAmount)
+
     }
 
     private fun setPaymentDetails(state: MandateAddState) {
@@ -389,10 +405,10 @@ internal class MandateAddUM (private val dispatchEvent: (MandateAddEvent) -> Uni
         if(merchantCharges != null && (freeByTokenization)){
             if(state.chargeResponse?.showAtMandateLevel == true || installment <= 1){
                 handlingChargeLabel.set(ResourceManager.getInstance().getString(
-                    R.string.rp_merchant_charges_at_zero, MandateManager.getInstance().getAppName()))
+                    R.string.rp_merchant_charges_at_zero))
             }else{
                 handlingChargeLabel.set(ResourceManager.getInstance().getString(
-                    R.string.rp_merchant_charges_per_installment_at_zero, MandateManager.getInstance().getAppName()))
+                    R.string.rp_merchant_charges_per_installment_at_zero))
             }
             subscriptionInfoText.set(ResourceManager.getInstance().getString(R.string.rp_saved_with_app_plan,
                 AmountUtils.format(merchantCharges.discount), MandateManager.getInstance().getAppName()))
@@ -532,9 +548,17 @@ internal class MandateAddUM (private val dispatchEvent: (MandateAddEvent) -> Uni
                     setCollectionInfo(state)
                     paymentDetailVisibility.set(true)
                     generatePaymentLinkText.set(ResourceManager.getInstance().getString(R.string.rp_share_payment_link))
+                    val isPenaltyValid = !state.isPenaltyEnabled
+                            || state.isPenaltyAuto == false
+                            ||  MandateAddStateMachine.isPenaltyAmountValid(
+                        state.amount,
+                        state.installment,
+                        state.penaltyAmount,
+                        state.minimumPenaltyAmount,
+                        state.maximumPenaltyAmount).first
                     generatePaymentButtonEnabled.set(
                         if(state.installmentFrequency !is InstallmentFrequency.Adhoc){
-                            state.chargeResponse != null
+                            state.chargeResponse != null && isPenaltyValid
                         }else{
                             true
                         })

@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.text.TextUtils"/>
+        <import type="android.view.View" />
+        <variable
+            name="vm"
+            type="com.rocketpay.mandate.feature.mandate.presentation.ui.mandateadd.viewmodel.ItemPenaltyVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/rp_surface_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/rp_size_16"
+        android:paddingVertical="@dimen/rp_size_12">
+
+        <TextView
+            android:id="@+id/tv_auto_reminder"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_marginEnd="@dimen/rp_size_40"
+            app:layout_constraintHorizontal_bias="0.0"
+            android:text="@string/rp_charge_penalty"
+            android:textSize="12sp"
+            android:textAppearance="@style/rp_body_regular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/lyt_no_penalty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:foreground="?attr/selectableItemBackground"
+            android:onClick="@{() -> vm.onNoPenaltyClick()}"
+            android:layout_marginTop="@dimen/rp_size_16"
+            app:layout_constraintTop_toBottomOf="@+id/tv_auto_reminder">
+
+            <ImageView
+                android:layout_width="@dimen/rp_size_16"
+                android:layout_height="@dimen/rp_size_16"
+                android:src="@{vm.noPenaltyDrawable}"
+                android:layout_marginTop="@dimen/rp_size_2"
+                tools:src="@drawable/rp_ic_radio_empty"
+                tools:ignore="ContentDescription" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/rp_size_16"
+                    android:layout_weight="1"
+                    android:text="@string/rp_no_penalty"
+                    android:textAppearance="@style/rp_body_regular_medium" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/rp_size_4"
+                    android:layout_marginStart="@dimen/rp_size_16"
+                    android:layout_weight="1"
+                    app:textWithEmptyCheck="@{vm.penaltyEnableErrorText}"
+                    tools:text="@string/rp_charge_automatically"
+                    android:textAppearance="@style/rp_body_small" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lyt_manual_penalty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:foreground="?attr/selectableItemBackground"
+            android:onClick="@{() -> vm.onManualPenaltyClick()}"
+            android:layout_marginTop="@dimen/rp_size_16"
+            android:clickable="@{TextUtils.isEmpty(vm.penaltyEnableErrorText)}"
+            android:alpha="@{TextUtils.isEmpty(vm.penaltyEnableErrorText) ? 1.0F : 0.4F}"
+            app:layout_constraintTop_toBottomOf="@+id/lyt_no_penalty">
+
+            <ImageView
+                android:layout_width="@dimen/rp_size_16"
+                android:layout_height="@dimen/rp_size_16"
+                android:src="@{vm.manualPenaltyDrawable}"
+                android:layout_marginTop="@dimen/rp_size_2"
+                tools:src="@drawable/rp_ic_radio_empty"
+                tools:ignore="ContentDescription" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/rp_size_16"
+                    android:layout_weight="1"
+                    android:text="@string/rp_charge_manually_later"
+                    android:textAppearance="@style/rp_body_regular_medium" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/rp_size_16"
+                    android:visibility="@{vm.manualPenaltyVisibility ? View.VISIBLE : View.GONE}"
+                    android:layout_marginTop="@dimen/rp_size_4"
+                    android:layout_weight="1"
+                    android:text="@string/rp_enter_amount_and_manually_retry_on_a_bounced_installment_from_installment_page"
+                    android:textAppearance="@style/rp_body_small" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lyt_auto_penalty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:foreground="?attr/selectableItemBackground"
+            android:alpha="@{TextUtils.isEmpty(vm.penaltyEnableErrorText) ? 1.0F : 0.4F}"
+            android:clickable="@{TextUtils.isEmpty(vm.penaltyEnableErrorText)}"
+            android:onClick="@{() -> vm.onAutoPenaltyClick()}"
+            android:layout_marginTop="@dimen/rp_size_16"
+            app:layout_constraintTop_toBottomOf="@+id/lyt_manual_penalty">
+
+            <ImageView
+                android:layout_width="@dimen/rp_size_16"
+                android:layout_height="@dimen/rp_size_16"
+                android:src="@{vm.autoPenaltyDrawable}"
+                android:layout_marginTop="@dimen/rp_size_2"
+                tools:src="@drawable/rp_ic_radio_empty"
+                tools:ignore="ContentDescription" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="@dimen/rp_size_16">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="@string/rp_charge_automatically"
+                    android:textAppearance="@style/rp_body_regular_medium" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="@dimen/rp_size_4"
+                    android:layout_weight="1"
+                    android:visibility="@{vm.autoPenaltyVisibility ? View.VISIBLE : View.GONE}"
+                    android:text="@string/rp_enter_amount_and_manually_retry_on_a_bounced_installment_from_installment_page"
+                    android:textAppearance="@style/rp_body_small" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_charges"
+                    style="@style/RpMyTextInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/rp_size_8"
+                    android:hint="@string/rp_penalty_amount"
+                    android:visibility="@{vm.autoPenaltyVisibility ? View.VISIBLE : View.GONE}"
+                    app:errorIconDrawable="@null"
+                    app:errorText="@{vm.penaltyAmountError}">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/RpMyCompactEditText"
+                        android:layout_width="match_parent"
+                        android:drawableStart="@drawable/rp_ic_rupee_icon"
+                        android:drawablePadding="@dimen/rp_size_8"
+                        android:drawableTint="@android:color/black"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:onTextChanged="@{(text,a,b,c) -> vm.onPenaltyAmountChanged(text)}"
+                        android:text="@{vm.penaltyAmount}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{vm.autoPenaltyVisibility ? View.VISIBLE : View.GONE}"
+                    android:layout_marginTop="@dimen/rp_size_8">
+
+                    <TextView
+                        android:id="@+id/tv_rocketpay_charges_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/rp_size_16"
+                        android:layout_weight="1"
+                        android:text="@{vm.penaltyTextByRocketpay}"
+                        tools:text="@string/rp_rocketpay_charges"
+                        android:textAppearance="@style/rp_body_small"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_rocketpay_charges"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_rocketpay_charges"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|end"
+                        android:layout_weight="1"
+                        tools:text="@string/rp_rocketpay_charges"
+                        android:text="@{vm.penaltyChargedByRocketPay}"
+                        android:textAppearance="@style/rp_body_small"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tv_rocketpay_charges_label"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_rocketpay_charges_label"/>
+
+                    <TextView
+                        android:id="@+id/tv_merchant_charges_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="@dimen/rp_size_6"
+                        android:layout_marginEnd="@dimen/rp_size_16"
+                        android:layout_weight="1"
+                        android:text="@string/rp_you_will_get"
+                        android:textAppearance="@style/rp_body_small"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_merchant_charges"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_rocketpay_charges_label" />
+
+                    <TextView
+                        android:id="@+id/tv_merchant_charges"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|end"
+                        android:layout_weight="1"
+                        tools:text="@string/rp_rocketpay_charges"
+                        android:text="@{vm.penaltyChargedByMerchant}"
+                        android:textAppearance="@style/rp_body_small"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tv_merchant_charges_label"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_merchant_charges_label"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

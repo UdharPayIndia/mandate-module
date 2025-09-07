@@ -30,6 +30,7 @@ import com.rocketpay.mandate.common.mvistatemachine.contract.collectIn
 import com.rocketpay.mandate.common.mvistatemachine.viewmodel.simple.SimpleStateMachineImpl
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
 import com.rocketpay.mandate.feature.common.domain.CommonUseCase
+import com.rocketpay.mandate.feature.mandate.data.entities.PenaltyMetaDto
 import com.rocketpay.mandate.feature.product.domain.entities.ProductTypeEnum
 import com.rocketpay.mandate.feature.product.domain.usecase.ProductUseCase
 import kotlinx.coroutines.CoroutineScope
@@ -40,6 +41,7 @@ import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlin.math.abs
+import kotlin.text.format
 
 internal class MandateAddStateMachine(
     private val mandateUseCase: MandateUseCase,
@@ -188,12 +190,31 @@ internal class MandateAddStateMachine(
                         amountError = ResourceManager.getInstance().getString(R.string.rp_error_amount)
                     )
                 }
-                val verifyEnable = shouldEnableVerify(newState)
-                next(
-                    newState.copy(
-                        isGeneratePaymentLinkEnable = verifyEnable
+                val isPenaltyApplicable =
+                    isPenaltyApplicable(
+                        event.amount,
+                        state.installment,
+                        state.paymentMethod,
+                        state.minimumInstallmentAmountForPenalty
                     )
-                )
+                val verifyEnable = shouldEnableVerify(newState)
+                if(state.isPenaltyEnabled && !isPenaltyApplicable.first){
+                    next(
+                        newState.copy(
+                            isGeneratePaymentLinkEnable = verifyEnable,
+                            isPenaltyEnabled = false,
+                            penaltyEnableError = isPenaltyApplicable.second.orEmpty()
+                        ),
+                        MandateAddUSF.ShowSnackBar(isPenaltyApplicable.second.orEmpty())
+                    )
+                }else{
+                    next(
+                        newState.copy(
+                            isGeneratePaymentLinkEnable = verifyEnable,
+                            penaltyEnableError = isPenaltyApplicable.second.orEmpty()
+                        )
+                    )
+                }
             }
 
             is MandateAddEvent.DownPaymentChanged -> {
@@ -262,13 +283,34 @@ internal class MandateAddStateMachine(
             }
 
             MandateAddEvent.NachClick -> {
+                val isPenaltyApplicable = isPenaltyApplicable(
+                        state.amount,
+                        state.installment,
+                        PaymentMethod.Nach,
+                        state.minimumInstallmentAmountForPenalty
+                    )
                 val newState = state.copy(paymentMethod = PaymentMethod.Nach)
                 val verifyEnable = shouldEnableVerify(newState)
-                next(newState.copy(isGeneratePaymentLinkEnable = verifyEnable))
+                if(state.isPenaltyEnabled && !isPenaltyApplicable.first){
+                    next(newState.copy(isGeneratePaymentLinkEnable = verifyEnable,
+                        isPenaltyEnabled = false,
+                        penaltyEnableError = isPenaltyApplicable.second.orEmpty()),
+                        MandateAddUSF.ShowSnackBar(isPenaltyApplicable.second.orEmpty()))
+                }else{
+                    next(newState.copy(isGeneratePaymentLinkEnable = verifyEnable,
+                        penaltyEnableError = isPenaltyApplicable.second.orEmpty()))
+                }
             }
 
             MandateAddEvent.UpiClick -> {
-                val newState = state.copy(paymentMethod = PaymentMethod.Upi)
+                val isPenaltyApplicable = isPenaltyApplicable(
+                        state.amount,
+                        state.installment,
+                        PaymentMethod.Upi,
+                        state.minimumInstallmentAmountForPenalty
+                    )
+                val newState = state.copy(paymentMethod = PaymentMethod.Upi,
+                    penaltyEnableError = isPenaltyApplicable.second.orEmpty())
                 val verifyEnable = shouldEnableVerify(newState)
                 next(newState.copy(isGeneratePaymentLinkEnable = verifyEnable))
             }
@@ -297,7 +339,8 @@ internal class MandateAddStateMachine(
                         event.mandate,
                         state.referenceId,
                         state.showSkip,
-                        state.mandate?.paymentMethodDetail?.method == PaymentMethod.Manual
+                        state.mandate?.paymentMethodDetail?.method == PaymentMethod.Manual,
+                        state.maximumPenaltyAmount
                     ),
                 )
             }
@@ -422,6 +465,12 @@ internal class MandateAddStateMachine(
                     state.paymentMethod,
                     state.maxUpiAmountLimit
                 )
+                val isPenaltyApplicable = isPenaltyApplicable(
+                        state.amount,
+                        event.installment,
+                        state.paymentMethod,
+                        state.minimumInstallmentAmountForPenalty
+                    )
                 val newState = state.copy(
                     installment = event.installment,
                     isUpiEnable = pair.first,
@@ -430,11 +479,24 @@ internal class MandateAddStateMachine(
                     installmentFrequencyError = null
                 )
                 val verifyEnable = shouldEnableVerify(newState)
-                next(
-                    newState.copy(
-                        isGeneratePaymentLinkEnable = verifyEnable,
+                if(state.isPenaltyEnabled && !isPenaltyApplicable.first){
+                    next(
+                        newState.copy(
+                            isGeneratePaymentLinkEnable = verifyEnable,
+                            isPenaltyEnabled = false,
+                            penaltyEnableError = isPenaltyApplicable.second.orEmpty()
+                        ),
+                        MandateAddUSF.ShowSnackBar(isPenaltyApplicable.second.orEmpty())
                     )
-                )
+
+                }else{
+                    next(
+                        newState.copy(
+                            isGeneratePaymentLinkEnable = verifyEnable,
+                            penaltyEnableError = isPenaltyApplicable.second.orEmpty()
+                        )
+                    )
+                }
             }
 
             is MandateAddEvent.StartDateSelected -> {
@@ -840,6 +902,35 @@ internal class MandateAddStateMachine(
             is MandateAddEvent.CloseScreen -> {
                 next(MandateAddUSF.CloseScreen)
             }
+            is MandateAddEvent.UpdatePenaltyFlag -> {
+                val isPenaltyApplicable = isPenaltyApplicable(
+                    state.amount,
+                    state.installment,
+                    state.paymentMethod,
+                    state.minimumInstallmentAmountForPenalty)
+                if(isPenaltyApplicable.first){
+                    next(state.copy(
+                        isPenaltyEnabled = event.isEnabled,
+                        isPenaltyAuto = event.isAuto,
+                        penaltyEnableError = ""
+                    ))
+                }else{
+                    next(
+                        state.copy(penaltyEnableError = isPenaltyApplicable.second.orEmpty())
+                    )
+                }
+            }
+            is MandateAddEvent.PenaltyAmountChanged -> {
+                val isValid = isPenaltyAmountValid(state.amount,
+                    state.installment,
+                    event.penaltyAmount,
+                    state.minimumPenaltyAmount,
+                    state.maximumPenaltyAmount)
+                next(state.copy(
+                    penaltyAmount = event.penaltyAmount,
+                    penaltyAmountError = isValid.second),
+                )
+            }
             else -> {
                 noChange()
             }
@@ -888,7 +979,10 @@ internal class MandateAddStateMachine(
                     referenceId = state.referenceId,
                     referenceType = state.referenceType,
                     state.chargeResponse,
-                    financier = state.financier
+                    financier = state.financier,
+                    isPenaltyEnabled = state.isPenaltyEnabled,
+                    isPenaltyAuto = state.isPenaltyAuto ?: false,
+                    penaltyAmount = AmountUtils.stringToDouble(state.penaltyAmount)
                 ), if (state.paymentMethod == PaymentMethod.Manual) {
                     MandateAddUSF.ShowLoading(
                         ResourceManager.getInstance().getString(R.string.rp_creating_payment_schedule),
@@ -1162,6 +1256,15 @@ internal class MandateAddStateMachine(
             referenceId = sideEffect.referenceId,
             referenceType = sideEffect.referenceType,
             chargeResponseDto = sideEffect.chargeResponse,
+            penaltyMetaDto = PenaltyMetaDto(
+                isEnabled = sideEffect.isPenaltyEnabled,
+                isAuto = sideEffect.isPenaltyAuto,
+                amountInRs = if (sideEffect.isPenaltyAuto) {
+                    sideEffect.penaltyAmount
+                } else {
+                    null
+                }
+            )
         )) {
             is Outcome.Error -> {
                 dispatchEvent(MandateAddEvent.UnableToGeneratePaymentLink(outcome.error.message.orEmpty()))
@@ -1198,6 +1301,53 @@ internal class MandateAddStateMachine(
                 Pair(isUpiEnable, paymentMethod)
             } else {
                 Pair(false, PaymentMethod.Manual)
+            }
+        }
+
+        fun isPenaltyApplicable(
+            amount: String,
+            installment: Int?,
+            paymentMethod: PaymentMethod?,
+            minimumInstallmentForCharges: Int
+        ): Pair<Boolean, String?> {
+            return if (paymentMethod == PaymentMethod.Upi) {
+                if(installment != null) {
+                    val installmentAmount = AmountUtils.stringToDouble(amount) / installment
+                    if (installmentAmount >= minimumInstallmentForCharges) {
+                        true to null
+                    } else {
+                        false to ResourceManager.getInstance().getString(
+                            R.string.rp_automatic_charge_penalty_is_not_available_for_amount_less_than,
+                            AmountUtils.format(minimumInstallmentForCharges.toDouble())
+                        )
+                    }
+                }else{
+                    true to null
+                }
+            } else {
+                false to ResourceManager.getInstance().getString(R.string.rp_automatic_charge_penalty_is_not_available_for_nach_payments,
+                    paymentMethod?.transalion)
+            }
+        }
+
+        fun isPenaltyAmountValid(
+            amount: String,
+            installment: Int?,
+            penaltyAmount: String,
+            minimumPenaltyAmount: Int,
+            maximumPenaltyAmount: Int
+        ): Pair<Boolean, String?> {
+            val penaltyAmount = AmountUtils.stringToDouble(penaltyAmount)
+            val installmentAmount = AmountUtils.stringToDouble(amount) / (installment ?: 1)
+            val maxPenaltyAmount = minOf(maximumPenaltyAmount.toDouble(), installmentAmount)
+            return if(penaltyAmount < minimumPenaltyAmount){
+                false to ResourceManager.getInstance().getString(R.string.rp_penalty_amount_should_not_be_less_than,
+                    AmountUtils.format(minimumPenaltyAmount.toDouble()))
+            }else if(penaltyAmount > maxPenaltyAmount){
+                false to ResourceManager.getInstance().getString(R.string.rp_penalty_amount_should_not_be_greater_than,
+                    AmountUtils.format(maxPenaltyAmount))
+            }else{
+                true to null
             }
         }
 

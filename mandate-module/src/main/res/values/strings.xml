@@ -424,8 +424,8 @@
     <string name="rp_merchant_charges">Merchant charges</string>
     <string name="rp_saved_with_app_plan">%1$s saved! With %2$s+</string>
     <string name="rp_saved_with_superkey">%1$s saved! With Superkey</string>
-    <string name="rp_merchant_charges_at_zero">Merchant charges @ ₹0 with %1$s+</string>
-    <string name="rp_merchant_charges_per_installment_at_zero">Merchant charges per installment @ ₹0 with %1$s+</string>
+    <string name="rp_merchant_charges_at_zero">Merchant charges @ ₹0</string>
+    <string name="rp_merchant_charges_per_installment_at_zero">Merchant charges per installment @ ₹0</string>
     <string name="rp_merchant_charges_at_zero_with_superkey">Merchant charges @ ₹0 with Superkey</string>
     <string name="rp_please_enter_sales_details">Please enter sales details</string>
     <string name="rp_down_payment">Down payment</string>
@@ -584,11 +584,13 @@
     <string name="rp_end_date">End date</string>
     <string name="rp_start_date">Start date</string>
     <string name="rp_report_generated_successfully">Report generated successfully</string>
-    <string name="rp_rocketpay_charges">Rocketpay Charges</string>
+    <string name="rp_rocketpay_charges">%1$s Charges</string>
     <string name="rp_you_will_get">You will get</string>
     <string name="rp_automatic_charge_penalty_is_not_available_for_nach_payments">Penalty not available for %1$s mandates</string>
     <string name="rp_automatic_charge_penalty_is_not_available_for_amount_less_than">Penalty not available for installment amount less than %1$s</string>
     <string name="rp_nach">NACH</string>
+    <string name="rp_manual">Manual</string>
+    <string name="rp_upi">UPI</string>
     <string name="rp_penalty_amount_should_not_be_less_than">Penalty amount should not be less than %1$s</string>
     <string name="rp_penalty_amount_should_not_be_greater_than">Penalty amount should not be greater than %1$s</string>
     <string name="rp_merchant_penalty_for_bounced_installments">Merchant penalty for bounced installments</string>

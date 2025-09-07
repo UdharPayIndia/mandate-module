@@ -68,8 +68,16 @@ internal data class MandateAddState(
     val termsAndConditionUrl: String? = null,
     val financier: String? = null,
     val isTokenizationEnabled: Boolean = true,
-    val productWallet: ProductWallet? = null
-    ) : BaseState(MandateAddScreen)
+    val productWallet: ProductWallet? = null,
+    val isPenaltyEnabled: Boolean = false,
+    val isPenaltyAuto: Boolean? = null,
+    val penaltyAmount: String = "",
+    val penaltyEnableError: String = "",
+    val penaltyAmountError: String? = "",
+    val minimumInstallmentAmountForPenalty: Int = AmountUtils.MINIMUM_INSTALLMENT_AMOUNT_FOR_PENALTY,
+    val minimumPenaltyAmount: Int = AmountUtils.MINIMUM_PENALTY_AMOUNT,
+    val maximumPenaltyAmount: Int = AmountUtils.MAXIMUM_PENALTY_AMOUNT
+) : BaseState(MandateAddScreen)
 
 
 internal sealed class MandateAddEvent(name: String? = null) : BaseEvent(name) {
@@ -152,6 +160,11 @@ internal sealed class MandateAddEvent(name: String? = null) : BaseEvent(name) {
     object GoToMandateDetail: MandateAddEvent()
     object StopPolling: MandateAddEvent()
     data object CloseScreen: MandateAddEvent()
+    data class UpdatePenaltyFlag(
+        val isEnabled: Boolean,
+        val isAuto: Boolean?
+    ): MandateAddEvent()
+    data class PenaltyAmountChanged(val penaltyAmount: String): MandateAddEvent()
 }
 
 
@@ -178,7 +191,10 @@ internal sealed class MandateAddASF : AsyncSideEffect {
         val referenceId: String?,
         val referenceType: String?,
         val chargeResponse: ChargeResponseDto? = null,
-        val financier: String?
+        val financier: String?,
+        val isPenaltyEnabled: Boolean,
+        val isPenaltyAuto: Boolean,
+        val penaltyAmount: Double
     ) : MandateAddASF()
     object LoadSupportedFrequency: MandateAddASF()
     data class ShareOnWhatsAppClick(val mandate: Mandate): MandateAddASF()
@@ -205,7 +221,9 @@ internal sealed class MandateAddUSF : UiSideEffect {
     data class OpenInstallmentSelection(val currentNoOfInstallments: Int?, val installments: List<ItemDialogBottomSheet>) : MandateAddUSF()
     data class OpenStartDateSelection(val installmentFrequency: InstallmentFrequency?, val currentSelectedDate: Long?) : MandateAddUSF()
     data class OpenFrequencySelection(val installmentFrequency: InstallmentFrequency?, val frequencies: List<ItemDialogBottomSheet>) : MandateAddUSF()
-    data class OpenMandatePreview(val mandate: Mandate, val referenceId: String?, val showSkip: Boolean, val isManual: Boolean) : MandateAddUSF()
+    data class OpenMandatePreview(val mandate: Mandate,
+                                  val referenceId: String?, val showSkip: Boolean,
+                                  val isManual: Boolean, val maximumPenaltyAmount: Int) : MandateAddUSF()
     data class OpenUpiApp(val mandate: Mandate, val upiApplication: UpiApplication) : MandateAddUSF()
     data class GotoMandateDetail(val mandateId: String, val referenceId: String?, val isManual: Boolean): MandateAddUSF()
     data class ShareOnWhatsApp(val mobileNumber: String, val message: String,

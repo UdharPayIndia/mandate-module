@@ -131,6 +131,36 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_customer_charges_label"/>
 
+        <TextView
+            android:id="@+id/tv_penalty_label"
+            android:textAppearance="@style/rp_body_small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:text="@string/rp_merchant_penalty_for_bounced_installments"
+            android:textColor="@color/rp_grey_2"
+            android:ellipsize="end"
+            android:layout_marginEnd="@dimen/rp_size_24"
+            android:visibility="@{vm.penaltyVisibility ? View.VISIBLE : View.GONE}"
+            android:layout_marginTop="@dimen/rp_size_16"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_penalty"
+            app:layout_constraintTop_toBottomOf="@+id/tv_customer_charges_label"/>
+
+        <TextView
+            android:id="@+id/tv_penalty"
+            android:textAppearance="@style/rp_body_small"
+            android:layout_width="wrap_content"
+            android:textColor="@color/rp_grey_2"
+            android:layout_height="wrap_content"
+            android:text="@{vm.penaltyChargesText}"
+            android:visibility="@{vm.penaltyVisibility ? View.VISIBLE : View.GONE}"
+            tools:text="6 Weeks"
+            android:gravity="end"
+            app:layout_constraintStart_toEndOf="@+id/tv_penalty_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_penalty_label"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
