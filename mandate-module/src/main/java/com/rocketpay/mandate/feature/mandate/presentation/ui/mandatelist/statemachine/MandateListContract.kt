@@ -63,7 +63,6 @@ internal sealed class MandateListUSF : UiSideEffect {
 
     data class GotoMandateDetail(val mandate: Mandate, val isManual: Boolean = false) : MandateListUSF()
     object GotoAddMandate: MandateListUSF()
-    data class OpenBankAccountAddition(val source: String): MandateListUSF()
     data object OpenPaymentTracker: MandateListUSF()
     data object UserProfileClick: MandateListUSF()
 }

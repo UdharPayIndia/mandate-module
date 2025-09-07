@@ -21,7 +21,13 @@ import com.rocketpay.mandate.common.basemodule.common.eventbus.activityresultcal
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
 import com.rocketpay.mandate.common.syncmanager.client.SyncManager
 import com.rocketpay.mandate.feature.bankaccount.data.BankAccountSyncer
+import com.rocketpay.mandate.feature.bankaccount.presentation.ui.bankaccountadd.statemachine.BankAccountAddScreen
+import com.rocketpay.mandate.feature.bankaccount.presentation.ui.bankaccountadd.view.BankAccountAddFragment
+import com.rocketpay.mandate.feature.bankaccount.presentation.ui.bankaccountlist.statemachine.BankAccountListScreen
+import com.rocketpay.mandate.feature.bankaccount.presentation.ui.bankaccountlist.view.BankAccountListFragment
 import com.rocketpay.mandate.feature.business.data.BusinessPropertySyncer
+import com.rocketpay.mandate.feature.installment.presentation.ui.paymentSchedule.main.statemachine.PaymentTrackerMainScreen
+import com.rocketpay.mandate.feature.installment.presentation.ui.paymentSchedule.main.view.PaymentTrackerMainFragment
 import com.rocketpay.mandate.feature.kyc.data.KycSyncer
 import com.rocketpay.mandate.feature.kyc.presentation.ui.kyc.statemachine.KycScreen
 import com.rocketpay.mandate.feature.kyc.presentation.ui.kyc.view.KycFragment
@@ -37,6 +43,8 @@ import com.rocketpay.mandate.feature.mandate.presentation.ui.mandatelist.view.Ma
 import com.rocketpay.mandate.feature.product.data.ProductOrderSyncer
 import com.rocketpay.mandate.feature.product.data.ProductWalletSyncer
 import com.rocketpay.mandate.feature.settlements.data.PaymentOrderSyncer
+import com.rocketpay.mandate.feature.settlements.presentation.ui.main.statemachine.SettlementMainScreen
+import com.rocketpay.mandate.feature.settlements.presentation.ui.main.view.SettlementMainFragment
 import com.rocketpay.mandate.main.GlobalState
 import com.rocketpay.mandate.main.init.MandateManager
 import com.rocketpay.mandate.main.presentation.injection.RpMainComponent
@@ -57,8 +65,14 @@ internal class RpMainActivity : AppCompatActivity(), BaseFragmentListener {
     companion object{
         const val BUNDLE_FLOW = "BUNDLE_FLOW"
         const val BUNDLE_REFERENCE_ID = "BUNDLE_REFERENCE_ID"
-        const val MANDATE_ADDITION = "MANDATE_ADDITION"
-        const val MANDATE_DETAIL = "MANDATE_DETAIL"
+        const val FLOW_MANDATE_ADDITION = "FLOW_MANDATE_ADDITION"
+        const val FLOW_MANDATE_DETAIL = "FLOW_MANDATE_DETAIL"
+        const val FLOW_PAYMENT_TRACKER = "FLOW_PAYMENT_TRACKER"
+        const val FLOW_SETTLEMENT = "FLOW_SETTLEMENT"
+        const val FLOW_KYC = "FLOW_KYC"
+        const val FLOW_BANK_ACCOUNT_LIST = "FLOW_BANK_ACCOUNT_LIST"
+        const val FLOW_BANK_ACCOUNT_ADD = "FLOW_BANK_ACCOUNT_ADD"
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -135,10 +149,10 @@ internal class RpMainActivity : AppCompatActivity(), BaseFragmentListener {
             !mViewModel.isLoggedIn() -> {
                 onNavigate(LoginFragment.newInstance(null), fragmentTag = LoginScreen.name, addToBackStack = false)
             }
-            !mViewModel.isKycCompleted() && !MandateManager.getInstance().skipKyc() -> {
+            (!mViewModel.isKycCompleted() && !MandateManager.getInstance().skipKyc()) || mViewModel.flowType == FLOW_KYC  -> {
                 GlobalState.isLogin.value = true
                 val bundle = Bundle()
-                bundle.putBoolean(KycFragment.BUNDLE_IS_ONBOARDING, true)
+                bundle.putBoolean(KycFragment.BUNDLE_IS_ONBOARDING, mViewModel.flowType != FLOW_KYC)
                 onNavigate(KycFragment.newInstance(bundle), fragmentTag = KycScreen.name, addToBackStack = false)
             }
             else -> {
@@ -150,12 +164,12 @@ internal class RpMainActivity : AppCompatActivity(), BaseFragmentListener {
     private fun handleMandateRedirection(){
         GlobalState.isLogin.value = true
         when{
-            mViewModel.flowType == MANDATE_DETAIL && mViewModel.referenceId.isNotEmpty() -> {
+            mViewModel.flowType == FLOW_MANDATE_DETAIL && mViewModel.referenceId.isNotEmpty() -> {
                 val bundle = Bundle()
                 bundle.putString(MandateDetailFragment.BUNDLE_SUPER_KEY_ID, mViewModel.referenceId)
                 onNavigate(MandateDetailFragment.newInstance(bundle), fragmentTag = MandateDetailScreen.name)
             }
-            mViewModel.flowType == MANDATE_ADDITION -> {
+            mViewModel.flowType == FLOW_MANDATE_ADDITION -> {
                 val bundle = Bundle()
                 bundle.putString(MandateAddFragment.BUNDLE_REFERENCE_ID, mViewModel.referenceId)
                 bundle.putString(MandateAddFragment.BUNDLE_REFERENCE_TYPE, "SDK")
@@ -164,6 +178,21 @@ internal class RpMainActivity : AppCompatActivity(), BaseFragmentListener {
                 bundle.putString(MandateAddFragment.BUNDLE_NOTE, mViewModel.note)
                 bundle.putDouble(MandateAddFragment.BUNDLE_AMOUNT, mViewModel.amount.toDouble())
                 onNavigate(MandateAddFragment.newInstance(bundle), fragmentTag = MandateAddScreen.name)
+            }
+            mViewModel.flowType == FLOW_PAYMENT_TRACKER -> {
+                onNavigate(PaymentTrackerMainFragment.newInstance(null), fragmentTag = PaymentTrackerMainScreen.name)
+            }
+            mViewModel.flowType == FLOW_SETTLEMENT -> {
+                onNavigate(SettlementMainFragment.newInstance(null), fragmentTag = SettlementMainScreen.name)
+            }
+            mViewModel.flowType == FLOW_BANK_ACCOUNT_LIST -> {
+                onNavigate(BankAccountListFragment.newInstance(null), fragmentTag = BankAccountListScreen.name)
+            }
+            mViewModel.flowType == FLOW_BANK_ACCOUNT_ADD -> {
+                val bundle = Bundle()
+                bundle.putBoolean(BankAccountAddFragment.IS_FROM_ONBOARDING, false)
+                bundle.putString(BankAccountAddFragment.BUNDLE_SOURCE, "sdk")
+                onNavigate(BankAccountAddFragment.newInstance(bundle), fragmentTag = BankAccountAddScreen.name)
             }
             else -> {
                 onNavigate(MandateListFragment.newInstance(null), fragmentTag = MandateListScreen.name)

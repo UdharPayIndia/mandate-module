@@ -30,6 +30,14 @@
             <action android:name="android.intent.action.GET_CONTENT" />
             <data android:mimeType="application/pdf" />
         </intent>
+        <intent>
+            <action android:name="android.intent.action.PICK" />
+            <data android:mimeType="text/csv" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.GET_CONTENT" />
+            <data android:mimeType="text/csv" />
+        </intent>
     </queries>
 
     <application>

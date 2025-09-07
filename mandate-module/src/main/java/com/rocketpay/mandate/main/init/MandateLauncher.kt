@@ -23,7 +23,7 @@ object MandateLauncher {
 
     fun openMandateDetails(context: Context, referenceId: String) {
         val intent = Intent(context, RpMainActivity::class.java)
-        intent.putExtra(RpMainActivity.BUNDLE_FLOW, RpMainActivity.MANDATE_DETAIL)
+        intent.putExtra(RpMainActivity.BUNDLE_FLOW, RpMainActivity.FLOW_MANDATE_DETAIL)
         intent.putExtra(RpMainActivity.BUNDLE_REFERENCE_ID, referenceId)
         context.startActivity(intent)
     }
@@ -37,7 +37,7 @@ object MandateLauncher {
         amount: Long = 0L,
     ){
         val intent = Intent(context, RpMainActivity::class.java)
-        intent.putExtra(RpMainActivity.BUNDLE_FLOW, RpMainActivity.MANDATE_ADDITION)
+        intent.putExtra(RpMainActivity.BUNDLE_FLOW, RpMainActivity.FLOW_MANDATE_ADDITION)
         intent.putExtra(RpMainActivity.BUNDLE_REFERENCE_ID, referenceId)
         intent.putExtra(MandateAddFragment.BUNDLE_CUSTOMER_NAME, customerName)
         intent.putExtra(MandateAddFragment.BUNDLE_CUSTOMER_NUMBER, mobileNumber)
@@ -45,6 +45,47 @@ object MandateLauncher {
         intent.putExtra(MandateAddFragment.BUNDLE_AMOUNT, amount)
         context.startActivity(intent)
     }
+
+    fun openBankAccountList(
+        context: Context,
+    ){
+        val intent = Intent(context, RpMainActivity::class.java)
+        intent.putExtra(RpMainActivity.BUNDLE_FLOW, RpMainActivity.FLOW_BANK_ACCOUNT_LIST)
+        context.startActivity(intent)
+    }
+
+    fun openBankAccountAddition(
+        context: Context,
+    ){
+        val intent = Intent(context, RpMainActivity::class.java)
+        intent.putExtra(RpMainActivity.BUNDLE_FLOW, RpMainActivity.FLOW_BANK_ACCOUNT_ADD)
+        context.startActivity(intent)
+    }
+
+    fun openPaymentTracker(
+        context: Context,
+    ){
+        val intent = Intent(context, RpMainActivity::class.java)
+        intent.putExtra(RpMainActivity.BUNDLE_FLOW, RpMainActivity.FLOW_PAYMENT_TRACKER)
+        context.startActivity(intent)
+    }
+
+    fun openSettlementDetails(
+        context: Context,
+    ){
+        val intent = Intent(context, RpMainActivity::class.java)
+        intent.putExtra(RpMainActivity.BUNDLE_FLOW, RpMainActivity.FLOW_SETTLEMENT)
+        context.startActivity(intent)
+    }
+
+    fun openKyc(
+        context: Context,
+    ){
+        val intent = Intent(context, RpMainActivity::class.java)
+        intent.putExtra(RpMainActivity.BUNDLE_FLOW, RpMainActivity.FLOW_KYC)
+        context.startActivity(intent)
+    }
+
 
     fun getMandateList(context: Context): Fragment {
         return MandateListFragment.newInstance(null)

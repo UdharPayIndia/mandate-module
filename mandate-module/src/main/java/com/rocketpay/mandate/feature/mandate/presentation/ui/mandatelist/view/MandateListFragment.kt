@@ -238,12 +238,6 @@ internal class MandateListFragment : BaseMainFragment<MandateListEvent, MandateL
                 filterSelection?.updateCurrentPosition(sideEffect.mandateSearchFilterSort.mandateFilter.value)
                 sortSelection?.updateCurrentPosition(sideEffect.mandateSearchFilterSort.mandateSort.value)
             }
-            is MandateListUSF.OpenBankAccountAddition -> {
-                val bundle = Bundle()
-                bundle.putBoolean(BankAccountAddFragment.IS_FROM_ONBOARDING, true)
-                bundle.putString(BankAccountAddFragment.BUNDLE_SOURCE, sideEffect.source)
-                listener?.onNavigate(BankAccountAddFragment.newInstance(bundle), fragmentTag = BankAccountAddScreen.name)
-            }
             is MandateListUSF.OpenPaymentTracker -> {
                 val bundle = Bundle()
                 bundle.putBoolean(PaymentTrackerMainFragment.BUNDLE_IS_SUPER_KEY_FLOW, false)
