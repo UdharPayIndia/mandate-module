@@ -27,6 +27,7 @@ class MandateManager private constructor(
     private val context: Context,
     private val enterpriseId: String,
     private val appName: String,
+    private val appIcon: Int,
     private var loginMobileNumber: String,
     private val customerSupportNumber: String,
     private val skipKyc: Boolean,
@@ -106,6 +107,11 @@ class MandateManager private constructor(
     fun getAppName(): String{
         return appName
     }
+
+    fun getAppIcon(): Int{
+        return appIcon
+    }
+
     fun getEnterpriseId(): String{
         return enterpriseId
     }
@@ -144,6 +150,7 @@ class MandateManager private constructor(
         private var customerSupportNumber: String = ""
         private var skipKyc: Boolean = false
         private var appName: String = ""
+        private var appIcon: Int = -1
         private var isDebug: Boolean = false
 
         fun setContext(context: Context) = apply {
@@ -166,6 +173,10 @@ class MandateManager private constructor(
             this.appName = appName
         }
 
+        fun setAppIcon(appIcon: Int)= apply{
+            this.appIcon = appIcon
+        }
+
         fun skipKyc(flag: Boolean)= apply{
             this.skipKyc = flag
         }
@@ -181,7 +192,8 @@ class MandateManager private constructor(
             if (instance != null) {
                 throw Exception("MandateManager is already built, it can not be re built")
             }
-            instance = MandateManager(context, enterpriseId,appName, loginMobileNumber, customerSupportNumber, skipKyc, isDebug)
+            instance = MandateManager(context, enterpriseId,appName, appIcon,
+                loginMobileNumber, customerSupportNumber, skipKyc, isDebug)
         }
     }
 

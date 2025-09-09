@@ -38,6 +38,10 @@
             <action android:name="android.intent.action.GET_CONTENT" />
             <data android:mimeType="text/csv" />
         </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:mimeType="text/csv" />
+        </intent>
     </queries>
 
     <application>

@@ -76,12 +76,28 @@ internal object RocketpayDownloadManager {
     fun showNotification(title: String, text: String, targetUri: Uri?) {
         val notificationManager = ensureChannel()
 
+        // Create intent to view the file
+        val openFileIntent = Intent(Intent.ACTION_VIEW).apply {
+            setDataAndType(targetUri, "text/csv") // change MIME type as needed
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+
+        // Wrap in PendingIntent
+        val pendingIntent = PendingIntent.getActivity(
+            MandateManager.getInstance().getContext(),
+            0,
+            openFileIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
         val notificationBuilder = NotificationCompat.Builder(
             MandateManager.getInstance().getContext(),
             DOWNLOADS_CHANNEL_ID)
             .setContentTitle(title)
             .setContentText(text)
             .setAutoCancel(true)
+            .setContentIntent(pendingIntent)
             .setChannelId(DOWNLOADS_CHANNEL_ID)
         if(MandateManager.getInstance().getAppIcon() != -1) {
             notificationBuilder.setSmallIcon(MandateManager.getInstance().getAppIcon() )
