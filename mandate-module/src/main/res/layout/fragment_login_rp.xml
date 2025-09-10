@@ -85,6 +85,8 @@
                             style="@style/RpMyEditText"
                             android:layout_width="match_parent"
                             android:inputType="number"
+                            android:textColor="@color/rp_grey_1"
+                            android:enabled="@{vm.mobileNumberEnabled}"
                             android:onTextChanged="@{(text,a,b,c) -> vm.updateMobileNumber(text)}"
                             android:onFocusChange="@{(v, hasFocus) -> vm.onMobileNumberFocusChanged(hasFocus)}"
                             android:text="@{vm.mobileNumber}" />

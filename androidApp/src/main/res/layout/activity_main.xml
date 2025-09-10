@@ -9,6 +9,28 @@
     android:gravity="center"
     tools:context=".main.app.presentation.ui.view.MainActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Debug"/>
+
+        <Switch
+            android:id="@+id/switchView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Release"/>
+
+    </LinearLayout>
+
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/etMobile"
         android:layout_width="@dimen/size_300"

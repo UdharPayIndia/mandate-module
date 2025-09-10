@@ -10,6 +10,7 @@ import com.rocketpay.mandate.common.mvistatemachine.contract.UiSideEffect
 internal data class LoginState(
     val countryCode: String = "",
     val mobileNumber: String = "",
+    val mobileNumberEnabled: Boolean = true,
     val otp: String = "",
     val appSignature: String = "",
     val viewState: LoginViewState = LoginViewState.EnterMobileNumber,

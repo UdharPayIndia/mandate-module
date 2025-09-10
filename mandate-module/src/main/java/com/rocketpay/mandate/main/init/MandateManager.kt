@@ -25,13 +25,13 @@ import kotlinx.coroutines.GlobalScope
 class MandateManager private constructor(
     private val context: Context,
     private val enterpriseId: String,
-    private val secretToken: String,
+    private val enterpriseToken: String,
     private val appName: String,
     private val appIcon: Int,
     private var loginMobileNumber: String,
     private val customerSupportNumber: String,
     private val skipKyc: Boolean,
-    private val isDebug: Boolean
+    private var isDebug: Boolean
 ){
 
     //Config
@@ -115,8 +115,8 @@ class MandateManager private constructor(
         return enterpriseId
     }
 
-    fun getSecretToken(): String{
-        return secretToken
+    fun getEnterpriseToken(): String{
+        return enterpriseToken
     }
 
     fun getCustomerCareNumber(): String{
@@ -143,19 +143,23 @@ class MandateManager private constructor(
         return isDebug
     }
 
+    fun setDebug(flag: Boolean) {
+        this.isDebug = flag
+    }
+
     /*********
      * Builder
      */
     class Builder {
         private lateinit var context: Context
         private var enterpriseId: String = ""
+        private var enterpriseToken: String = ""
         private var loginMobileNumber: String = ""
         private var customerSupportNumber: String = ""
         private var skipKyc: Boolean = false
         private var appName: String = ""
         private var appIcon: Int = -1
         private var isDebug: Boolean = false
-        private var secretToken: String = ""
 
         fun setContext(context: Context) = apply {
             this.context = context.applicationContext
@@ -165,8 +169,8 @@ class MandateManager private constructor(
             this.enterpriseId = enterpriseId
         }
 
-        fun setSecretToken(secretToken: String) = apply {
-            this.secretToken = secretToken
+        fun setEnterpriseToken(enterpriseToken: String) = apply {
+            this.enterpriseToken = enterpriseToken
         }
 
         fun setLoginMobileNumber(loginMobileNumber: String) = apply {
@@ -197,10 +201,13 @@ class MandateManager private constructor(
             if(enterpriseId.isNullOrEmpty()){
                 throw Exception("MandateManager is not built, Enterprise Id is missing")
             }
+            if(enterpriseToken.isNullOrEmpty()){
+                throw Exception("MandateManager is not built, Enterprise Token is missing")
+            }
             if (instance != null) {
                 throw Exception("MandateManager is already built, it can not be re built")
             }
-            instance = MandateManager(context, enterpriseId, secretToken, appName, appIcon,
+            instance = MandateManager(context, enterpriseId, enterpriseToken, appName, appIcon,
                 loginMobileNumber, customerSupportNumber, skipKyc, isDebug)
         }
     }

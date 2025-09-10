@@ -33,19 +33,21 @@ internal class LoginStateMachine(
         return when (event) {
             is LoginEvent.Init -> {
                 val mobileNumber = MandateManager.getInstance().getLoginMobileNumber()
-                val secretToken = MandateManager.getInstance().getSecretToken()
-                if(!mobileNumber.isNullOrEmpty() && !secretToken.isNullOrEmpty()){
+                val enterpriseToken = MandateManager.getInstance().getEnterpriseToken()
+                if(!mobileNumber.isNullOrEmpty() && !enterpriseToken.isNullOrEmpty()){
                     val countryCode = loginUseCase.getCountryCode()
                     val header = ResourceManager.getInstance().getString(R.string.rp_token_verification_in_progress)
                     val message = ResourceManager.getInstance().getString(R.string.rp_token_verification_in_progress_detail)
                     if(NetworkUtils.isNetworkAvailable()){
                         next(state.copy(mobileNumber = mobileNumber,
+                            mobileNumberEnabled = false,
                             countryCode = countryCode,
-                            otp = secretToken),
-                            LoginASF.ValidateUser(countryCode, mobileNumber, secretToken),
+                            otp = enterpriseToken),
+                            LoginASF.ValidateUser(countryCode, mobileNumber, enterpriseToken),
                             LoginUSF.ShowInProgress(header, message))
                     }else{
                         next(state.copy(mobileNumber = mobileNumber,
+                            mobileNumberEnabled = false,
                             countryCode = loginUseCase.getCountryCode()),
                             LoginUSF.ShowError(ResourceManager.getInstance().getString(R.string.rp_token_verification_failed),
                                 ResourceManager.getInstance().getString(R.string.rp_no_internet_connectivity_please_connect_to_internet)))

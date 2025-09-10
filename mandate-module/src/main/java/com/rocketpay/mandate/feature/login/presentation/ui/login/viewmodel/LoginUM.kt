@@ -21,6 +21,7 @@ internal class LoginUM(private val dispatchEvent: (LoginEvent) -> Unit) : BaseMa
     val mobileNumberVisibility = ObservableInt()
     val countryCode = ObservableField<String>()
     val mobileNumber = ObservableField<String>()
+    val mobileNumberEnabled = ObservableBoolean()
 
     val mobileErrorMessage = ObservableField<String>()
 
@@ -44,7 +45,7 @@ internal class LoginUM(private val dispatchEvent: (LoginEvent) -> Unit) : BaseMa
     fun handleState(state: LoginState) {
         countryCode.set(state.countryCode)
         mobileNumber.set(state.mobileNumber)
-
+        mobileNumberEnabled.set(state.mobileNumberEnabled)
         when(state.viewState) {
             LoginViewState.EnterMobileNumber -> {
                 mobileNumberVisibility.set(View.VISIBLE)

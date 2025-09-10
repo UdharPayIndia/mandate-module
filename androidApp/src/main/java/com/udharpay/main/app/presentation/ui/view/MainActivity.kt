@@ -7,6 +7,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Switch
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private var fragment: Fragment? = null
     private var insetView: View? = null
 
+    var switchView: Switch? = null
     var etMobile: EditText? = null
     var btnOpen: Button? = null
     var etReference1: EditText? = null
@@ -63,12 +65,20 @@ class MainActivity : AppCompatActivity() {
             WindowInsetsCompat.CONSUMED
         }
         super.onStart()
+        switchView = findViewById(R.id.switchView)
         etMobile = findViewById(R.id.etMobile)
         btnOpen = findViewById(R.id.btnOpen)
         etReference1 = findViewById(R.id.etReference1)
         btnMandateAdd = findViewById(R.id.btnMandateAdd)
         etReference2 = findViewById(R.id.etReference2)
         btnMandateDetails = findViewById(R.id.btnMandateDetails)
+        switchView?.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked){
+                MandateManager.getInstance().setDebug(false)
+            }else{
+                MandateManager.getInstance().setDebug(true)
+            }
+        }
         etMobile?.addTextChangedListener{
             mobileNumber = it.toString()
         }
