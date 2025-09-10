@@ -53,7 +53,8 @@ internal class LoginStateMachine(
                                 ResourceManager.getInstance().getString(R.string.rp_no_internet_connectivity_please_connect_to_internet)))
                     }
                 }else{
-                    next(LoginASF.LoadCountryCode, LoginUSF.RequestPhoneHint)
+                    next(state.copy(otp = enterpriseToken),
+                        LoginASF.LoadCountryCode, LoginUSF.RequestPhoneHint)
                 }
             }
             is LoginEvent.CountryCodeChanged -> {

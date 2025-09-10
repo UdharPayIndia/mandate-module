@@ -20,10 +20,13 @@ import com.rocketpay.mandate.common.resourcemanager.ResourceManager
 import com.rocketpay.mandate.main.init.MandateManager
 import kotlin.text.format
 
-internal class MandatePreviewDialogVM(val mandate: Mandate,
-                                      val showSkip: Boolean,
-                                      val maximumPenaltyAmount: Int,
-                                      private val dispatchEvent: (MandateAddEvent) -> Unit) : BaseMainUM() {
+internal class MandatePreviewDialogVM(
+    val mandate: Mandate,
+    val showSkip: Boolean,
+    val maximumPenaltyAmount: Int,
+    val isPenaltyEnabled: Boolean,
+    private val dispatchEvent: (MandateAddEvent) -> Unit) : BaseMainUM()
+{
 
     val contactDetails = ObservableField<String>()
     val amount = ObservableField<String>()
@@ -149,15 +152,19 @@ internal class MandatePreviewDialogVM(val mandate: Mandate,
             null
         })
 
-        if(mandate.meta?.penaltyMetaDto?.isEnabled == true){
+        if (isPenaltyEnabled && mandate.meta?.penaltyMetaDto?.isEnabled == true) {
             penaltyVisibility.set(true)
-            if(mandate?.meta?.penaltyMetaDto?.isAuto == true){
-                penaltyChargesText.set(ResourceManager.getInstance().getString(R.string.rp_upto,
-                    AmountUtils.format(maximumPenaltyAmount.toDouble())))
-            }else{
+            if (mandate?.meta?.penaltyMetaDto?.isAuto == true) {
+                penaltyChargesText.set(
+                    ResourceManager.getInstance().getString(
+                        R.string.rp_upto,
+                        AmountUtils.format(maximumPenaltyAmount.toDouble())
+                    )
+                )
+            } else {
                 penaltyChargesText.set(AmountUtils.format(mandate.meta?.penaltyMetaDto?.amountInRs.double()))
             }
-        }else{
+        } else {
             penaltyVisibility.set(false)
         }
     }

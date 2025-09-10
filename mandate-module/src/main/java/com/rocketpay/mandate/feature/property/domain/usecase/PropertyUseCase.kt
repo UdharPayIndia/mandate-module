@@ -42,7 +42,7 @@ internal class PropertyUseCase internal constructor(
         return propertyRepository.getPropertyLive(key)
     }
 
-    fun getMultipleLive(keys: List<String>): Flow<List<PropertyDom?>>{
+    fun getMultiplePropertyLive(keys: List<String>): Flow<List<PropertyDom?>>{
         return propertyRepository.getMultipleLive(keys)
     }
 

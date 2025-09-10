@@ -1,6 +1,7 @@
 package com.rocketpay.mandate.feature.business.presentation.injection
 
 import com.rocketpay.mandate.feature.business.data.BusinessPropertySyncer
+import com.rocketpay.mandate.feature.business.data.EnterprisePropertySyncer
 import com.rocketpay.mandate.feature.business.presentation.ui.view.BusinessProfileFragment
 import dagger.Component
 
@@ -10,6 +11,7 @@ internal interface BusinessProfileComponent {
 
     fun inject(businessProfileFragment: BusinessProfileFragment)
     fun inject(businessProfileSyncer: BusinessPropertySyncer)
+    fun inject(enterprisePropertySyncer: EnterprisePropertySyncer)
 
     object Initializer {
 

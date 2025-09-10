@@ -30,6 +30,11 @@ internal class PropertyRepositoryImpl(
         propertyDao.saveProperties(properties, propertyType)
     }
 
+    override fun saveProperty(property: PropertyDto, propertyType: PropertyType) {
+        propertyDao.saveProperties(listOf(property), propertyType)
+    }
+
+
     override fun setProperties(properties: Map<String, String?>, propertyType: PropertyType) {
         propertyDao.setProperties(properties, propertyType)
     }

@@ -63,20 +63,23 @@ internal data class MandateAddState(
     val referenceId: String? = null,
     val referenceType: String? = null,
     val showSkip: Boolean = false,
-    val maxUpiAmountLimit: Int = AmountUtils.NON_MONETISED_UPI_MAXIMUM_AMOUNT,
+    val maxUpiAmountLimit: Int = 0,
     val isCashFreeMandateUpiEnabled: Boolean = true,
     val termsAndConditionUrl: String? = null,
     val financier: String? = null,
     val isTokenizationEnabled: Boolean = true,
     val productWallet: ProductWallet? = null,
     val isPenaltyEnabled: Boolean = false,
+    val isPenaltySelected: Boolean = false,
     val isPenaltyAuto: Boolean? = null,
     val penaltyAmount: String = "",
     val penaltyEnableError: String = "",
     val penaltyAmountError: String? = "",
     val minimumInstallmentAmountForPenalty: Int = AmountUtils.MINIMUM_INSTALLMENT_AMOUNT_FOR_PENALTY,
-    val minimumPenaltyAmount: Int = AmountUtils.MINIMUM_PENALTY_AMOUNT,
-    val maximumPenaltyAmount: Int = AmountUtils.MAXIMUM_PENALTY_AMOUNT
+    val minimumPenaltyAmount: Int = 0,
+    val maximumPenaltyAmount: Int = 0,
+    val isAdhocEnabled: Boolean = false,
+    val maxUpiNonMonetisedInstallmentAmount: Int = 0
 ) : BaseState(MandateAddScreen)
 
 
@@ -165,6 +168,15 @@ internal sealed class MandateAddEvent(name: String? = null) : BaseEvent(name) {
         val isAuto: Boolean?
     ): MandateAddEvent()
     data class PenaltyAmountChanged(val penaltyAmount: String): MandateAddEvent()
+    data object LoadConfig: MandateAddEvent()
+    data class ConfigLoaded(
+        val isPenaltyEnabled: Boolean,
+        val isAdhocEnabled: Boolean,
+        val penaltyMinimumAmount: Double,
+        val penaltyMaximumAmount: Double,
+        val termsAndConditionUrl: String,
+        val maxUpiNonMonetisedInstallmentAmount: Double
+    ): MandateAddEvent()
 }
 
 
@@ -193,10 +205,11 @@ internal sealed class MandateAddASF : AsyncSideEffect {
         val chargeResponse: ChargeResponseDto? = null,
         val financier: String?,
         val isPenaltyEnabled: Boolean,
+        val isPenaltySelected: Boolean,
         val isPenaltyAuto: Boolean,
         val penaltyAmount: Double
     ) : MandateAddASF()
-    object LoadSupportedFrequency: MandateAddASF()
+    data class LoadSupportedFrequency(val isAdhocEnabled: Boolean): MandateAddASF()
     data class ShareOnWhatsAppClick(val mandate: Mandate): MandateAddASF()
     data class OpenMandatePreview(val mandate: Mandate): MandateAddASF()
     data class CheckChargeAndDiscount(
@@ -209,6 +222,7 @@ internal sealed class MandateAddASF : AsyncSideEffect {
     data class StartPolling(val mandateId: String): MandateAddASF()
     object StopPolling: MandateAddASF()
     data class RefreshMandate(val mandateId: String): MandateAddASF()
+    data object LoadConfig: MandateAddASF()
 }
 
 
@@ -221,9 +235,11 @@ internal sealed class MandateAddUSF : UiSideEffect {
     data class OpenInstallmentSelection(val currentNoOfInstallments: Int?, val installments: List<ItemDialogBottomSheet>) : MandateAddUSF()
     data class OpenStartDateSelection(val installmentFrequency: InstallmentFrequency?, val currentSelectedDate: Long?) : MandateAddUSF()
     data class OpenFrequencySelection(val installmentFrequency: InstallmentFrequency?, val frequencies: List<ItemDialogBottomSheet>) : MandateAddUSF()
-    data class OpenMandatePreview(val mandate: Mandate,
-                                  val referenceId: String?, val showSkip: Boolean,
-                                  val isManual: Boolean, val maximumPenaltyAmount: Int) : MandateAddUSF()
+    data class OpenMandatePreview(
+        val mandate: Mandate,
+        val referenceId: String?, val showSkip: Boolean,
+        val isManual: Boolean, val maximumPenaltyAmount: Int,
+        val isPenaltyEnabled: Boolean) : MandateAddUSF()
     data class OpenUpiApp(val mandate: Mandate, val upiApplication: UpiApplication) : MandateAddUSF()
     data class GotoMandateDetail(val mandateId: String, val referenceId: String?, val isManual: Boolean): MandateAddUSF()
     data class ShareOnWhatsApp(val mobileNumber: String, val message: String,

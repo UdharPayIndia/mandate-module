@@ -87,7 +87,8 @@ internal class MandateUseCase internal constructor(
         referenceId: String?,
         referenceType: String?,
         chargeResponseDto: ChargeResponseDto?,
-        penaltyMetaDto: PenaltyMetaDto
+        penaltyMetaDto: PenaltyMetaDto?,
+        retryInstallmentMetaDto: RetryInstallmentMetaDto?
     ): Outcome<Mandate> {
         val customer = CustomerDetail(name, mobileNumber)
         val paymentDetails = PaymentMethodDetail(paymentMethod, upiId)
@@ -111,7 +112,7 @@ internal class MandateUseCase internal constructor(
                 charges = chargeResponseDto,
                 selfCheckoutDto = null,
                 penaltyMetaDto = penaltyMetaDto,
-                retryInstallmentMeta = RetryInstallmentMetaDto(isAuto = false)
+                retryInstallmentMeta = retryInstallmentMetaDto
             )
         )
         return mandateRepository.createMandate(mandateDom)

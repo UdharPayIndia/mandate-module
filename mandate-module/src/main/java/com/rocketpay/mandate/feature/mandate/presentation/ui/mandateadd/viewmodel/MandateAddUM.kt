@@ -135,8 +135,7 @@ internal class MandateAddUM (private val dispatchEvent: (MandateAddEvent) -> Uni
 
     val enableUpiLayout = ObservableBoolean()
     val upiLayoutAlpha = ObservableFloat()
-    val upiAmountLimitError = ObservableField<String>(ResourceManager.getInstance().getString(R.string.rp_upi_amount_limit_exceeded,
-        AmountUtils.format(AmountUtils.NON_MONETISED_UPI_MAXIMUM_AMOUNT.toDouble())))
+    val upiAmountLimitError = ObservableField<String>()
     val upiAmountLimitExceededVisibility = ObservableInt(View.GONE)
 
     val upiLayoutVisibility = ObservableInt()
@@ -159,6 +158,7 @@ internal class MandateAddUM (private val dispatchEvent: (MandateAddEvent) -> Uni
     val userCollectionPerInstallmentLabel = ObservableField<String>(ResourceManager.getInstance().getString(R.string.rp_your_collection))
     val userCollectionPerInstallmentText = ObservableField<String>()
     val bearerCheckBox = ObservableField<Drawable>(ResourceManager.getInstance().getDrawable(R.drawable.rp_ic_checkbox_empty))
+    val isPenaltyEnabled = ObservableBoolean()
 
     fun onChargeClick() {
         dispatchEvent(MandateAddEvent.ShowChargeDialog)
@@ -281,7 +281,8 @@ internal class MandateAddUM (private val dispatchEvent: (MandateAddEvent) -> Uni
         setPaymentDetails(state)
         showMonetization(state)
 
-        itemPenaltyVm.setData(state.isPenaltyEnabled,
+        isPenaltyEnabled.set(state.isPenaltyEnabled)
+        itemPenaltyVm.setData(state.isPenaltySelected,
             state.isPenaltyAuto,
             state.penaltyEnableError,
             state.penaltyAmount,
@@ -548,7 +549,7 @@ internal class MandateAddUM (private val dispatchEvent: (MandateAddEvent) -> Uni
                     setCollectionInfo(state)
                     paymentDetailVisibility.set(true)
                     generatePaymentLinkText.set(ResourceManager.getInstance().getString(R.string.rp_share_payment_link))
-                    val isPenaltyValid = !state.isPenaltyEnabled
+                    val isPenaltyValid = !state.isPenaltySelected
                             || state.isPenaltyAuto == false
                             ||  MandateAddStateMachine.isPenaltyAmountValid(
                         state.amount,

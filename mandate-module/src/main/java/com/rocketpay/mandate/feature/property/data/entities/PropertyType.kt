@@ -5,4 +5,5 @@ internal sealed class PropertyType(val value: Int){
     object User: PropertyType(1)
     object Device: PropertyType(2)
     object Miscellaneous: PropertyType(3)
+    object Enterprise: PropertyType(4)
 }

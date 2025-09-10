@@ -1,5 +1,6 @@
 package com.rocketpay.mandate.feature.business.data
 
+import com.rocketpay.mandate.feature.business.data.datasource.entities.EnterprisePropertyDto
 import com.rocketpay.mandate.feature.business.data.datasource.remote.BusinessPropertyService
 import com.rocketpay.mandate.feature.business.domain.repositories.BusinessPropertyRepository
 import com.rocketpay.mandate.feature.property.data.entities.PropertyDto
@@ -18,4 +19,7 @@ internal class BusinessPropertyRepositoryImpl(
         return businessPropertyService.pushBusinessProperties(businessProperty)
     }
 
+    override suspend fun pullEnterprisePropertyList(accountId: String): Outcome<List<EnterprisePropertyDto>>{
+        return businessPropertyService.pullEnterprisePropertyList(accountId)
+    }
 }

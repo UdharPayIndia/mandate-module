@@ -4,6 +4,8 @@ import com.rocketpay.mandate.feature.bankaccount.data.BankAccountSync
 import com.rocketpay.mandate.feature.bankaccount.data.BankAccountSyncer
 import com.rocketpay.mandate.feature.business.data.BusinessPropertySync
 import com.rocketpay.mandate.feature.business.data.BusinessPropertySyncer
+import com.rocketpay.mandate.feature.business.data.EnterprisePropertySync
+import com.rocketpay.mandate.feature.business.data.EnterprisePropertySyncer
 import com.rocketpay.mandate.feature.kyc.data.KycSync
 import com.rocketpay.mandate.feature.kyc.data.KycSyncer
 import com.rocketpay.mandate.feature.mandate.data.MandateSync
@@ -28,6 +30,7 @@ internal class SyncRegister: Register<String, Sync>() {
         register(ProductOrderSyncer.TYPE, ProductOrderSync())
         register(ProductWalletSyncer.TYPE, ProductWalletSync())
         register(BusinessPropertySyncer.TYPE, BusinessPropertySync())
+        register(EnterprisePropertySyncer.TYPE, EnterprisePropertySync())
         register(PaymentOrderReportSyncer.TYPE, PaymentOrderReportSync())
     }
 }

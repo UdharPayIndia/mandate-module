@@ -9,6 +9,7 @@ internal interface PropertyRepository {
     fun getDirtyProperties(propertyType: PropertyType): List<PropertyDom>
     fun markPropertiesNonDirty(properties: List<PropertyDom>)
     fun saveProperties(properties: List<PropertyDto>, propertyType: PropertyType)
+    fun saveProperty(property: PropertyDto, propertyType: PropertyType)
     fun setProperty(key: String, value: String, propertyType: PropertyType)
     fun setProperties(properties: Map<String, String?>, propertyType: PropertyType)
     fun getPropertyValue(key: String): String?

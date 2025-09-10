@@ -36,9 +36,6 @@ class MandateManager private constructor(
 
     //Config
     internal val penaltyMinimumAmount: Double = 15.0
-    internal val maxUpiMonetisedInstallmentAmount: Int = AmountUtils.NON_MONETISED_UPI_MAXIMUM_AMOUNT
-    internal val isAdhocInstallmentFrequencyEnable: Boolean = false
-    internal val termsAndConditionUrl: String = "https://www.rocketpay.co.in/termsofuse"
     internal val nonBusinessEnumString: String = "I don’t have a business"
 
     companion object {

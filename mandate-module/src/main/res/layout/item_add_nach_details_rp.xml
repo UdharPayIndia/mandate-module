@@ -181,6 +181,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/rp_size_4"
+                android:visibility="@{vm.isPenaltyEnabled() ? View.VISIBLE : View.GONE}"
                 app:vm="@{vm.itemPenaltyVm}" />
         </LinearLayout>
     </FrameLayout>

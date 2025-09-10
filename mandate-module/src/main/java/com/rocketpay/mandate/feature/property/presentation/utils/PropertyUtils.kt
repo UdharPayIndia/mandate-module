@@ -1,10 +1,14 @@
 package com.rocketpay.mandate.feature.property.presentation.utils
 
 internal object PropertyUtils {
-    const val IS_LOCATION_FETCHED = "is_location_fetched"
-    const val IS_SUBSCRIPTION_ACTIVE = "is_subscription_active"
-    const val FRP = "frp"
-    const val UPI_IMAGE_URL = "upi_image_url"
     const val BUSINESS_NAME = "business_name"
+    const val BUSINESS_MOBILE_NUMBER = "business_mobile_number"
+
+    const val PENALTY_MINIMUM_AMOUNT = "penalty_min_amount"
+    const val PENALTY_MAXIMUM_AMOUNT = "penalty_max_amount"
+    const val IS_PENALTY_ENABLED = "is_penalty_feature_enabled"
+    const val IS_ADHOC_ENABLED = "is_adhoc_frequency_mandate_enabled"
+    const val TERMS_AND_CONDITION_URL = "tnc_url"
+    const val MAX_UPI_NON_MONETISED_INSTALLMENT_AMOUNT = "max_upi_non_monetised_installment_amount"
 
 }

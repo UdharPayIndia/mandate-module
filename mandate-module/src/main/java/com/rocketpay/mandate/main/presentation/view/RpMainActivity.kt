@@ -32,6 +32,7 @@ import com.rocketpay.mandate.feature.bankaccount.presentation.ui.bankaccountadd.
 import com.rocketpay.mandate.feature.bankaccount.presentation.ui.bankaccountlist.statemachine.BankAccountListScreen
 import com.rocketpay.mandate.feature.bankaccount.presentation.ui.bankaccountlist.view.BankAccountListFragment
 import com.rocketpay.mandate.feature.business.data.BusinessPropertySyncer
+import com.rocketpay.mandate.feature.business.data.EnterprisePropertySyncer
 import com.rocketpay.mandate.feature.image.presentation.utils.FileUtils
 import com.rocketpay.mandate.feature.installment.presentation.ui.paymentSchedule.main.statemachine.PaymentTrackerMainScreen
 import com.rocketpay.mandate.feature.installment.presentation.ui.paymentSchedule.main.view.PaymentTrackerMainFragment
@@ -145,6 +146,7 @@ internal class RpMainActivity : AppCompatActivity(), BaseFragmentListener {
         SyncManager.getInstance().enqueue(KycSyncer.TYPE)
         SyncManager.getInstance().enqueue(ProductWalletSyncer.TYPE)
         SyncManager.getInstance().enqueue(ProductOrderSyncer.TYPE)
+        SyncManager.getInstance().enqueue(EnterprisePropertySyncer.TYPE)
         SyncManager.getInstance().enqueue(BusinessPropertySyncer.TYPE)
     }
 

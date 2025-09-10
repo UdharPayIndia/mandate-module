@@ -54,6 +54,7 @@ import com.rocketpay.mandate.common.basemodule.common.presentation.utils.ShowUti
 import com.rocketpay.mandate.databinding.BottomSheetEnterRpBinding
 import com.rocketpay.mandate.common.basemodule.main.view.BaseMainFragment
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
+import com.rocketpay.mandate.feature.mandate.presentation.ui.mandatelist.statemachine.MandateListEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -137,6 +138,7 @@ internal class MandateAddFragment : BaseMainFragment<MandateAddEvent, MandateAdd
         stateMachine.dispatchEvent(MandateAddEvent.Init(customerName, customerNumber, note,
             amount, downPayment, referenceId, referenceType, showSkip, paymentMode, financier))
         stateMachine.dispatchEvent(MandateAddEvent.LoadProductWallet)
+        stateMachine.dispatchEvent(MandateAddEvent.LoadConfig)
     }
 
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -238,7 +240,8 @@ internal class MandateAddFragment : BaseMainFragment<MandateAddEvent, MandateAdd
             is MandateAddUSF.OpenMandatePreview -> {
                 showSharePaymentLinkPopUp(sideEffect.mandate,
                     sideEffect.referenceId, sideEffect.showSkip,
-                    sideEffect.isManual, sideEffect.maximumPenaltyAmount)
+                    sideEffect.isManual, sideEffect.maximumPenaltyAmount,
+                    sideEffect.isPenaltyEnabled)
                 progressDialog.dismiss()
             }
             is MandateAddUSF.OpenUpiApp -> {
@@ -404,11 +407,18 @@ internal class MandateAddFragment : BaseMainFragment<MandateAddEvent, MandateAdd
         }
     }
 
-    private fun showSharePaymentLinkPopUp(mandate: Mandate,
-                                          referenceId: String?, showSkip: Boolean, isManual: Boolean, maximumPenaltyAmount: Int) {
+    private fun showSharePaymentLinkPopUp(
+        mandate: Mandate,
+        referenceId: String?,
+        showSkip: Boolean,
+        isManual: Boolean,
+        maximumPenaltyAmount: Int,
+        isPenaltyEnabled: Boolean
+    ) {
         if (mandatePreviewDialog == null) {
             skipRedirection = !referenceId.isNullOrEmpty()
-            val mandatePreviewDialogVM = MandatePreviewDialogVM(mandate, showSkip, maximumPenaltyAmount) {
+            val mandatePreviewDialogVM = MandatePreviewDialogVM(mandate,
+                showSkip, maximumPenaltyAmount, isPenaltyEnabled) {
                 stateMachine.dispatchEvent(it)
             }
             mandatePreviewDialog = MandatePreviewDialog(requireContext(), mandatePreviewDialogVM)

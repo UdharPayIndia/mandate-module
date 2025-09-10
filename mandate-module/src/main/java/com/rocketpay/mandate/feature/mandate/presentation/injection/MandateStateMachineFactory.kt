@@ -33,7 +33,8 @@ internal open class MandateStateMachineFactory(
                 bankAccountUseCase,
                 permissionUseCase,
                 chargeUseCase,
-                productUseCase
+                productUseCase,
+                propertyUseCase
             ) as T
             modelClass.isAssignableFrom(MandateDetailStateMachine::class.java) -> MandateDetailStateMachine(
                 mandateUseCase,
