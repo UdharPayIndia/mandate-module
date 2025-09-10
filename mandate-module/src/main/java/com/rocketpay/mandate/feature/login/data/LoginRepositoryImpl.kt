@@ -31,14 +31,15 @@ internal class LoginRepositoryImpl(
         }
     }
 
-    override suspend fun verifyOtp(
+    override suspend fun verifyToken(
         mobileNumber: String,
         enterpriseId: String,
         otp: String,
-        deviceId: String
+        deviceId: String,
     ): Outcome<User> {
-        val request = ValidateOtpRequest(subjectId = mobileNumber, enterpriseId = enterpriseId, secret = otp, deviceId = deviceId)
-        return when(val outcome = loginService.verifyOtp(request)) {
+        val request = ValidateOtpRequest(subjectId = mobileNumber,
+            enterpriseId = enterpriseId, secret = otp, deviceId = deviceId)
+        return when(val outcome = loginService.verifyToken(request)) {
             is Outcome.Error -> outcome
             is Outcome.Success -> {
                 val user = userMapper.map(outcome.data)

@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.rocketpay.mandate.common.basemodule.common.eventbus.activityresultcallback.FragmentResultBus
 import com.rocketpay.mandate.main.init.MandateLauncher
+import com.rocketpay.mandate.main.init.MandateManager
 import com.udharpay.R
 import kotlinx.coroutines.launch
 
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     private var fragment: Fragment? = null
     private var insetView: View? = null
 
+    var etMobile: EditText? = null
     var btnOpen: Button? = null
     var etReference1: EditText? = null
     var btnMandateAdd: Button? = null
@@ -34,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     var btnMandateDetails: Button? = null
     var btnLogout: Button? = null
 
+    private var mobileNumber: String = ""
     private var referenceId1: String = ""
     private var referenceId2: String = ""
 
@@ -60,12 +63,17 @@ class MainActivity : AppCompatActivity() {
             WindowInsetsCompat.CONSUMED
         }
         super.onStart()
+        etMobile = findViewById(R.id.etMobile)
         btnOpen = findViewById(R.id.btnOpen)
         etReference1 = findViewById(R.id.etReference1)
         btnMandateAdd = findViewById(R.id.btnMandateAdd)
         etReference2 = findViewById(R.id.etReference2)
         btnMandateDetails = findViewById(R.id.btnMandateDetails)
+        etMobile?.addTextChangedListener{
+            mobileNumber = it.toString()
+        }
         btnOpen?.setOnClickListener {
+            MandateManager.getInstance().setLoginMobileNumber(mobileNumber)
             MandateLauncher.openMandateList(this)
         }
         etReference1?.addTextChangedListener {

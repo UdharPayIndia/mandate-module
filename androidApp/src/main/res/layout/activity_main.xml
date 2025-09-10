@@ -9,6 +9,13 @@
     android:gravity="center"
     tools:context=".main.app.presentation.ui.view.MainActivity">
 
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etMobile"
+        android:layout_width="@dimen/size_300"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_64"
+        android:hint="Enter Login Mobile Number"/>
+
     <Button
         android:id="@+id/btnOpen"
         android:layout_width="@dimen/size_300"

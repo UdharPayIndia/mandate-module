@@ -1133,9 +1133,6 @@ internal class MandateAddStateMachine(
 
             is MandateAddASF.LoadSupportedFrequency -> {
                 val installmentFrequencies = InstallmentFrequency.map.values.toMutableList()
-                if (!MandateManager.getInstance().isDailyFrequencyEnable) {
-                    installmentFrequencies.removeAt(0)
-                }
                 if (!MandateManager.getInstance().isAdhocInstallmentFrequencyEnable) {
                     installmentFrequencies.removeAt(installmentFrequencies.lastIndex)
                 }

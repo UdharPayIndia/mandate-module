@@ -8,8 +8,10 @@ import com.udharpay.core.networkmanager.domain.entities.Outcome
 internal interface LoginRepository {
     fun getMobileNumber(): String
     suspend fun requestOtp(mobileNumber: String, appSignature: String): Outcome<Boolean>
-    suspend fun verifyOtp(mobileNumber: String, enterpriseId: String,
-                          otp: String, deviceId: String): Outcome<User>
+    suspend fun verifyToken(
+        mobileNumber: String, enterpriseId: String,
+        otp: String, deviceId: String,
+    ): Outcome<User>
     suspend fun createDevice(createDeviceRequest: CreateDeviceRequest): Outcome<DeviceResponseDto>
     fun getUserId(): String
     fun getAccountId(): String

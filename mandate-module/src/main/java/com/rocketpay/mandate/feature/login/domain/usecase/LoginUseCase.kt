@@ -31,11 +31,14 @@ internal class LoginUseCase internal constructor(
     }
 
 
-    suspend fun verifyOtp(mobileNumber: String,
-                          enterpriseId: String,
-                          otp: String,
-                          deviceId: String): Outcome<User> {
-        return loginRepository.verifyOtp(mobileNumber = mobileNumber, enterpriseId = enterpriseId, otp = otp, deviceId = deviceId)
+    suspend fun verifyToken(
+        mobileNumber: String,
+        enterpriseId: String,
+        otp: String,
+        deviceId: String
+    ): Outcome<User> {
+        return loginRepository.verifyToken(mobileNumber = mobileNumber,
+            enterpriseId = enterpriseId, otp = otp, deviceId = deviceId)
     }
 
     internal suspend fun createDevice(createDeviceRequest: CreateDeviceRequest): Outcome<DeviceResponseDto>{

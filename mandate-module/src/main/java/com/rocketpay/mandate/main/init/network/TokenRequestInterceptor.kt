@@ -21,7 +21,7 @@ internal class TokenRequestInterceptor(private val userDataStore: LoginDataStore
             .header("x-platform", "android")
             .header("x-platform-version", Build.VERSION.SDK_INT.toString())
             .header("x-app", "udharpay")
-            .header("x-app-context", "SDK_APP")
+            .header("x-app-context", "MERCHANT_SDK")
             .header("x-app-version", BuildConfig.VERSION_CODE.toString())
             .url(filterUrl)
             .build()

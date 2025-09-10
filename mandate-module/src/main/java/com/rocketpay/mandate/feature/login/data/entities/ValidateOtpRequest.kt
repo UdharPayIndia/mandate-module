@@ -22,7 +22,7 @@ internal data class ValidateOtpRequest(
     val subjectType: String = "PHONE",
 
     @SerializedName("method")
-    val method: String = "OTP",
+    val method: String = "ENTERPRISE_TOKEN",
 
     @SerializedName("use_case")
     var useCase: String = "ROCKETPAY_LOGIN"

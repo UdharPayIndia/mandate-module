@@ -27,6 +27,7 @@
     <string name="rp_error_otp">Invalid OTP</string>
     <string name="rp_verify_otp">Verify OTP</string>
     <string name="rp_get_otp">Get OTP</string>
+    <string name="rp_verify_user">Verify user</string>
     <string name="rp_did_not_get_otp">Did not received OTP?</string>
     <string name="rp_resend_otp_after">Resend OTP in</string>
     <string name="rp_get_otp_code">Get OTP</string>
@@ -79,10 +80,13 @@
     <string name="rp_single_payments">Once</string>
     <string name="rp_share_payment_link">Share payment link</string>
     <string name="rp_otp_time_left">00:%s</string>
+    <string name="rp_token_verification_failed">User verification failed</string>
     <string name="rp_otp_verification_failed">OTP verification failed</string>
     <string name="rp_request_otp_in_progress">Requesting OTP…</string>
     <string name="rp_request_otp_in_progress_detail">Requesting OTP, Please wait…</string>
     <string name="rp_otp_verification_in_progress">Verifying OTP…</string>
+    <string name="rp_token_verification_in_progress">Verifying user…</string>
+    <string name="rp_token_verification_in_progress_detail">Verifying user, Please wait…</string>
     <string name="rp_otp_verification_in_progress_detail">Verifying OTP, Please wait…</string>
     <string name="rp_payment_link_share_message_one_time">Dear customer, MERCHANT_NAME has requested\nTOTAL_AMOUNT\nDue date:START_DATE\nScan the above QR using the UPI apps.</string>
     <string name="rp_payment_link_share_message">Dear customer, MERCHANT_NAME has requested\nTOTAL_AMOUNT\n\nNO_OF_INSTALLMENT x INSTALLMENT_AMOUNT in INSTALLMENT_FREQUENCY installments\nStarting from: START_DATE\nScan the above QR using the UPI apps.</string>
@@ -594,7 +598,6 @@
     <string name="rp_penalty_amount_should_not_be_less_than">Penalty amount should not be less than %1$s</string>
     <string name="rp_penalty_amount_should_not_be_greater_than">Penalty amount should not be greater than %1$s</string>
     <string name="rp_merchant_penalty_for_bounced_installments">Merchant penalty for bounced installments</string>
-    <string name="rp_penalty_will_be_attempted_tomorrow">Penalty will be attempted tomorrow and amount will be settled to you after deducting Rocketpay charges</string>
     <string name="rp_you_can_only_retry_an_installment_after_their_collection_is_failed">You can only retry an installment after their collection is failed</string>
     <string name="rp_you_can_only_skip_an_installment_before_its_collection_is_initiated">You can only skip an installment before its collection is initiated</string>
     <string name="rp_you_can_only_skip_an_installment_when_mandate_is_active">You can only skip an installment when mandate is in active state</string>

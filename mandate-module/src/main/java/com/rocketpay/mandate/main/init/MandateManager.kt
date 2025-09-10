@@ -3,7 +3,6 @@ package com.rocketpay.mandate.main.init
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.google.gson.Gson
-import com.rocketpay.mandate.BuildConfig
 import com.rocketpay.mandate.common.basemodule.common.data.cache.DataStore
 import com.rocketpay.mandate.main.database.MandateDatabase
 import com.rocketpay.mandate.main.init.network.EventResponseInterceptor
@@ -26,6 +25,7 @@ import kotlinx.coroutines.GlobalScope
 class MandateManager private constructor(
     private val context: Context,
     private val enterpriseId: String,
+    private val secretToken: String,
     private val appName: String,
     private val appIcon: Int,
     private var loginMobileNumber: String,
@@ -36,7 +36,6 @@ class MandateManager private constructor(
 
     //Config
     internal val penaltyMinimumAmount: Double = 15.0
-    internal val isDailyFrequencyEnable: Boolean = true
     internal val maxUpiMonetisedInstallmentAmount: Int = AmountUtils.NON_MONETISED_UPI_MAXIMUM_AMOUNT
     internal val isAdhocInstallmentFrequencyEnable: Boolean = false
     internal val termsAndConditionUrl: String = "https://www.rocketpay.co.in/termsofuse"
@@ -116,6 +115,10 @@ class MandateManager private constructor(
         return enterpriseId
     }
 
+    fun getSecretToken(): String{
+        return secretToken
+    }
+
     fun getCustomerCareNumber(): String{
         return customerSupportNumber
     }
@@ -152,6 +155,7 @@ class MandateManager private constructor(
         private var appName: String = ""
         private var appIcon: Int = -1
         private var isDebug: Boolean = false
+        private var secretToken: String = ""
 
         fun setContext(context: Context) = apply {
             this.context = context.applicationContext
@@ -159,6 +163,10 @@ class MandateManager private constructor(
 
         fun setEnterpriseId(enterpriseId: String) = apply {
             this.enterpriseId = enterpriseId
+        }
+
+        fun setSecretToken(secretToken: String) = apply {
+            this.secretToken = secretToken
         }
 
         fun setLoginMobileNumber(loginMobileNumber: String) = apply {
@@ -192,7 +200,7 @@ class MandateManager private constructor(
             if (instance != null) {
                 throw Exception("MandateManager is already built, it can not be re built")
             }
-            instance = MandateManager(context, enterpriseId,appName, appIcon,
+            instance = MandateManager(context, enterpriseId, secretToken, appName, appIcon,
                 loginMobileNumber, customerSupportNumber, skipKyc, isDebug)
         }
     }

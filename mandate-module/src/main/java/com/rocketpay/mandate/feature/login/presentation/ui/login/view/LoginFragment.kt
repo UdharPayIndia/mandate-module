@@ -17,23 +17,19 @@ import com.google.android.gms.auth.api.identity.GetPhoneNumberHintIntentRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.rocketpay.mandate.R
 import com.rocketpay.mandate.common.basemodule.common.eventbus.activityresultcallback.FragmentResultBus
-import com.rocketpay.mandate.databinding.FragmentLoginRpBinding
-import com.rocketpay.mandate.feature.login.presentation.injection.LoginComponent
-import com.rocketpay.mandate.feature.login.presentation.injection.LoginStateMachineFactory
-import com.rocketpay.mandate.feature.login.presentation.service.smsretriver.SmsRetrieverListener
-import com.rocketpay.mandate.feature.login.presentation.service.smsretriver.SmsRetrieverService
-import com.rocketpay.mandate.feature.login.presentation.service.smsretriver.SmsRetrieverServiceImpl
-import com.rocketpay.mandate.feature.login.presentation.ui.login.statemachine.LoginEvent
-import com.rocketpay.mandate.feature.login.presentation.ui.login.statemachine.LoginState
-import com.rocketpay.mandate.feature.login.presentation.ui.login.statemachine.LoginStateMachine
-import com.rocketpay.mandate.feature.login.presentation.ui.login.statemachine.LoginUSF
-import com.rocketpay.mandate.feature.login.presentation.ui.login.statemachine.OtpTimer
-import com.rocketpay.mandate.feature.login.presentation.ui.login.viewmodel.LoginUM
 import com.rocketpay.mandate.common.basemodule.common.presentation.progressdialog.ProgressDialog
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.KeyboardUtils
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.PhoneUtils
 import com.rocketpay.mandate.common.basemodule.main.view.BaseMainFragment
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
+import com.rocketpay.mandate.databinding.FragmentLoginRpBinding
+import com.rocketpay.mandate.feature.login.presentation.injection.LoginComponent
+import com.rocketpay.mandate.feature.login.presentation.injection.LoginStateMachineFactory
+import com.rocketpay.mandate.feature.login.presentation.ui.login.statemachine.LoginEvent
+import com.rocketpay.mandate.feature.login.presentation.ui.login.statemachine.LoginState
+import com.rocketpay.mandate.feature.login.presentation.ui.login.statemachine.LoginStateMachine
+import com.rocketpay.mandate.feature.login.presentation.ui.login.statemachine.LoginUSF
+import com.rocketpay.mandate.feature.login.presentation.ui.login.viewmodel.LoginUM
 import javax.inject.Inject
 
 internal class LoginFragment : BaseMainFragment<LoginEvent, LoginState, LoginUSF>() {
@@ -43,10 +39,6 @@ internal class LoginFragment : BaseMainFragment<LoginEvent, LoginState, LoginUSF
     @Inject
     internal lateinit var loginStateMachineFactory: LoginStateMachineFactory
     private val progressDialog by lazy { ProgressDialog(requireContext(), vm.progressDialogVM) }
-
-    private var otpTimer: OtpTimer? = null
-    private var smsRetrieverService: SmsRetrieverService? = null
-
     companion object {
         const val RESULT_LOGGED_IN = "RESULT_LOGGED_IN"
         fun newInstance(bundle: Bundle?): LoginFragment {
@@ -108,11 +100,6 @@ internal class LoginFragment : BaseMainFragment<LoginEvent, LoginState, LoginUSF
                 vm.progressDialogVM.setProgressState(sideEffect.header, sideEffect.message)
                 progressDialog.show()
             }
-            is LoginUSF.StartSmsListener -> {
-                progressDialog.dismiss()
-                handleGetSms(sideEffect.interval, sideEffect.otpTimeout)
-                stateMachine.dispatchEvent(LoginEvent.OtpFocusChanged)
-            }
             is LoginUSF.GotoHome -> {
                 requireActivity().supportFragmentManager.beginTransaction().remove(this).commit()
                 progressDialog.dismiss()
@@ -128,10 +115,6 @@ internal class LoginFragment : BaseMainFragment<LoginEvent, LoginState, LoginUSF
             is LoginUSF.MobileNumberFocusChanged -> {
                 binding.etMobileNumber.requestFocus()
                 KeyboardUtils.showKeyBoard(binding.etMobileNumber, requireContext())
-            }
-            is LoginUSF.OtpFocusChanged -> {
-                binding.etOtp.requestFocus()
-                KeyboardUtils.showKeyBoard(binding.etOtp, requireContext())
             }
             is LoginUSF.RequestPhoneHint -> {
                 requestPhoneNumberHint()
@@ -160,7 +143,7 @@ internal class LoginFragment : BaseMainFragment<LoginEvent, LoginState, LoginUSF
             if (!phoneNumber.isNullOrEmpty()) {
                 binding.etMobileNumber.setText(PhoneUtils.removedCountryCodeFromMobileNumber(phoneNumber))
                 stateMachine.dispatchEvent(LoginEvent.PhoneHintReceived(phoneNumber))
-                stateMachine.dispatchEvent(LoginEvent.RequestOtpClick)
+                stateMachine.dispatchEvent(LoginEvent.VerifyUserClick)
             } else {
                 stateMachine.dispatchEvent(LoginEvent.MobileNumberFocusChanged)
             }
@@ -168,49 +151,9 @@ internal class LoginFragment : BaseMainFragment<LoginEvent, LoginState, LoginUSF
         }
     }
 
-    private fun handleGetSms(interval: Long, otpTimeout: Long) {
-        if (otpTimer == null) {
-            otpTimer = OtpTimer(
-                otpTimeout = otpTimeout,
-                interval = interval,
-                {
-                    stateMachine.dispatchEvent(LoginEvent.UpdateTimeLeft(it))
-                },
-                {
-                    otpTimer?.cancel()
-                    smsRetrieverService?.stopService()
-                    stateMachine.dispatchEvent(LoginEvent.OtpTimeout)
-                }
-            )
-        }
-        otpTimer?.cancel()
-        otpTimer?.start()
-
-        if (smsRetrieverService == null) {
-            smsRetrieverService =
-                SmsRetrieverServiceImpl(requireContext(), object : SmsRetrieverListener {
-                    override fun onSmsReceived(otp: String?) {
-                        if (!otp.isNullOrEmpty()) {
-                            otpTimer?.cancel()
-                            smsRetrieverService?.stopService()
-                            binding.etOtp.setText(otp)
-                            stateMachine.dispatchEvent(LoginEvent.OtpHintReceived(otp))
-                            stateMachine.dispatchEvent(LoginEvent.VerifyOtpClick)
-                        }
-                    }
-                })
-        }
-        smsRetrieverService?.startService()
-    }
-
     override fun deInitView() {
         super.deInitView()
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
     }
 
-    override fun onDestroy() {
-        otpTimer?.cancel()
-        smsRetrieverService?.stopService()
-        super.onDestroy()
-    }
 }

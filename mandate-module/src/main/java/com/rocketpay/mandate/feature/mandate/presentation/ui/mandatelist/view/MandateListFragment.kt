@@ -12,8 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.rocketpay.mandate.R
 import com.rocketpay.mandate.databinding.FragmentMandateListRpBinding
-import com.rocketpay.mandate.feature.bankaccount.presentation.ui.bankaccountadd.statemachine.BankAccountAddScreen
-import com.rocketpay.mandate.feature.bankaccount.presentation.ui.bankaccountadd.view.BankAccountAddFragment
 import com.rocketpay.mandate.feature.mandate.presentation.injection.MandateComponent
 import com.rocketpay.mandate.feature.mandate.presentation.injection.MandateStateMachineFactory
 import com.rocketpay.mandate.feature.mandate.presentation.ui.mandateadd.statemachine.MandateAddScreen

@@ -20,7 +20,7 @@ internal class LoginService {
             .post()
     }
 
-    suspend fun verifyOtp(validateOtpRequest: ValidateOtpRequest): Outcome<UserDto> {
+    suspend fun verifyToken(validateOtpRequest: ValidateOtpRequest): Outcome<UserDto> {
         return NetworkRequestBuilder()
             .subUrl("/common/party/v1/login")
             .body(validateOtpRequest)
