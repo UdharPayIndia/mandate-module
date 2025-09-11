@@ -22,11 +22,6 @@ android {
         }
     }
 
-    lint {
-        checkReleaseBuilds = false
-        abortOnError = false
-    }
-
     sourceSets {
         androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
     }

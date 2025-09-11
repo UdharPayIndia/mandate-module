@@ -67,10 +67,6 @@ android {
         dataBinding = true
         buildConfig = true
     }
-    lint {
-        checkReleaseBuilds = false
-        abortOnError = false
-    }
     buildTypes {
         release {
             isMinifyEnabled = false
