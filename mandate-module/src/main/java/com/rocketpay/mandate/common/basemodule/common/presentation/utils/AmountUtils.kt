@@ -11,6 +11,7 @@ internal object AmountUtils {
 
     const val CURRENCY = "INR"
     const val CURRENCY_SYMBOL = "₹"
+    const val NON_MONETISED_UPI_MAXIMUM_AMOUNT = 15000
     const val MINIMUM_INSTALLMENT_AMOUNT_FOR_PENALTY = 100
 
     fun formatWithoutRupeeSymbol(amount: Double): String {

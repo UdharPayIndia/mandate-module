@@ -63,7 +63,7 @@ internal data class MandateAddState(
     val referenceId: String? = null,
     val referenceType: String? = null,
     val showSkip: Boolean = false,
-    val maxUpiAmountLimit: Int = 0,
+    val maxUpiAmountLimit: Int = AmountUtils.NON_MONETISED_UPI_MAXIMUM_AMOUNT,
     val isCashFreeMandateUpiEnabled: Boolean = true,
     val termsAndConditionUrl: String? = null,
     val financier: String? = null,
