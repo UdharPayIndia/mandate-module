@@ -107,7 +107,7 @@ internal class MandateListFragment : BaseMainFragment<MandateListEvent, MandateL
     override fun initView() {
         super.initView()
         vm.toolbarTitleString.set(ResourceManager.getInstance().getString(R.string.rp_mandate))
-        vm.toolbarIcon.set(ResourceManager.getInstance().getDrawable(R.drawable.rp_ic_profile_icon))
+        vm.toolbarIcon.set(ResourceManager.getInstance().getDrawable(R.drawable.rp_ic_mandate_settings_icon))
         vm.titleTextColor.set(ResourceManager.getInstance().getColor(R.color.rp_grey_6))
         vm.toolbarBackground.set(ResourceManager.getInstance().getDrawable(R.color.rp_blue_2))
         setupToolbar(vm)

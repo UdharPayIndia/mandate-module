@@ -67,7 +67,7 @@ internal class UserProfileFragment : BaseMainFragment<UserProfileEvent, UserProf
         vm.toolbarIcon.set(ResourceManager.getInstance().getDrawable(R.drawable.rp_ic_back))
         vm.titleTextColor.set(ResourceManager.getInstance().getColor(R.color.rp_grey_6))
         vm.toolbarBackground.set(ResourceManager.getInstance().getDrawable(R.color.rp_blue_2))
-        vm.toolbarTitleString.set(ResourceManager.getInstance().getString(R.string.rp_my_profile))
+        vm.toolbarTitleString.set(ResourceManager.getInstance().getString(R.string.rp_mandate_setting))
         setupToolbar(vm)
         binding.vm = vm
     }
