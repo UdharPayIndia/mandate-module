@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -78,10 +78,10 @@
                 android:layout_height="wrap_content"
                 android:background="@color/rp_grey_6"
                 android:gravity="end"
-                android:visibility="@{TextUtils.isEmpty(vm.collectionAmountText) ? View.GONE : View.VISIBLE}"
                 android:minWidth="@dimen/rp_size_80"
                 android:text="@{vm.collectionAmountText}"
                 android:textAppearance="@style/rp_body_small"
+                android:visibility="@{TextUtils.isEmpty(vm.collectionAmountText) ? View.GONE : View.VISIBLE}"
                 tools:text="@string/rp_business_info" />
 
         </FrameLayout>
@@ -97,16 +97,17 @@
             android:id="@+id/tvHandlingChargesLabel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/rp_size_8"
             android:layout_marginEnd="@dimen/rp_size_16"
             android:gravity="start"
             android:text="@{vm.handlingChargeLabel}"
             android:textAppearance="@style/rp_body_small"
             android:textColor="@color/rp_grey_3"
-            android:layout_marginTop="@dimen/rp_size_8"
-            app:layout_constraintTop_toBottomOf="@+id/collectionBarrier"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/chargesBarrier"
             app:layout_constraintEnd_toStartOf="@+id/tvHandlingCharges"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/collectionBarrier"
             app:layout_constraintVertical_bias="0.0"
             app:layout_constraintVertical_chainStyle="packed"
             tools:text="@string/rp_merchant_charges_per_installment_at_zero" />
@@ -115,10 +116,11 @@
             android:id="@+id/tvHandlingCharges"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/tvHandlingChargesLabel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tvHandlingChargesLabel"
             app:layout_constraintTop_toTopOf="@+id/tvHandlingChargesLabel"
-            app:layout_constraintBottom_toBottomOf="@+id/tvHandlingChargesLabel"
             app:layout_constraintVertical_chainStyle="packed"
             app:layout_constraintWidth_min="@dimen/rp_size_64">
 
@@ -144,10 +146,10 @@
                 android:layout_height="wrap_content"
                 android:background="@color/rp_grey_6"
                 android:gravity="end"
-                android:visibility="@{TextUtils.isEmpty(vm.handlingChargeText) ?View.GONE  :View.VISIBLE}"
                 android:minWidth="@dimen/rp_size_80"
                 android:text="@{vm.handlingChargeText}"
                 android:textAppearance="@style/rp_body_small"
+                android:visibility="@{TextUtils.isEmpty(vm.handlingChargeText) ?View.GONE  :View.VISIBLE}"
                 tools:text="@string/rp_kyc_registration" />
         </FrameLayout>
 
@@ -158,6 +160,70 @@
             app:barrierDirection="bottom"
             app:constraint_referenced_ids="tvHandlingChargesLabel, tvHandlingCharges" />
 
+        <TextView
+            android:id="@+id/tvTokenLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/rp_size_8"
+            android:layout_marginEnd="@dimen/rp_size_16"
+            android:gravity="start"
+            android:text="@string/rp_token_used"
+            android:textAppearance="@style/rp_body_small"
+            android:textColor="@color/rp_grey_3"
+            app:layout_constraintBottom_toTopOf="@+id/tokenBarrier"
+            app:layout_constraintEnd_toStartOf="@+id/tvToken"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chargesBarrier"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <FrameLayout
+            android:id="@+id/tvToken"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/tvTokenLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvTokenLabel"
+            app:layout_constraintTop_toTopOf="@+id/tvTokenLabel"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintWidth_min="@dimen/rp_size_64">
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="@{TextUtils.isEmpty(vm.tokenText) ?View.VISIBLE  :View.GONE}"
+                app:showShimmer="@{TextUtils.isEmpty(vm.tokenText)}">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/rp_grey_4"
+                    android:gravity="end"
+                    android:minWidth="@dimen/rp_size_80"
+                    android:textAppearance="@style/rp_body_small"
+                    tools:text="@string/rp_kyc_registration" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/rp_grey_6"
+                android:gravity="end"
+                android:minWidth="@dimen/rp_size_80"
+                android:text="@{vm.tokenText}"
+                android:textAppearance="@style/rp_body_small"
+                android:visibility="@{TextUtils.isEmpty(vm.tokenText) ?View.GONE  :View.VISIBLE}"
+                tools:text="@string/rp_kyc_registration" />
+        </FrameLayout>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/tokenBarrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="tvTokenLabel, tvToken" />
+
         <View
             android:id="@+id/viewSeparator"
             android:layout_width="match_parent"
@@ -165,7 +231,7 @@
             android:layout_marginTop="@dimen/rp_size_8"
             android:background="@drawable/rp_divider_dotted_line_horizontal"
             android:backgroundTint="@color/rp_grey_4"
-            app:layout_constraintTop_toBottomOf="@+id/chargesBarrier" />
+            app:layout_constraintTop_toBottomOf="@+id/tokenBarrier" />
 
         <TextView
             android:id="@+id/tvPerAmountLabel"
@@ -215,10 +281,10 @@
                 android:layout_height="wrap_content"
                 android:background="@color/rp_grey_6"
                 android:gravity="end"
-                android:visibility="@{TextUtils.isEmpty(vm.userCollectionPerInstallmentText) ? View.GONE: View.VISIBLE}"
                 android:minWidth="@dimen/rp_size_80"
                 android:text="@{vm.userCollectionPerInstallmentText}"
                 android:textAppearance="@style/rp_body_regular_medium"
+                android:visibility="@{TextUtils.isEmpty(vm.userCollectionPerInstallmentText) ? View.GONE: View.VISIBLE}"
                 tools:text="@string/rp_kyc_registration" />
         </FrameLayout>
 

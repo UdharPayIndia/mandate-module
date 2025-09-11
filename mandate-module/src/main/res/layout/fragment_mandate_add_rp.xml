@@ -108,6 +108,12 @@
                     app:drawableTint="@color/rp_grey_6" />
             </FrameLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:alpha="0.5"
+                android:background="@color/rp_grey_4"/>
+
             <include
                 app:vm="@{vm}"
                 layout="@layout/item_mandate_charges_rp"/>

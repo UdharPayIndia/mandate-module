@@ -15,6 +15,7 @@ import com.rocketpay.mandate.feature.mandate.presentation.ui.mandateadd.statemac
 import com.rocketpay.mandate.feature.mandate.presentation.ui.mandateadd.statemachine.MandateAddState
 import com.rocketpay.mandate.common.basemodule.common.presentation.bottomsheetenter.BottomSheetEnterVM
 import com.rocketpay.mandate.common.basemodule.common.presentation.ext.getSpannable
+import com.rocketpay.mandate.common.basemodule.common.presentation.ext.int
 import com.rocketpay.mandate.common.basemodule.common.presentation.ext.setTextColor
 import com.rocketpay.mandate.common.basemodule.common.presentation.ext.strike
 import com.rocketpay.mandate.common.basemodule.common.presentation.progressdialog.ProgressDialogVM
@@ -155,6 +156,8 @@ internal class MandateAddUM (private val dispatchEvent: (MandateAddEvent) -> Uni
     val collectionAmountText = ObservableField<String>()
     val handlingChargeLabel = ObservableField<String>(ResourceManager.getInstance().getString(R.string.rp_merchant_charges))
     val handlingChargeText = ObservableField<SpannableString>()
+    val tokenText = ObservableField<SpannableString>()
+
     val userCollectionPerInstallmentLabel = ObservableField<String>(ResourceManager.getInstance().getString(R.string.rp_your_collection))
     val userCollectionPerInstallmentText = ObservableField<String>()
     val bearerCheckBox = ObservableField<Drawable>(ResourceManager.getInstance().getDrawable(R.drawable.rp_ic_checkbox_empty))
@@ -391,12 +394,14 @@ internal class MandateAddUM (private val dispatchEvent: (MandateAddEvent) -> Uni
             val charges = setMerchantCharges(state.chargeResponse, state.installment ?: 1)
             setUserCollectionAmount(state.chargeResponse, state.installment ?: 1)
             setSubscriptionCharges(state, state.installment ?: 1, charges)
+            tokenText.set(SpannableString(state.installment.int().toString()))
         }else{
             handlingChargeLabel.set(ResourceManager.getInstance().getString(R.string.rp_merchant_charges))
             collectionAmountText.set(null)
             handlingChargeText.set(null)
             userCollectionPerInstallmentText.set(null)
             subscriptionInfoText.set(null)
+            tokenText.set(null)
         }
     }
 
@@ -411,15 +416,15 @@ internal class MandateAddUM (private val dispatchEvent: (MandateAddEvent) -> Uni
                 handlingChargeLabel.set(ResourceManager.getInstance().getString(
                     R.string.rp_merchant_charges_per_installment_at_zero))
             }
-            subscriptionInfoText.set(ResourceManager.getInstance().getString(R.string.rp_saved_with_app_plan,
-                AmountUtils.format(merchantCharges.discount), MandateManager.getInstance().getAppName()))
+//            subscriptionInfoText.set(ResourceManager.getInstance().getString(R.string.rp_saved_with_app_plan,
+//                AmountUtils.format(merchantCharges.discount), MandateManager.getInstance().getAppName()))
         }else{
             if(state.chargeResponse?.showAtMandateLevel == true || installment <= 1){
                 handlingChargeLabel.set(ResourceManager.getInstance().getString(R.string.rp_merchant_charges))
             }else{
                 handlingChargeLabel.set(ResourceManager.getInstance().getString(R.string.rp_merchant_charges_per_installment))
             }
-            subscriptionInfoText.set(null)
+//            subscriptionInfoText.set(null)
         }
     }
 
