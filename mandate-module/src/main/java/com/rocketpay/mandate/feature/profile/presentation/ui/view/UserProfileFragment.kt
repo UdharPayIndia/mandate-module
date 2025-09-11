@@ -11,6 +11,8 @@ import com.rocketpay.mandate.R
 import com.rocketpay.mandate.common.basemodule.main.view.BaseMainFragment
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
 import com.rocketpay.mandate.databinding.FragmentUserProfileRpBinding
+import com.rocketpay.mandate.feature.aboutus.presentation.ui.statemachine.AboutUsScreen
+import com.rocketpay.mandate.feature.aboutus.presentation.ui.view.AboutUsFragment
 import com.rocketpay.mandate.feature.bankaccount.presentation.ui.bankaccountlist.statemachine.BankAccountListScreen
 import com.rocketpay.mandate.feature.bankaccount.presentation.ui.bankaccountlist.view.BankAccountListFragment
 import com.rocketpay.mandate.feature.business.presentation.ui.view.BusinessProfileFragment
@@ -89,6 +91,9 @@ internal class UserProfileFragment : BaseMainFragment<UserProfileEvent, UserProf
             }
             is UserProfileUSF.GotoKyc -> {
                 listener?.onNavigate(KycFragment.newInstance(null), fragmentTag = KycScreen.name)
+            }
+            is UserProfileUSF.AboutUsClick -> {
+                listener?.onNavigate(AboutUsFragment.newInstance(null), fragmentTag = AboutUsScreen.name)
             }
         }
     }

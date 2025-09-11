@@ -30,7 +30,6 @@ import com.rocketpay.mandate.common.mvistatemachine.viewmodel.simple.SimpleState
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
 import com.rocketpay.mandate.feature.common.domain.CommonUseCase
 import com.rocketpay.mandate.feature.mandate.data.entities.PenaltyMetaDto
-import com.rocketpay.mandate.feature.mandate.data.entities.RetryInstallmentMetaDto
 import com.rocketpay.mandate.feature.product.domain.entities.ProductTypeEnum
 import com.rocketpay.mandate.feature.product.domain.usecase.ProductUseCase
 import com.rocketpay.mandate.feature.property.domain.usecase.PropertyUseCase
@@ -1316,8 +1315,7 @@ internal class MandateAddStateMachine(
                     } else {
                         null
                     }
-                ),
-            retryInstallmentMetaDto = RetryInstallmentMetaDto(isAuto = false)
+                )
         )) {
             is Outcome.Error -> {
                 dispatchEvent(MandateAddEvent.UnableToGeneratePaymentLink(outcome.error.message.orEmpty()))

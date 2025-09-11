@@ -25,7 +25,6 @@ import com.udharpay.core.networkmanager.domain.entities.Outcome
 import com.rocketpay.mandate.common.basemodule.common.presentation.ext.double
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.DataValidator
 import com.rocketpay.mandate.feature.mandate.data.entities.PenaltyMetaDto
-import com.rocketpay.mandate.feature.mandate.data.entities.RetryInstallmentMetaDto
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -88,7 +87,6 @@ internal class MandateUseCase internal constructor(
         referenceType: String?,
         chargeResponseDto: ChargeResponseDto?,
         penaltyMetaDto: PenaltyMetaDto?,
-        retryInstallmentMetaDto: RetryInstallmentMetaDto?
     ): Outcome<Mandate> {
         val customer = CustomerDetail(name, mobileNumber)
         val paymentDetails = PaymentMethodDetail(paymentMethod, upiId)
@@ -112,7 +110,6 @@ internal class MandateUseCase internal constructor(
                 charges = chargeResponseDto,
                 selfCheckoutDto = null,
                 penaltyMetaDto = penaltyMetaDto,
-                retryInstallmentMeta = retryInstallmentMetaDto
             )
         )
         return mandateRepository.createMandate(mandateDom)

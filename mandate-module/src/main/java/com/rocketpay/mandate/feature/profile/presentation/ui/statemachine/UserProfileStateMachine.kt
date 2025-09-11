@@ -64,6 +64,9 @@ internal class UserProfileStateMachine(
             UserProfileEvent.RefreshKyc -> {
                 next(UserProfileASF.RefreshKyc)
             }
+            UserProfileEvent.AboutUsClick ->  {
+                next(UserProfileUSF.AboutUsClick)
+            }
         }
     }
 

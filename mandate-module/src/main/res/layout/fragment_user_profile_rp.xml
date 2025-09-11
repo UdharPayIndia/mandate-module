@@ -280,12 +280,69 @@
 
             </LinearLayout>
 
-            <View
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="32dp"/>
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-<!--            <include layout="@layout/item_trust_address_with_power_by"/>-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/rp_size_8"
+                    android:gravity="center"
+                    android:onClick="@{() -> vm.onAboutUsClick()}"
+                    android:background="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="@dimen/rp_size_24"
+                        android:layout_height="@dimen/rp_size_24"
+                        android:layout_margin="@dimen/rp_size_8"
+                        android:src="@drawable/rp_ic_info_filled"
+                        app:tint="@color/rp_blue_4"
+                        tools:ignore="ContentDescription" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="@dimen/rp_size_8">
+
+                        <TextView
+                            android:textAppearance="@style/rp_body_regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/rp_about_collectpe" />
+
+                        <TextView
+                            android:textAppearance="@style/rp_body_small"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/rp_help_others_to_join_future_of_collection"/>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/rp_size_20"
+                        android:layout_height="@dimen/rp_size_20"
+                        android:padding="@dimen/rp_size_4"
+                        android:layout_margin="@dimen/rp_size_8"
+                        android:src="@drawable/rp_ic_forward"
+                        app:tint="@color/rp_grey_4"
+                        tools:ignore="ContentDescription"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/rp_size_56"
+                    android:background="@drawable/rp_divider_hr"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 

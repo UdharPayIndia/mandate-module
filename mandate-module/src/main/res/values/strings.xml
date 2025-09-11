@@ -219,6 +219,7 @@
     <string name="rp_primary_bank_account">Primary bank</string>
     <string name="rp_other_bank_account">Other banks</string>
     <string name="rp_chat_with_us">Chat with us</string>
+    <string name="rp_privacy_policy">Privacy policy</string>
     <string name="rp_terms_n_condition">Terms &amp; conditions</string>
     <string name="rp_paytm_payments_bank">Paytm Payments Bank</string>
     <string name="rp_your_data_is_100_safe_with_us">Your data is 100% safe with us</string>
@@ -611,4 +612,6 @@
     <string name="rp_please_select_start_date">Please select start date</string>
     <string name="rp_download">Download</string>
     <string name="rp_open">Open</string>
+    <string name="rp_about_collectpe">About Collectpe</string>
+    <string name="rp_help_others_to_join_future_of_collection">Terms &amp; Conditions, Privacy Policy, Legal and others</string>
 </resources>

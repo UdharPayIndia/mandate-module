@@ -27,6 +27,7 @@ internal sealed class UserProfileEvent(name: String? = null) : BaseEvent(name) {
     object LoadKyc: UserProfileEvent()
     data class KycLoaded(val kycStateEnum: KycStateEnum): UserProfileEvent()
     object RefreshKyc: UserProfileEvent()
+    data object AboutUsClick: UserProfileEvent()
 }
 
 
@@ -42,6 +43,7 @@ internal sealed class UserProfileUSF : UiSideEffect {
     object GotoBusinessProfile: UserProfileUSF()
     object OpenBankAccountList: UserProfileUSF()
     object GotoKyc: UserProfileUSF()
+    data object AboutUsClick: UserProfileUSF()
 
 }
 

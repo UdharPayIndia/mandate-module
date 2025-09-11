@@ -10,5 +10,6 @@ internal object PropertyUtils {
     const val IS_ADHOC_ENABLED = "is_adhoc_frequency_mandate_enabled"
     const val TERMS_AND_CONDITION_URL = "tnc_url"
     const val MAX_UPI_NON_MONETISED_INSTALLMENT_AMOUNT = "max_upi_non_monetised_installment_amount"
+    const val PRIVACY_POLICY_URL = "privacy_policy_url"
 
 }

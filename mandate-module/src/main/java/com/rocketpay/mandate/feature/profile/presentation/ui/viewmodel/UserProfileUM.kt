@@ -77,4 +77,7 @@ internal class UserProfileUM(private val dispatchEvent: (UserProfileEvent) -> Un
         dispatchEvent(UserProfileEvent.BankAccountsClick)
     }
 
+    fun onAboutUsClick(){
+        dispatchEvent(UserProfileEvent.AboutUsClick)
+    }
 }
