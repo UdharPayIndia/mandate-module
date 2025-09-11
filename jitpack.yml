@@ -1,2 +1,6 @@
 jdk:
   -openjdk17
+
+build:
+  gradle:
+    run: ./gradlew :mandate-module:assembleRelease
