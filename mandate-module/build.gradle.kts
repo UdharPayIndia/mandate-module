@@ -157,7 +157,7 @@ dependencies {
 
 
     // Chuck - Network Debugger
-    implementation("com.github.chuckerteam.chucker:library:4.2.0")
+    implementation(libs.chucker.library)
 
     // hyper verge
     api("co.hyperverge:hyperkyc:0.28.0", {

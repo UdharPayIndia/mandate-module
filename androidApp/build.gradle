@@ -71,22 +71,6 @@ android {
     kotlinOptions {
         jvmTarget = '17'
     }
-    androidComponents {
-        onVariants(selector().all(), { variant ->
-            afterEvaluate {
-                // This is a workaround for https://issuetracker.google.com/301245705 which depends on internal
-                // implementations of the android gradle plugin and the ksp gradle plugin which might change in the future
-                // in an unpredictable way.
-                project.tasks.getByName("ksp" + variant.name.capitalize() + "Kotlin") {
-                    def dataBindingTask = (com.android.build.gradle.internal.tasks.databinding.DataBindingGenBaseClassesTask) project.tasks.getByName("dataBindingGenBaseClasses" + variant.name.capitalize())
-
-                    ((org.jetbrains.kotlin.gradle.tasks.AbstractKotlinCompileTool) it).setSource(
-                            dataBindingTask.sourceOutFolder
-                    )
-                }
-            }
-        })
-    }
     namespace 'com.udharpay'
 }
 
@@ -111,20 +95,6 @@ dependencies {
     // Retrofit
     implementation(libs.converter.gson)
 
-    // Chuck - Network Debugger
-    implementation "com.github.chuckerteam.chucker:library:3.5.2"
-
-    // Dagger
-    implementation libs.dagger
-    implementation libs.dagger.android
-    ksp libs.dagger.compiler
-    ksp libs.dagger.android.processor
-
-    // Room
-    implementation(libs.room.runtime)
-    implementation(libs.room.ktx)
-    ksp(libs.room.compiler)
-    androidTestImplementation(libs.room.testing)
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test:runner:1.6.1'
     androidTestImplementation 'androidx.test:rules:1.6.1'

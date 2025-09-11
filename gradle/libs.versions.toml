@@ -8,6 +8,7 @@ gson = "2.10.1"
 kotlin = "2.1.0"
 composejb = "1.6.10"
 ksp = "2.0.20-1.0.25"
+chucker-library = "4.2.0"
 playServicesAdsIdentifier = "18.1.0"
 playServicesAuth = "21.2.0"
 playServicesAuthApiPhone = "18.1.0"
@@ -73,6 +74,7 @@ compose-foundation = { module = "androidx.compose.foundation:foundation", versio
 compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "compose-material3" }
 
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+chucker-library = { module = "com.github.chuckerteam.chucker:library", version.ref = "chucker-library" }
 play-services-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "playServicesAuth" }
 play-services-auth-api-phone = { module = "com.google.android.gms:play-services-auth-api-phone", version.ref = "playServicesAuthApiPhone" }
 play-services-base = { module = "com.google.android.gms:play-services-base", version.ref = "playServicesBase" }
