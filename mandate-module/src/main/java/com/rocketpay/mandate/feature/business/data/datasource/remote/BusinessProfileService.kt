@@ -38,6 +38,7 @@ internal class BusinessPropertyService {
                     PropertyUtils.IS_PENALTY_ENABLED,
                     PropertyUtils.IS_ADHOC_ENABLED,
                     PropertyUtils.TERMS_AND_CONDITION_URL,
+                    PropertyUtils.PRIVACY_POLICY_URL,
                     PropertyUtils.MAX_UPI_NON_MONETISED_INSTALLMENT_AMOUNT,
                     PropertyUtils.BUSINESS_MOBILE_NUMBER)
             ))

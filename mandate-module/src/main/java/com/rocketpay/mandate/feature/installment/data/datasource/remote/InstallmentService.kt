@@ -19,7 +19,7 @@ internal class InstallmentService {
 
     suspend fun getInstallments(createdAt: Long, maxUpdatedAt: Long): Outcome<InstallmentResponse> {
         return NetworkRequestBuilder()
-            .subUrl("/v2/merchant/installments/sync")
+            .subUrl("/v3/merchant/installments/sync")
             .queryParameter("updated_at", maxUpdatedAt.toString())
             .queryParameter("created_at", createdAt.toString())
             .queryParameter("limit", "100")
@@ -47,7 +47,7 @@ internal class InstallmentService {
 
     suspend fun getInstallmentActions(installmentId: String): Outcome<InstallmentActionResponse> {
         return NetworkRequestBuilder()
-            .subUrl("/v2/merchant/installments/{installment_id}/actions")
+            .subUrl("/v3/merchant/installments/{installment_id}/actions")
             .pathParameter("installment_id", installmentId)
             .build()
             .get()
@@ -110,7 +110,7 @@ internal class InstallmentService {
 
     suspend fun chargePenalty(installmentId: String, installmentAmount: Double): Outcome<InstallmentPenaltyDto> {
         return NetworkRequestBuilder()
-            .subUrl("/v2/merchant/installments/{id}/charge-penalty")
+            .subUrl("/v3/merchant/installments/{id}/charge-penalty")
             .pathParameter("id", installmentId)
             .body(InstallmentPenaltyRequest(installmentAmount))
             .build()
