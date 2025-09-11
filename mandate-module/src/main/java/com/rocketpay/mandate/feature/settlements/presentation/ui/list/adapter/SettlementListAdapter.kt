@@ -52,7 +52,7 @@ internal class SettlementListAdapter : RecyclerViewAdapter() {
             VIEW_TYPE_END -> {
                 ItemEndOfListVM(
                     ResourceManager.getInstance()
-                        .getString(R.string.rp_for_older_data_please_reach_out_to_us)
+                        .getString(R.string.rp_this_is_the_end_of_the_list)
                 )
             }
             else -> {

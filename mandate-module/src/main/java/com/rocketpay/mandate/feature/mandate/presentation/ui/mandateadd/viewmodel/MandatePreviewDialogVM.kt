@@ -67,7 +67,12 @@ internal class MandatePreviewDialogVM(
 
     fun onSharePaymentViaWhatsappClick() {
         updatePaymentDetailsState(false)
-        dispatchEvent(MandateAddEvent.SharePaymentLinkClick(mandate))
+        dispatchEvent(MandateAddEvent.SharePaymentLinkClick(mandate, false))
+    }
+
+    fun onSharePaymentViaSmsClick() {
+        updatePaymentDetailsState(false)
+        dispatchEvent(MandateAddEvent.SharePaymentLinkClick(mandate, true))
     }
 
 

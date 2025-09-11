@@ -277,27 +277,16 @@ internal class MandateAddFragment : BaseMainFragment<MandateAddEvent, MandateAdd
             }
             is MandateAddUSF.ShareOnWhatsApp -> {
                 skipRedirection = false
-                lifecycleScope.launch {
-                    var uri : Uri? = null
-                    val view: View? = mandatePreviewDialog?.findViewById(R.id.iv_illustration)
-                    if(view != null){
-                        val bitmapFromView = BitmapUtils.getBitmapFromView(view)
-                        if(bitmapFromView != null){
-                            uri = withContext(Dispatchers.Default) { BitmapUtils.getUriFromBitmap(
-                                requireContext(), bitmapFromView, "QrCode_${System.currentTimeMillis()}", ".jpeg") }
-                        }
-                    }
-                    if (!ShareUtils.sendWhatsApp(
-                            requireContext(),
-                            sideEffect.message,
-                            uri,
-                            sideEffect.mobileNumber)) {
-                        ShowUtils.shortToast(requireContext(), ResourceManager.getInstance().getString(R.string.rp_no_apps_found_to_handle_data))
-                    }
-                    progressDialog.dismiss()
-                    mandatePreviewDialog?.dismiss()
-                    gotoMandateDetail(sideEffect.mandateId, sideEffect.referenceId, sideEffect.isManual)
+                if (!ShareUtils.sendWhatsApp(
+                        requireContext(),
+                        sideEffect.message,
+                        sideEffect.mobileNumber)) {
+                    ShowUtils.shortToast(requireContext(),
+                        ResourceManager.getInstance().getString(R.string.rp_no_apps_found_to_handle_data))
                 }
+                progressDialog.dismiss()
+                mandatePreviewDialog?.dismiss()
+                gotoMandateDetail(sideEffect.mandateId, sideEffect.referenceId, sideEffect.isManual)
             }
             is MandateAddUSF.ShowToast -> {
                 ShowUtils.shortToast(requireContext(), sideEffect.message)

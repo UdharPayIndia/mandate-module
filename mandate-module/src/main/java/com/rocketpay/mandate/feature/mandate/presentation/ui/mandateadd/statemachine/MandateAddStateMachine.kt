@@ -371,7 +371,7 @@ internal class MandateAddStateMachine(
             }
 
             is MandateAddEvent.SharePaymentLinkClick -> {
-                next(MandateAddASF.ShareOnWhatsAppClick(event.mandate))
+                next(MandateAddASF.ShareOnLinkClick(event.mandate, event.viaSms))
             }
 
             is MandateAddEvent.SkipSharePaymentLinkClick -> {
@@ -380,15 +380,27 @@ internal class MandateAddStateMachine(
 
             is MandateAddEvent.WhatsAppTemplateCreated -> {
                 val isManual = event.mandate.paymentMethodDetail.method == PaymentMethod.Manual
-                next(
-                    MandateAddUSF.ShareOnWhatsApp(
-                        event.mandate.customerDetail.mobileNumber,
-                        event.messageTemplate,
-                        event.mandate.id,
-                        state.referenceId,
-                        isManual
+                if(event.viaSms){
+                    next(
+                        MandateAddUSF.ShareOnSms(
+                            event.mandate.customerDetail.mobileNumber,
+                            event.messageTemplate,
+                            event.mandate.id,
+                            state.referenceId,
+                            isManual
+                        )
                     )
-                )
+                }else {
+                    next(
+                        MandateAddUSF.ShareOnWhatsApp(
+                            event.mandate.customerDetail.mobileNumber,
+                            event.messageTemplate,
+                            event.mandate.id,
+                            state.referenceId,
+                            isManual
+                        )
+                    )
+                }
             }
 
             is MandateAddEvent.ContactSelected -> {
@@ -1158,7 +1170,7 @@ internal class MandateAddStateMachine(
                 dispatchEvent(MandateAddEvent.InstallmentFrequencyLoaded(installmentFrequencies))
             }
 
-            is MandateAddASF.ShareOnWhatsAppClick -> {
+            is MandateAddASF.ShareOnLinkClick -> {
                 val whatsAppMessageConfig = mandateUseCase.getWhatsAppMessageConfig()
                 val messageTemplate = WhatsAppMessageParserUtils.getMessageForSharePaymentLink(
                     whatsAppMessageConfig, sideEffect.mandate, CommonUseCase.getInstance().getName()
@@ -1168,6 +1180,7 @@ internal class MandateAddStateMachine(
                         sideEffect.mandate,
                         whatsAppMessageConfig.experiment,
                         messageTemplate,
+                        sideEffect.viaSms
                     )
                 )
             }

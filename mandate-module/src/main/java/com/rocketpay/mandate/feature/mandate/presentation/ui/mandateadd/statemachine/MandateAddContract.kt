@@ -104,7 +104,7 @@ internal sealed class MandateAddEvent(name: String? = null) : BaseEvent(name) {
     object UpiClick : MandateAddEvent()
 
     data class PaymentLinkGenerated(val mandate: Mandate, val userMobileNumber: String) : MandateAddEvent("")
-    data class SharePaymentLinkClick(val mandate: Mandate) : MandateAddEvent()
+    data class SharePaymentLinkClick(val mandate: Mandate, val viaSms: Boolean) : MandateAddEvent()
     data class UnableToGeneratePaymentLink(val message: String): MandateAddEvent()
     data class SkipSharePaymentLinkClick(val mandate: Mandate) : MandateAddEvent("share_payment_link_skip")
 
@@ -145,6 +145,7 @@ internal sealed class MandateAddEvent(name: String? = null) : BaseEvent(name) {
         val mandate: Mandate,
         val experiment: String,
         val messageTemplate: String,
+        val viaSms: Boolean
     ) : MandateAddEvent("")
     object ChargeBearerChanged: MandateAddEvent("")
     data class UpdateMoreDetailsState(val flag: Boolean): MandateAddEvent("")
@@ -210,7 +211,7 @@ internal sealed class MandateAddASF : AsyncSideEffect {
         val penaltyAmount: Double
     ) : MandateAddASF()
     data class LoadSupportedFrequency(val isAdhocEnabled: Boolean): MandateAddASF()
-    data class ShareOnWhatsAppClick(val mandate: Mandate): MandateAddASF()
+    data class ShareOnLinkClick(val mandate: Mandate, val viaSms: Boolean): MandateAddASF()
     data class OpenMandatePreview(val mandate: Mandate): MandateAddASF()
     data class CheckChargeAndDiscount(
         val amount: Double, val frequency: String, val installments: Int,

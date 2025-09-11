@@ -224,35 +224,17 @@ internal class MandateDetailFragment : BaseMainFragment<MandateDetailEvent, Mand
                 ShowUtils.shortToast(requireContext(), ResourceManager.getInstance().getString(R.string.rp_copied_link))
             }
             is MandateDetailUSF.ShareOnWhatsApp -> {
-                lifecycleScope.launch {
-                    var uri: Uri? = null
-                    val view: View? = binding.lytSummary.ivIllustration
-                    if (view != null) {
-                        val bitmapFromView = BitmapUtils.getBitmapFromView(view)
-                        if (bitmapFromView != null) {
-                            uri = withContext(Dispatchers.Default) {
-                                BitmapUtils.getUriFromBitmap(
-                                    requireContext(),
-                                    bitmapFromView,
-                                    "QrCode_${System.currentTimeMillis()}",
-                                    ".jpeg"
-                                )
-                            }
-                        }
-                    }
-                    if (!ShareUtils.sendWhatsApp(
-                            requireContext(),
-                            sideEffect.message,
-                            uri,
-                            sideEffect.mobileNumber
-                        )
-                    ) {
-                        ShowUtils.shortToast(
-                            requireContext(),
-                            ResourceManager.getInstance()
-                                .getString(R.string.rp_no_apps_found_to_handle_data)
-                        )
-                    }
+                if (!ShareUtils.sendWhatsApp(
+                        requireContext(),
+                        sideEffect.message,
+                        sideEffect.mobileNumber
+                    )
+                ) {
+                    ShowUtils.shortToast(
+                        requireContext(),
+                        ResourceManager.getInstance()
+                            .getString(R.string.rp_no_apps_found_to_handle_data)
+                    )
                 }
             }
             is MandateDetailUSF.UpdateHeader -> {

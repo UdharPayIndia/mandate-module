@@ -74,11 +74,7 @@ internal class InstallmentListAdapter : RecyclerViewAdapter() {
             }
         }
         if(isLastPage){
-            if(hideTag) {
-                list.add(RecyclerViewItem(VIEW_TYPE_END, ResourceManager.getInstance().getString(R.string.rp_for_older_data_please_reach_out_to_us)))
-            }else{
-                list.add(RecyclerViewItem(VIEW_TYPE_END, ResourceManager.getInstance().getString(R.string.rp_this_is_the_end_of_the_list)))
-            }
+            list.add(RecyclerViewItem(VIEW_TYPE_END, ResourceManager.getInstance().getString(R.string.rp_this_is_the_end_of_the_list)))
         }else{
             list.add(RecyclerViewItem(VIEW_LOADING, null))
         }
