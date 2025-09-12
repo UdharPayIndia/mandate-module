@@ -2,6 +2,7 @@ package com.rocketpay.mandate.feature.login.presentation.injection
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.rocketpay.mandate.feature.business.domain.usecase.BusinessProfileUseCase
 import com.rocketpay.mandate.feature.kyc.domain.usecase.KycUseCase
 import com.rocketpay.mandate.feature.login.domain.usecase.LoginUseCase
 import com.rocketpay.mandate.feature.login.presentation.ui.login.statemachine.LoginStateMachine
@@ -11,12 +12,13 @@ import com.rocketpay.mandate.feature.property.domain.usecase.PropertyUseCase
 internal open class LoginStateMachineFactory(
     private val loginUseCase: LoginUseCase,
     private val kycUseCase: KycUseCase,
-    private val propertyUseCase: PropertyUseCase
+    private val propertyUseCase: PropertyUseCase,
+    private val businessProfileUseCase: BusinessProfileUseCase
 ): ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
-            modelClass.isAssignableFrom(LoginStateMachine::class.java) -> LoginStateMachine(loginUseCase, kycUseCase, propertyUseCase) as T
+            modelClass.isAssignableFrom(LoginStateMachine::class.java) -> LoginStateMachine(loginUseCase, kycUseCase, propertyUseCase, businessProfileUseCase) as T
             else -> throw IllegalArgumentException("ViewModel Not Found")
         }
     }

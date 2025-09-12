@@ -449,8 +449,11 @@ internal class MandateDetailStateMachine(
                 }
             }
             is MandateDetailASF.ShareOnWhatsAppClick -> {
-                val message = WhatsAppMessageParserUtils.getMessageForSharePaymentLink(messageTemplate = sideEffect.messageTemplate,
-                    sideEffect.mandate, CommonUseCase.getInstance().getName())
+                val message = WhatsAppMessageParserUtils.getMessageForSharePaymentLink(
+                    messageTemplate = sideEffect.messageTemplate,
+                    mandate = sideEffect.mandate,
+                    name = CommonUseCase.getInstance().getName()
+                )
                 dispatchEvent(MandateDetailEvent.WhatsAppTemplateCreated(sideEffect.mandate,
                     message))
             }

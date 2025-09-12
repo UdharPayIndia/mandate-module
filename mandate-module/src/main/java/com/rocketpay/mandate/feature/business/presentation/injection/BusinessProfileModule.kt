@@ -4,6 +4,7 @@ import com.rocketpay.mandate.feature.business.data.BusinessPropertyRepositoryImp
 import com.rocketpay.mandate.feature.business.data.datasource.remote.BusinessPropertyService
 import com.rocketpay.mandate.feature.business.domain.repositories.BusinessPropertyRepository
 import com.rocketpay.mandate.feature.business.domain.usecase.BusinessProfileUseCase
+import com.rocketpay.mandate.feature.property.domain.repositories.PropertyRepository
 import com.rocketpay.mandate.feature.property.domain.usecase.PropertyUseCase
 import com.rocketpay.mandate.feature.property.presentation.injection.PropertyModule
 import dagger.Module
@@ -22,8 +23,11 @@ internal open class BusinessProfileModule {
     }
 
     @Provides
-    internal fun provideBusinessProfileUseCase(): BusinessProfileUseCase{
-        return BusinessProfileUseCase()
+    internal fun provideBusinessProfileUseCase(
+        businessProfileRepository: BusinessPropertyRepository,
+        propertyRepository: PropertyRepository
+    ): BusinessProfileUseCase{
+        return BusinessProfileUseCase(businessProfileRepository, propertyRepository)
     }
 
     @Provides

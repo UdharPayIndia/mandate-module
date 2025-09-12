@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.fragment.app.Fragment
 import java.net.URLEncoder
+import androidx.core.net.toUri
 
 internal object ShareUtils {
 
@@ -41,7 +42,9 @@ internal object ShareUtils {
         message: String,
         mobileNumber: String
     ): Intent {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://wa.me/$mobileNumber/?text=${URLEncoder.encode(message)}"))
+        val number = mobileNumber.replace("+", "")
+        val intent = Intent(Intent.ACTION_VIEW,
+            "https://wa.me/$number/?text=${URLEncoder.encode(message)}".toUri())
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         return intent
     }

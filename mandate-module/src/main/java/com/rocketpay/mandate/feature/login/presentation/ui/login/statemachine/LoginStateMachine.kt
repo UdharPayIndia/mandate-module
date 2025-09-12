@@ -11,6 +11,7 @@ import com.rocketpay.mandate.common.basemodule.common.presentation.utils.Adverti
 import com.rocketpay.mandate.common.mvistatemachine.contract.Next
 import com.rocketpay.mandate.common.mvistatemachine.viewmodel.simple.SimpleStateMachineImpl
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
+import com.rocketpay.mandate.feature.business.domain.usecase.BusinessProfileUseCase
 import com.rocketpay.mandate.feature.kyc.domain.usecase.KycUseCase
 import com.rocketpay.mandate.feature.property.domain.usecase.PropertyUseCase
 import com.rocketpay.mandate.main.GlobalState
@@ -19,7 +20,8 @@ import kotlinx.coroutines.CoroutineScope
 internal class LoginStateMachine(
     private val loginUseCase: LoginUseCase,
     private val kycUseCase: KycUseCase,
-    private val propertyUseCase: PropertyUseCase
+    private val propertyUseCase: PropertyUseCase,
+    private val businessProfileUseCase: BusinessProfileUseCase
 ): SimpleStateMachineImpl<LoginEvent, LoginState, LoginASF, LoginUSF>(BaseAnalyticsHandler()) {
 
     override fun startState(): LoginState {
@@ -138,6 +140,7 @@ internal class LoginStateMachine(
             is LoginASF.CheckKyc -> {
                 when(kycUseCase.fetchKyc(propertyUseCase)){
                     is Outcome.Success -> {
+                        businessProfileUseCase.pullEnterprisePropertyList()
                         dispatchEvent(LoginEvent.VerifyUserSuccess(sideEffect.user, kycUseCase.isKycCompleted()))
                     }
                     is Outcome.Error -> {

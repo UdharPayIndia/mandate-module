@@ -49,21 +49,11 @@ internal class EnterprisePropertySyncer: Syncer {
     }
 
     private suspend fun pullEnterpriseProperties(): Outcome<List<EnterprisePropertyDto>> {
-        return when(val outcome = businessPropertyRepository.pullEnterprisePropertyList(
-            MandateManager.getInstance().getEnterpriseId()
-        )) {
+        return when(val outcome = businessPropertyRepository.pullEnterprisePropertyList(propertyRepository)) {
             is Outcome.Error -> {
                 outcome
             }
             is Outcome.Success -> {
-                outcome.data.forEach { data ->
-                    val keys = data.properties.keys
-                    keys?.forEach {
-                        propertyRepository.saveProperty(
-                            PropertyDto(it, data.properties.get(it)?.orEmpty()),
-                            PropertyType.Enterprise)
-                    }
-                }
                 outcome
             }
         }

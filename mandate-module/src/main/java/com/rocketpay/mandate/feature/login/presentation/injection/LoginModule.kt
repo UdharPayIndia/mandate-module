@@ -12,6 +12,8 @@ import com.rocketpay.mandate.feature.login.domain.usecase.LoginUseCase
 import com.rocketpay.mandate.main.init.MandateManager
 import com.rocketpay.mandate.common.basemodule.common.data.cache.DataStore
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.DataValidator
+import com.rocketpay.mandate.feature.business.domain.usecase.BusinessProfileUseCase
+import com.rocketpay.mandate.feature.business.presentation.injection.BusinessProfileModule
 import com.rocketpay.mandate.feature.kyc.domain.usecase.KycUseCase
 import com.rocketpay.mandate.feature.kyc.presentation.injection.KycModule
 import com.rocketpay.mandate.feature.property.domain.usecase.PropertyUseCase
@@ -20,15 +22,17 @@ import dagger.Module
 import dagger.Provides
 
 
-@Module(includes = [KycModule::class, PropertyModule::class])
+@Module(includes = [KycModule::class, PropertyModule::class, BusinessProfileModule::class])
 internal open class LoginModule {
 
     @Provides
     internal fun provideLoginStateMachineFactory(
         loginUseCase: LoginUseCase,
         kycUseCase: KycUseCase,
-        propertyUseCase: PropertyUseCase): LoginStateMachineFactory {
-        return LoginStateMachineFactory(loginUseCase, kycUseCase, propertyUseCase)
+        propertyUseCase: PropertyUseCase,
+        businessProfileUseCase: BusinessProfileUseCase
+    ): LoginStateMachineFactory {
+        return LoginStateMachineFactory(loginUseCase, kycUseCase, propertyUseCase, businessProfileUseCase)
     }
 
     @Provides
