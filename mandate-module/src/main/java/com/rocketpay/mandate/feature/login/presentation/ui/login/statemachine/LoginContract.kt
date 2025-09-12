@@ -16,7 +16,8 @@ internal data class LoginState(
     val viewState: LoginViewState = LoginViewState.EnterMobileNumber,
     val otpTimeout: Long = 1000L * 30,
     val interval: Long = 1000L,
-    val timeLeftToResendOtp: Long = 0L
+    val timeLeftToResendOtp: Long = 0L,
+    val isKyced: Boolean = false
 ) : BaseState(LoginScreen)
 
 
@@ -42,6 +43,7 @@ internal sealed class LoginEvent(name: String? = null) : BaseEvent(name) {
 
     data class PhoneHintReceived(val mobileNumber: String): LoginEvent("phone_hint_received")
     data class CheckKyc(val user: User) : LoginEvent()
+    data object ProductWalletLoaded: LoginEvent()
 }
 
 
@@ -49,6 +51,8 @@ internal sealed class LoginASF : AsyncSideEffect {
     object LoadCountryCode: LoginASF()
     data class ValidateUser(val countryCode: String, val mobileNumber: String, val otp: String) : LoginASF()
     data class CheckKyc(val user: User): LoginASF()
+    data object LoadProductWallet: LoginASF()
+
 }
 
 

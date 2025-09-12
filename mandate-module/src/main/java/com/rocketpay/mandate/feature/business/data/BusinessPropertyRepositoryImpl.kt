@@ -34,5 +34,6 @@ internal class BusinessPropertyRepositoryImpl(
                 }
             }
         }
+        return outcome
     }
 }

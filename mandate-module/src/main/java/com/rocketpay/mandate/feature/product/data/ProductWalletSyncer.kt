@@ -46,12 +46,12 @@ internal class ProductWalletSyncer: Syncer {
     }
 
     override suspend fun sync(): SyncStatus {
-        return getProductWallet()
+        return fetchProductWallet()
     }
 
 
-    private suspend fun getProductWallet(): SyncStatus {
-        return when(val outcome = productRepository.getProductWallet()) {
+    private suspend fun fetchProductWallet(): SyncStatus {
+        return when(val outcome = productRepository.fetchProductWallet()) {
             is Outcome.Error -> {
                 SyncStatus.Failed
             }

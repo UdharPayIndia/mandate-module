@@ -13,6 +13,7 @@ import com.rocketpay.mandate.common.mvistatemachine.viewmodel.simple.SimpleState
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
 import com.rocketpay.mandate.feature.business.domain.usecase.BusinessProfileUseCase
 import com.rocketpay.mandate.feature.kyc.domain.usecase.KycUseCase
+import com.rocketpay.mandate.feature.product.domain.usecase.ProductUseCase
 import com.rocketpay.mandate.feature.property.domain.usecase.PropertyUseCase
 import com.rocketpay.mandate.main.GlobalState
 import kotlinx.coroutines.CoroutineScope
@@ -21,7 +22,8 @@ internal class LoginStateMachine(
     private val loginUseCase: LoginUseCase,
     private val kycUseCase: KycUseCase,
     private val propertyUseCase: PropertyUseCase,
-    private val businessProfileUseCase: BusinessProfileUseCase
+    private val businessProfileUseCase: BusinessProfileUseCase,
+    private val productUseCase: ProductUseCase
 ): SimpleStateMachineImpl<LoginEvent, LoginState, LoginASF, LoginUSF>(BaseAnalyticsHandler()) {
 
     override fun startState(): LoginState {
@@ -86,8 +88,7 @@ internal class LoginStateMachine(
                 next(state.copy(viewState = LoginViewState.VerifyUser), LoginUSF.ShowError(header, event.message))
             }
             is LoginEvent.VerifyUserSuccess -> {
-                GlobalState.isLogin.value = true
-                next(LoginUSF.GotoHome(event.isKyced))
+                next(state.copy(isKyced = event.isKyced), LoginASF.LoadProductWallet)
             }
             is LoginEvent.ActionButtonClick -> {
                 next(LoginUSF.CloseProgressDialog)
@@ -97,6 +98,10 @@ internal class LoginStateMachine(
             }
             is LoginEvent.CheckKyc -> {
                 next(LoginASF.CheckKyc(event.user))
+            }
+            is LoginEvent.ProductWalletLoaded -> {
+                GlobalState.isLogin.value = true
+                next(LoginUSF.GotoHome(state.isKyced))
             }
         }
     }
@@ -147,6 +152,10 @@ internal class LoginStateMachine(
                         dispatchEvent(LoginEvent.VerifyUserSuccess(sideEffect.user, kycUseCase.isKycCompleted()))
                     }
                 }
+            }
+            is LoginASF.LoadProductWallet -> {
+                productUseCase.fetchProductWallet()
+                dispatchEvent(LoginEvent.ProductWalletLoaded)
             }
         }
     }

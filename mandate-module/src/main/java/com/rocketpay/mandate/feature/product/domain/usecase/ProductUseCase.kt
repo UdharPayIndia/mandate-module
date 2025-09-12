@@ -1,6 +1,7 @@
 package com.rocketpay.mandate.feature.product.domain.usecase
 
 import com.rocketpay.mandate.feature.product.data.entities.CreateProductOrderRequest
+import com.rocketpay.mandate.feature.product.data.entities.ProductWalletDto
 import com.rocketpay.mandate.feature.product.domain.entities.PaymentMethod
 import com.rocketpay.mandate.feature.product.domain.entities.ProductOrder
 import com.rocketpay.mandate.feature.product.domain.entities.ProductPlan
@@ -15,6 +16,10 @@ import kotlinx.coroutines.withContext
 internal class ProductUseCase internal constructor(
     private val productRepository: ProductRepository
 ) {
+
+    suspend fun fetchProductWallet(): Outcome<List<ProductWalletDto>>{
+        return productRepository.fetchProductWallet()
+    }
 
     fun getProductWallet(productType: String): Flow<ProductWallet?>{
         return productRepository.getProductWallet(productType)

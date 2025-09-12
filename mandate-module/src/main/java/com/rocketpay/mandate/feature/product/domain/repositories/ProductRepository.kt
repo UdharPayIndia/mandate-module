@@ -14,7 +14,7 @@ import com.udharpay.core.networkmanager.domain.entities.Outcome
 import kotlinx.coroutines.flow.Flow
 
 internal interface ProductRepository {
-    suspend fun getProductWallet(): Outcome<List<ProductWalletDto>>
+    suspend fun fetchProductWallet(): Outcome<List<ProductWalletDto>>
     fun saveProductWallet(
         data: List<ProductWalletDto>,
         onInsert: (ProductWalletEntity) -> Unit,

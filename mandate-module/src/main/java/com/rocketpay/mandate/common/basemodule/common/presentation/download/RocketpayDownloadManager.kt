@@ -1,15 +1,18 @@
 package com.rocketpay.mandate.common.basemodule.common.presentation.download
 
+import android.Manifest
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.rocketpay.mandate.R
+import com.rocketpay.mandate.common.basemodule.common.presentation.utils.ShowUtils
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
 import com.rocketpay.mandate.feature.image.presentation.utils.FileUtils
 import com.rocketpay.mandate.main.init.MandateManager
@@ -26,8 +29,10 @@ internal object RocketpayDownloadManager {
     private var targetUri: Uri? = null
 
     fun download(fileUrl: String, destinationFile: File, fileName: String, shouldShowProgressUpdateMsg: Boolean): Uri? {
-        if (shouldShowProgressUpdateMsg) showNotification(fileName, ResourceManager.getInstance().getString(
-            R.string.rp_downloading_report), null)
+        if (shouldShowProgressUpdateMsg) {
+            showNotification(fileName, ResourceManager.getInstance().getString(
+                R.string.rp_downloading_report), null)
+        }
         try {
             val url = URL(fileUrl)
             val connection = url.openConnection()
@@ -62,57 +67,75 @@ internal object RocketpayDownloadManager {
             input.close()
 
             targetUri = FileUtils.getUriForFile(destinationFile)
-            if (shouldShowProgressUpdateMsg) showNotification(fileName,
-                ResourceManager.getInstance().getString(R.string.rp_download_complete), targetUri)
+            if (shouldShowProgressUpdateMsg) {
+                showNotification(fileName,
+                    ResourceManager.getInstance().getString(R.string.rp_download_complete), targetUri)
+            }
         } catch (e: Exception) {
             targetUri = null
-            if (shouldShowProgressUpdateMsg) showNotification(fileName,
-                ResourceManager.getInstance().getString(R.string.rp_download_failed), null)
+            if (shouldShowProgressUpdateMsg) {
+                showNotification(fileName,
+                    ResourceManager.getInstance().getString(R.string.rp_download_failed), null)
+            }
             e.printStackTrace()
         }
         return targetUri
     }
 
     fun showNotification(title: String, text: String, targetUri: Uri?) {
-        val notificationManager = ensureChannel()
+        try {
+            val context = MandateManager.getInstance().getContext()
+            if (context.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+                return
+            }
+            val notificationManager = ensureChannel()
 
-        // Create intent to view the file
-        val openFileIntent = Intent(Intent.ACTION_VIEW).apply {
-            setDataAndType(targetUri, "text/csv") // change MIME type as needed
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            // Create intent to view the file
+            val openFileIntent = Intent(Intent.ACTION_VIEW).apply {
+                setDataAndType(targetUri, "text/csv") // change MIME type as needed
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+
+            // Wrap in PendingIntent
+            val pendingIntent = PendingIntent.getActivity(
+                context,
+                0,
+                openFileIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+
+            val notificationBuilder = NotificationCompat.Builder(
+                MandateManager.getInstance().getContext(),
+                DOWNLOADS_CHANNEL_ID
+            )
+                .setContentTitle(title)
+                .setContentText(text)
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent)
+                .setChannelId(DOWNLOADS_CHANNEL_ID)
+            if (MandateManager.getInstance().getAppIcon() != -1) {
+                notificationBuilder.setSmallIcon(MandateManager.getInstance().getAppIcon())
+            }else{
+                notificationBuilder.setSmallIcon(R.drawable.rp_ic_download_report)
+            }
+
+            if (targetUri != null) {
+                val viewIntent = Intent(Intent.ACTION_VIEW, targetUri)
+                viewIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                val pendingIntent = PendingIntent.getActivity(
+                    MandateManager.getInstance().getContext(),
+                    0, viewIntent, PendingIntent.FLAG_IMMUTABLE
+                )
+                notificationBuilder.setContentIntent(pendingIntent)
+            }
+
+            notificationBuilder.priority = Notification.PRIORITY_MIN
+            notificationManager.notify(notificationId, notificationBuilder.build())
+        }catch (ex: Exception){
+            ex.printStackTrace()
         }
-
-        // Wrap in PendingIntent
-        val pendingIntent = PendingIntent.getActivity(
-            MandateManager.getInstance().getContext(),
-            0,
-            openFileIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-
-        val notificationBuilder = NotificationCompat.Builder(
-            MandateManager.getInstance().getContext(),
-            DOWNLOADS_CHANNEL_ID)
-            .setContentTitle(title)
-            .setContentText(text)
-            .setAutoCancel(true)
-            .setContentIntent(pendingIntent)
-            .setChannelId(DOWNLOADS_CHANNEL_ID)
-        if(MandateManager.getInstance().getAppIcon() != -1) {
-            notificationBuilder.setSmallIcon(MandateManager.getInstance().getAppIcon() )
-        }
-
-        if (targetUri != null) {
-            val viewIntent = Intent(Intent.ACTION_VIEW, targetUri)
-            viewIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            val pendingIntent = PendingIntent.getActivity(MandateManager.getInstance().getContext(),
-                0, viewIntent, PendingIntent.FLAG_IMMUTABLE)
-            notificationBuilder.setContentIntent(pendingIntent)
-        }
-
-        notificationBuilder.priority = Notification.PRIORITY_MIN
-        notificationManager.notify(notificationId, notificationBuilder.build())
     }
 
     private fun ensureChannel(): NotificationManager {

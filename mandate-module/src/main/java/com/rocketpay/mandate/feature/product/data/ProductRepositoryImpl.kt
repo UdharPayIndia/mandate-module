@@ -40,7 +40,7 @@ internal class ProductRepositoryImpl(
     private val productDataStore: ProductDataStore
 ): ProductRepository {
 
-    override suspend fun getProductWallet(): Outcome<List<ProductWalletDto>>{
+    override suspend fun fetchProductWallet(): Outcome<List<ProductWalletDto>>{
         return productService.getProductWallet()
     }
 

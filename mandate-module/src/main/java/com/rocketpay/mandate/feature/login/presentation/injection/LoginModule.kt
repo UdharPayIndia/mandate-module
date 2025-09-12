@@ -16,13 +16,16 @@ import com.rocketpay.mandate.feature.business.domain.usecase.BusinessProfileUseC
 import com.rocketpay.mandate.feature.business.presentation.injection.BusinessProfileModule
 import com.rocketpay.mandate.feature.kyc.domain.usecase.KycUseCase
 import com.rocketpay.mandate.feature.kyc.presentation.injection.KycModule
+import com.rocketpay.mandate.feature.product.domain.usecase.ProductUseCase
+import com.rocketpay.mandate.feature.product.presentation.injection.ProductModule
 import com.rocketpay.mandate.feature.property.domain.usecase.PropertyUseCase
 import com.rocketpay.mandate.feature.property.presentation.injection.PropertyModule
 import dagger.Module
 import dagger.Provides
 
 
-@Module(includes = [KycModule::class, PropertyModule::class, BusinessProfileModule::class])
+@Module(includes = [KycModule::class, PropertyModule::class,
+    BusinessProfileModule::class, ProductModule::class])
 internal open class LoginModule {
 
     @Provides
@@ -30,9 +33,10 @@ internal open class LoginModule {
         loginUseCase: LoginUseCase,
         kycUseCase: KycUseCase,
         propertyUseCase: PropertyUseCase,
-        businessProfileUseCase: BusinessProfileUseCase
+        businessProfileUseCase: BusinessProfileUseCase,
+        productUseCase: ProductUseCase
     ): LoginStateMachineFactory {
-        return LoginStateMachineFactory(loginUseCase, kycUseCase, propertyUseCase, businessProfileUseCase)
+        return LoginStateMachineFactory(loginUseCase, kycUseCase, propertyUseCase, businessProfileUseCase, productUseCase)
     }
 
     @Provides
@@ -40,8 +44,7 @@ internal open class LoginModule {
         loginRepository: LoginRepository,
         appSignatureRepository: AppSignatureRepository
     ): LoginUseCase {
-        return LoginUseCase(loginRepository, DataValidator(), appSignatureRepository
-        )
+        return LoginUseCase(loginRepository, DataValidator(), appSignatureRepository)
     }
 
     @Provides

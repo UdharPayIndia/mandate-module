@@ -6,6 +6,7 @@ import com.rocketpay.mandate.feature.business.domain.usecase.BusinessProfileUseC
 import com.rocketpay.mandate.feature.kyc.domain.usecase.KycUseCase
 import com.rocketpay.mandate.feature.login.domain.usecase.LoginUseCase
 import com.rocketpay.mandate.feature.login.presentation.ui.login.statemachine.LoginStateMachine
+import com.rocketpay.mandate.feature.product.domain.usecase.ProductUseCase
 import com.rocketpay.mandate.feature.property.domain.usecase.PropertyUseCase
 
 @Suppress("UNCHECKED_CAST")
@@ -13,12 +14,14 @@ internal open class LoginStateMachineFactory(
     private val loginUseCase: LoginUseCase,
     private val kycUseCase: KycUseCase,
     private val propertyUseCase: PropertyUseCase,
-    private val businessProfileUseCase: BusinessProfileUseCase
+    private val businessProfileUseCase: BusinessProfileUseCase,
+    private val productUseCase: ProductUseCase
 ): ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
-            modelClass.isAssignableFrom(LoginStateMachine::class.java) -> LoginStateMachine(loginUseCase, kycUseCase, propertyUseCase, businessProfileUseCase) as T
+            modelClass.isAssignableFrom(LoginStateMachine::class.java) -> LoginStateMachine(
+                loginUseCase, kycUseCase, propertyUseCase, businessProfileUseCase, productUseCase) as T
             else -> throw IllegalArgumentException("ViewModel Not Found")
         }
     }

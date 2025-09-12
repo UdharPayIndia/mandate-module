@@ -617,4 +617,5 @@
     <string name="rp_mandate_setting">Mandate Settings</string>
     <string name="rp_token_used">Token used</string>
     <string name="rp_penalty_will_be_attempted_tomorrow">Penalty will be attempted tomorrow and amount will be settled to you after deducting Rocketpay charges</string>
+    <string name="rp_notification_perimission_is_missing">Notification permission is missing</string>
 </resources>
