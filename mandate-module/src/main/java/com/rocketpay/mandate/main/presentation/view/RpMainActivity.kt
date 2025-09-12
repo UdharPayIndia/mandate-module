@@ -50,6 +50,7 @@ import com.rocketpay.mandate.feature.mandate.presentation.ui.mandatelist.statema
 import com.rocketpay.mandate.feature.mandate.presentation.ui.mandatelist.view.MandateListFragment
 import com.rocketpay.mandate.feature.product.data.ProductOrderSyncer
 import com.rocketpay.mandate.feature.product.data.ProductWalletSyncer
+import com.rocketpay.mandate.feature.property.presentation.utils.PropertyUtils
 import com.rocketpay.mandate.feature.settlements.data.PaymentOrderSyncer
 import com.rocketpay.mandate.feature.settlements.presentation.ui.main.statemachine.SettlementMainScreen
 import com.rocketpay.mandate.feature.settlements.presentation.ui.main.view.SettlementMainFragment
@@ -178,7 +179,7 @@ internal class RpMainActivity : AppCompatActivity(), BaseFragmentListener {
             mViewModel.flowType == FLOW_MANDATE_ADDITION -> {
                 val bundle = Bundle()
                 bundle.putString(MandateAddFragment.BUNDLE_REFERENCE_ID, mViewModel.referenceId)
-                bundle.putString(MandateAddFragment.BUNDLE_REFERENCE_TYPE, "SDK")
+                bundle.putString(MandateAddFragment.BUNDLE_REFERENCE_TYPE, PropertyUtils.MAIN_SDK)
                 bundle.putString(MandateAddFragment.BUNDLE_CUSTOMER_NAME, mViewModel.customerName)
                 bundle.putString(MandateAddFragment.BUNDLE_CUSTOMER_NUMBER, mViewModel.customerNumber)
                 bundle.putString(MandateAddFragment.BUNDLE_NOTE, mViewModel.note)
@@ -197,7 +198,7 @@ internal class RpMainActivity : AppCompatActivity(), BaseFragmentListener {
             mViewModel.flowType == FLOW_BANK_ACCOUNT_ADD -> {
                 val bundle = Bundle()
                 bundle.putBoolean(BankAccountAddFragment.IS_FROM_ONBOARDING, false)
-                bundle.putString(BankAccountAddFragment.BUNDLE_SOURCE, "sdk")
+                bundle.putString(BankAccountAddFragment.BUNDLE_SOURCE, PropertyUtils.MAIN_SDK)
                 onNavigate(BankAccountAddFragment.newInstance(bundle), fragmentTag = BankAccountAddScreen.name)
             }
             else -> {

@@ -38,6 +38,7 @@ import com.rocketpay.mandate.feature.product.presentation.ui.summary.statemachin
 import com.rocketpay.mandate.feature.product.presentation.ui.summary.view.ProductSummaryFragment
 import com.rocketpay.mandate.feature.profile.presentation.ui.statemachine.UserProfileScreen
 import com.rocketpay.mandate.feature.profile.presentation.ui.view.UserProfileFragment
+import com.rocketpay.mandate.feature.property.presentation.utils.PropertyUtils
 import javax.inject.Inject
 
 
@@ -174,7 +175,7 @@ internal class MandateListFragment : BaseMainFragment<MandateListEvent, MandateL
             }
             is MandateListUSF.GotoAddMandate -> {
                 val bundle = Bundle()
-                bundle.putString(MandateAddFragment.BUNDLE_REFERENCE_TYPE, "SDK")
+                bundle.putString(MandateAddFragment.BUNDLE_REFERENCE_TYPE, PropertyUtils.MAIN_SDK)
                 listener?.onNavigate(MandateAddFragment.newInstance(bundle), fragmentTag = MandateAddScreen.name)
             }
             is MandateListUSF.UpdateMandates -> {

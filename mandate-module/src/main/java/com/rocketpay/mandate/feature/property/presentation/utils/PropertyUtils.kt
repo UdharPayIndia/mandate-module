@@ -13,5 +13,6 @@ internal object PropertyUtils {
     const val PRIVACY_POLICY_URL = "privacy_policy_url"
     const val PAYMENT_LINK_SHARE_MESSAGE_ONE_TIME = "payment_link_share_message_one_time"
     const val PAYMENT_LINK_SHARE_MESSAGE_DEFAULT = "payment_link_share_message"
+    const val MAIN_SDK = "MAIN_SDK"
 
 }
