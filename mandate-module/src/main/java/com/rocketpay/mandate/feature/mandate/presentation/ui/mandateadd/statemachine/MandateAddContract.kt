@@ -1,6 +1,7 @@
 package com.rocketpay.mandate.feature.mandate.presentation.ui.mandateadd.statemachine
 
 import android.graphics.drawable.Drawable
+import com.rocketpay.mandate.R
 import com.rocketpay.mandate.feature.charge.domain.entities.Charge
 import com.rocketpay.mandate.feature.mandate.data.entities.ChargeResponseDto
 import com.rocketpay.mandate.feature.mandate.domain.entities.Coupon
@@ -18,6 +19,7 @@ import com.rocketpay.mandate.common.basemodule.common.presentation.statemachine.
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.AmountUtils
 import com.rocketpay.mandate.common.mvistatemachine.contract.AsyncSideEffect
 import com.rocketpay.mandate.common.mvistatemachine.contract.UiSideEffect
+import com.rocketpay.mandate.common.resourcemanager.ResourceManager
 import com.rocketpay.mandate.feature.product.domain.entities.ProductWallet
 
 internal data class MandateAddState(
@@ -79,7 +81,13 @@ internal data class MandateAddState(
     val minimumPenaltyAmount: Int = 0,
     val maximumPenaltyAmount: Int = 0,
     val isAdhocEnabled: Boolean = false,
-    val maxUpiNonMonetisedInstallmentAmount: Int = 0
+    val maxUpiNonMonetisedInstallmentAmount: Int = 0,
+    val paymentLinkShareMessageDefault : String = ResourceManager.getInstance().getString(
+        R.string.rp_payment_link_share_message
+    ),
+    val paymentLinkShareMessageOneTime: String = ResourceManager.getInstance().getString(
+        R.string.rp_payment_link_share_message_one_time
+    ),
 ) : BaseState(MandateAddScreen)
 
 
@@ -143,8 +151,7 @@ internal sealed class MandateAddEvent(name: String? = null) : BaseEvent(name) {
     object BackPressed: MandateAddEvent("")
     data class WhatsAppTemplateCreated(
         val mandate: Mandate,
-        val experiment: String,
-        val messageTemplate: String,
+        val message: String,
         val viaSms: Boolean
     ) : MandateAddEvent("")
     object ChargeBearerChanged: MandateAddEvent("")
@@ -176,7 +183,9 @@ internal sealed class MandateAddEvent(name: String? = null) : BaseEvent(name) {
         val penaltyMinimumAmount: Double,
         val penaltyMaximumAmount: Double,
         val termsAndConditionUrl: String,
-        val maxUpiNonMonetisedInstallmentAmount: Double
+        val maxUpiNonMonetisedInstallmentAmount: Double,
+        val paymentLinkShareMessageDefault: String,
+        val paymentLinkShareMessageOneTime: String
     ): MandateAddEvent()
 }
 
@@ -211,7 +220,7 @@ internal sealed class MandateAddASF : AsyncSideEffect {
         val penaltyAmount: Double
     ) : MandateAddASF()
     data class LoadSupportedFrequency(val isAdhocEnabled: Boolean): MandateAddASF()
-    data class ShareOnLinkClick(val mandate: Mandate, val viaSms: Boolean): MandateAddASF()
+    data class ShareOnLinkClick(val messageTemplate: String, val mandate: Mandate, val viaSms: Boolean): MandateAddASF()
     data class OpenMandatePreview(val mandate: Mandate): MandateAddASF()
     data class CheckChargeAndDiscount(
         val amount: Double, val frequency: String, val installments: Int,

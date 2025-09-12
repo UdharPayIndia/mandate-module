@@ -1,6 +1,7 @@
 package com.rocketpay.mandate.feature.mandate.presentation.ui.mandatedetail.statemachine
 
 import android.graphics.drawable.Drawable
+import com.rocketpay.mandate.R
 import com.rocketpay.mandate.feature.installment.domain.entities.Installment
 import com.rocketpay.mandate.feature.mandate.domain.entities.Mandate
 import com.rocketpay.mandate.feature.mandate.domain.entities.MandateState
@@ -14,6 +15,7 @@ import com.rocketpay.mandate.common.basemodule.common.presentation.statemachine.
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.TimeConstant
 import com.rocketpay.mandate.common.mvistatemachine.contract.AsyncSideEffect
 import com.rocketpay.mandate.common.mvistatemachine.contract.UiSideEffect
+import com.rocketpay.mandate.common.resourcemanager.ResourceManager
 
 internal data class MandateDetailState(
     val mandateId: String? = null,
@@ -32,7 +34,13 @@ internal data class MandateDetailState(
     var deleteEnable: Boolean = false,
     var cancelEnable: Boolean = false,
     val installmentSerialNumber: Int = -1,
-    val isOtherDetailsExpanded: Boolean = false
+    val isOtherDetailsExpanded: Boolean = false,
+    val paymentLinkShareMessageDefault : String = ResourceManager.getInstance().getString(
+        R.string.rp_payment_link_share_message
+    ),
+    val paymentLinkShareMessageOneTime: String = ResourceManager.getInstance().getString(
+        R.string.rp_payment_link_share_message_one_time
+    ),
 ) : BaseState(MandateDetailScreen)
 
 sealed class MandateDetailViewState {
@@ -55,7 +63,7 @@ internal sealed class MandateDetailEvent(name: String? = null) : BaseEvent(name)
     data class UnableToRefresh(val message: String): MandateDetailEvent()
     data class DataRefreshed(val installments: List<Installment>? = null, val nextInstallmentId: String? = null) : MandateDetailEvent()
     object ShareOnWhatsAppClick: MandateDetailEvent()
-    data class WhatsAppTemplateCreated(val mandate: Mandate, val experiment: String, val message: String): MandateDetailEvent()
+    data class WhatsAppTemplateCreated(val mandate: Mandate, val message: String): MandateDetailEvent()
 
     object CopyClick: MandateDetailEvent("copy_click")
     object ResendRequestClick: MandateDetailEvent("resend_request_click")
@@ -87,6 +95,11 @@ internal sealed class MandateDetailEvent(name: String? = null) : BaseEvent(name)
     data object CallCustomerClick: MandateDetailEvent()
     object UpdateDeviceDetailsCardState: MandateDetailEvent()
     data object CloseScreen: MandateDetailEvent()
+    data object LoadConfig: MandateDetailEvent()
+    data class ConfigLoaded(
+        val paymentLinkShareMessageDefault: String,
+        val paymentLinkShareMessageOneTime: String
+    ) : MandateDetailEvent()
 }
 
 
@@ -101,10 +114,11 @@ internal sealed class MandateDetailASF : AsyncSideEffect {
     data class LoadMandateState(val mandateId: String): MandateDetailASF()
     data class DeleteMandate(val mandateId: String): MandateDetailASF()
     data class CancelMandate(val mandateId: String): MandateDetailASF()
-    data class ShareOnWhatsAppClick(val mandate: Mandate): MandateDetailASF()
+    data class ShareOnWhatsAppClick(val messageTemplate: String, val mandate: Mandate): MandateDetailASF()
     data class StartPolling(val mandateId: String): MandateDetailASF()
     object StopPolling: MandateDetailASF()
     data class RefreshMandate(val mandateId: String): MandateDetailASF()
+    data object LoadConfig: MandateDetailASF()
 }
 
 

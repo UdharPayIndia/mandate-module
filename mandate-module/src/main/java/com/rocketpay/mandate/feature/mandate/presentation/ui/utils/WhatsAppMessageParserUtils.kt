@@ -20,31 +20,12 @@ internal object WhatsAppMessageParserUtils {
     private const val INSTALLMENT_FREQUENCY = "INSTALLMENT_FREQUENCY"
     private const val INSTALLMENT_AMOUNT = "INSTALLMENT_AMOUNT"
 
-    fun getDefaultWhatsAppMessageConfig(): WhatsAppMessageConfig {
-        return WhatsAppMessageConfig(experiment = "",
-            data = listOf(
-                WhatsAppMessageData(
-                    InstallmentFrequency.OneTimePayment.value,
-                    ResourceManager.getInstance().getString(
-                        R.string.rp_payment_link_share_message_one_time
-                    )
-                ),
-                WhatsAppMessageData(DEFAULT, ResourceManager.getInstance().getString(
-                R.string.rp_payment_link_share_message)))
-        )
-    }
-
     internal fun getMessageForSharePaymentLink(
-        whatsAppMessageConfig: WhatsAppMessageConfig,
+        messageTemplate: String,
         mandate: Mandate,
         name: String,
     ): String {
-        var messageData = whatsAppMessageConfig.data.find { it.type == mandate.frequency.value }?.message
-        if(messageData == null){
-            messageData = whatsAppMessageConfig.data.find { it.type == DEFAULT }?.message ?: ResourceManager.getInstance().getString(
-                R.string.rp_payment_link_share_message)
-        }
-        return messageData.replace(MERCHANT_NAME, name)
+        return messageTemplate.replace(MERCHANT_NAME, name)
             .replace(TOTAL_AMOUNT, AmountUtils.format(mandate.originalAmount))
             .replace(START_DATE, DateUtils.getDate(mandate.startAt, DateUtils.SLASH_DATE_FORMAT_WITH_TWO_DIGIT_YEAR))
             .replace(LINK, mandate.mandateUrl)

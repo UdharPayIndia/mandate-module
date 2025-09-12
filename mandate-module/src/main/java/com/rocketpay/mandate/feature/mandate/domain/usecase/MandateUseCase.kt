@@ -15,7 +15,6 @@ import com.rocketpay.mandate.feature.mandate.domain.entities.MandateState
 import com.rocketpay.mandate.feature.mandate.domain.entities.MandateStateDto
 import com.rocketpay.mandate.feature.mandate.domain.entities.PaymentMethod
 import com.rocketpay.mandate.feature.mandate.domain.entities.PaymentMethodDetail
-import com.rocketpay.mandate.feature.mandate.domain.entities.WhatsAppMessageConfig
 import com.rocketpay.mandate.feature.mandate.domain.repositories.MandateRepository
 import com.rocketpay.mandate.feature.mandate.presentation.ui.mandatelist.statemachine.MandateFilter
 import com.rocketpay.mandate.feature.mandate.presentation.ui.mandatelist.statemachine.MandateSearchFilterSort
@@ -253,10 +252,6 @@ internal class MandateUseCase internal constructor(
 
     internal suspend fun markMandateSubtextRead(mandate: Mandate) {
         return mandateRepository.markMandateSubtextRead(mandate)
-    }
-
-    fun getWhatsAppMessageConfig(): WhatsAppMessageConfig {
-        return mandateRepository.getWhatsAppMessageConfig()
     }
 
     fun getCount(): Int {

@@ -10,7 +10,6 @@ import com.rocketpay.mandate.feature.mandate.domain.entities.Coupon
 import com.rocketpay.mandate.feature.mandate.domain.entities.CreateMandate
 import com.rocketpay.mandate.feature.mandate.domain.entities.Mandate
 import com.rocketpay.mandate.feature.mandate.domain.entities.MandateStateDto
-import com.rocketpay.mandate.feature.mandate.domain.entities.WhatsAppMessageConfig
 import com.udharpay.core.networkmanager.domain.entities.GenericSuccessResponse
 import com.udharpay.core.networkmanager.domain.entities.Outcome
 import kotlinx.coroutines.flow.Flow
@@ -42,7 +41,6 @@ internal interface MandateRepository {
 
     suspend fun markMandateSubtextRead(mandate: Mandate)
     suspend fun saveMandatesSubtext(data: MutableSet<String>)
-    fun getWhatsAppMessageConfig(): WhatsAppMessageConfig
     fun getCount(): Int
     fun getMaxTimeStamp(): MandateEntity?
     suspend fun updateMandate(mandate: Mandate)

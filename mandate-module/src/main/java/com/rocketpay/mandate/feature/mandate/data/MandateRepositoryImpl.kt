@@ -21,12 +21,10 @@ import com.rocketpay.mandate.feature.mandate.domain.entities.CreateMandate
 import com.rocketpay.mandate.feature.mandate.domain.entities.Mandate
 import com.rocketpay.mandate.feature.mandate.domain.entities.MandateStateDto
 import com.rocketpay.mandate.feature.mandate.domain.entities.SubtextUiState
-import com.rocketpay.mandate.feature.mandate.domain.entities.WhatsAppMessageConfig
 import com.rocketpay.mandate.feature.mandate.domain.repositories.MandateRepository
 import com.udharpay.core.networkmanager.domain.entities.GenericSuccessResponse
 import com.udharpay.core.networkmanager.domain.entities.Outcome
 import com.rocketpay.mandate.common.syncmanager.client.SyncManager
-import com.rocketpay.mandate.feature.mandate.presentation.ui.utils.WhatsAppMessageParserUtils
 import com.rocketpay.mandate.feature.product.data.ProductWalletSyncer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -206,10 +204,6 @@ internal class MandateRepositoryImpl(
     override suspend fun saveMandatesSubtext(data: MutableSet<String>) {
         val mandates = mandateDao.getById(data.toMutableList()) ?: emptyList()
         withContext(Dispatchers.IO){ mandateSubtextDao.upsert(mandates) }
-    }
-
-    override fun getWhatsAppMessageConfig(): WhatsAppMessageConfig {
-        return WhatsAppMessageParserUtils.getDefaultWhatsAppMessageConfig()
     }
 
     override fun getCount(): Int {

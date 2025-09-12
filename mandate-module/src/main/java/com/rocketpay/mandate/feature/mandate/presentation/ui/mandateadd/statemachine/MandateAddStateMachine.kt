@@ -370,7 +370,13 @@ internal class MandateAddStateMachine(
             }
 
             is MandateAddEvent.SharePaymentLinkClick -> {
-                next(MandateAddASF.ShareOnLinkClick(event.mandate, event.viaSms))
+                val messageTemplate = if(event.mandate.frequency == InstallmentFrequency.OneTimePayment){
+                    state.paymentLinkShareMessageOneTime
+                }else{
+                    state.paymentLinkShareMessageDefault
+                }
+                next(MandateAddASF.ShareOnLinkClick(messageTemplate,
+                    event.mandate, event.viaSms))
             }
 
             is MandateAddEvent.SkipSharePaymentLinkClick -> {
@@ -383,7 +389,7 @@ internal class MandateAddStateMachine(
                     next(
                         MandateAddUSF.ShareOnSms(
                             event.mandate.customerDetail.mobileNumber,
-                            event.messageTemplate,
+                            event.message,
                             event.mandate.id,
                             state.referenceId,
                             isManual
@@ -393,7 +399,7 @@ internal class MandateAddStateMachine(
                     next(
                         MandateAddUSF.ShareOnWhatsApp(
                             event.mandate.customerDetail.mobileNumber,
-                            event.messageTemplate,
+                            event.message,
                             event.mandate.id,
                             state.referenceId,
                             isManual
@@ -956,7 +962,9 @@ internal class MandateAddStateMachine(
                     isAdhocEnabled =  event.isAdhocEnabled,
                     minimumPenaltyAmount = event.penaltyMinimumAmount.toInt(),
                     maximumPenaltyAmount = event.penaltyMaximumAmount.toInt(),
-                    maxUpiAmountLimit = event.maxUpiNonMonetisedInstallmentAmount.toInt()
+                    maxUpiAmountLimit = event.maxUpiNonMonetisedInstallmentAmount.toInt(),
+                    paymentLinkShareMessageDefault = event.paymentLinkShareMessageDefault,
+                    paymentLinkShareMessageOneTime = event.paymentLinkShareMessageOneTime
                 ))
             }
             else -> {
@@ -1170,15 +1178,13 @@ internal class MandateAddStateMachine(
             }
 
             is MandateAddASF.ShareOnLinkClick -> {
-                val whatsAppMessageConfig = mandateUseCase.getWhatsAppMessageConfig()
-                val messageTemplate = WhatsAppMessageParserUtils.getMessageForSharePaymentLink(
-                    whatsAppMessageConfig, sideEffect.mandate, CommonUseCase.getInstance().getName()
+                val message = WhatsAppMessageParserUtils.getMessageForSharePaymentLink(
+                    sideEffect.messageTemplate, sideEffect.mandate, CommonUseCase.getInstance().getName()
                 )
                 dispatchEvent(
                     MandateAddEvent.WhatsAppTemplateCreated(
                         sideEffect.mandate,
-                        whatsAppMessageConfig.experiment,
-                        messageTemplate,
+                        message,
                         sideEffect.viaSms
                     )
                 )
@@ -1266,7 +1272,9 @@ internal class MandateAddStateMachine(
                     PropertyUtils.PENALTY_MAXIMUM_AMOUNT,
                     PropertyUtils.IS_ADHOC_ENABLED,
                     PropertyUtils.TERMS_AND_CONDITION_URL,
-                    PropertyUtils.MAX_UPI_NON_MONETISED_INSTALLMENT_AMOUNT
+                    PropertyUtils.MAX_UPI_NON_MONETISED_INSTALLMENT_AMOUNT,
+                    PropertyUtils.PAYMENT_LINK_SHARE_MESSAGE_DEFAULT,
+                    PropertyUtils.PAYMENT_LINK_SHARE_MESSAGE_ONE_TIME
                 )).collectIn(viewModelScope){
                     val isPenaltyEnabled = it.find { it?.id == PropertyUtils.IS_PENALTY_ENABLED }?.value.toBoolean()
                     val isAdhocEnabled = it.find { it?.id == PropertyUtils.IS_ADHOC_ENABLED }?.value.toBoolean()
@@ -1274,13 +1282,18 @@ internal class MandateAddStateMachine(
                     val penaltyMaximumAmount = it.find { it?.id == PropertyUtils.PENALTY_MAXIMUM_AMOUNT }?.value.double()
                     val termsAndConditionUrl = it.find { it?.id == PropertyUtils.TERMS_AND_CONDITION_URL }?.value.orEmpty()
                     val maxUpiNonMonetisedInstallmentAmount = it.find { it?.id == PropertyUtils.MAX_UPI_NON_MONETISED_INSTALLMENT_AMOUNT }?.value.double()
+                    val paymentLinkShareMessageDefault = it.find { it?.id == PropertyUtils.PAYMENT_LINK_SHARE_MESSAGE_DEFAULT }?.value.orEmpty()
+                    val paymentLinkShareMessageOneTime = it.find { it?.id == PropertyUtils.PAYMENT_LINK_SHARE_MESSAGE_ONE_TIME }?.value.orEmpty()
+
                     dispatchEvent(MandateAddEvent.ConfigLoaded(
                         isPenaltyEnabled = isPenaltyEnabled,
                         isAdhocEnabled = isAdhocEnabled,
                         penaltyMinimumAmount = penaltyMinimumAmount,
                         penaltyMaximumAmount = penaltyMaximumAmount,
                         termsAndConditionUrl = termsAndConditionUrl,
-                        maxUpiNonMonetisedInstallmentAmount = maxUpiNonMonetisedInstallmentAmount
+                        maxUpiNonMonetisedInstallmentAmount = maxUpiNonMonetisedInstallmentAmount,
+                        paymentLinkShareMessageDefault = paymentLinkShareMessageDefault,
+                        paymentLinkShareMessageOneTime = paymentLinkShareMessageOneTime
                     ))
                 }
             }

@@ -9,7 +9,6 @@ import com.rocketpay.mandate.feature.mandate.domain.entities.MandateState
 import com.rocketpay.mandate.feature.mandate.domain.entities.PaymentMethod
 import com.rocketpay.mandate.feature.mandate.domain.usecase.MandateUseCase
 import com.rocketpay.mandate.feature.mandate.presentation.ui.utils.WhatsAppMessageParserUtils
-import com.rocketpay.mandate.main.init.MandateManager
 import com.rocketpay.mandate.feature.property.domain.usecase.PropertyUseCase
 import com.udharpay.core.networkmanager.domain.entities.Outcome
 import com.rocketpay.mandate.common.basemodule.common.presentation.statemachine.BaseAnalyticsHandler
@@ -20,6 +19,8 @@ import com.rocketpay.mandate.common.mvistatemachine.viewmodel.simple.SimpleState
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
 import com.rocketpay.mandate.common.syncmanager.client.SyncManager
 import com.rocketpay.mandate.feature.common.domain.CommonUseCase
+import com.rocketpay.mandate.feature.mandate.presentation.ui.mandateadd.viewmodel.InstallmentFrequency
+import com.rocketpay.mandate.feature.property.presentation.utils.PropertyUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -155,11 +156,17 @@ internal class MandateDetailStateMachine(
                 if (state.mandate == null) {
                     noChange()
                 } else {
-                    next(MandateDetailASF.ShareOnWhatsAppClick(state.mandate))
+                    val messageTemplate = if(state.mandate.frequency == InstallmentFrequency.OneTimePayment){
+                        state.paymentLinkShareMessageOneTime
+                    }else{
+                        state.paymentLinkShareMessageDefault
+                    }
+                    next(MandateDetailASF.ShareOnWhatsAppClick(messageTemplate, state.mandate))
                 }
             }
             is MandateDetailEvent.WhatsAppTemplateCreated -> {
-                next(MandateDetailUSF.ShareOnWhatsApp(event.mandate.customerDetail.mobileNumber, event.message))
+                next(MandateDetailUSF.ShareOnWhatsApp(
+                    event.mandate.customerDetail.mobileNumber, event.message))
             }
             MandateDetailEvent.ResendRequestClick -> {
                 if (state.mandateId == null) {
@@ -313,6 +320,15 @@ internal class MandateDetailStateMachine(
             is MandateDetailEvent.CloseScreen -> {
                 next(MandateDetailUSF.CloseScreen)
             }
+            is MandateDetailEvent.LoadConfig -> {
+                next(MandateDetailASF.LoadConfig)
+            }
+            is MandateDetailEvent.ConfigLoaded -> {
+                next(state.copy(
+                    paymentLinkShareMessageDefault = event.paymentLinkShareMessageDefault,
+                    paymentLinkShareMessageOneTime = event.paymentLinkShareMessageOneTime
+                ))
+            }
         }
     }
 
@@ -433,11 +449,10 @@ internal class MandateDetailStateMachine(
                 }
             }
             is MandateDetailASF.ShareOnWhatsAppClick -> {
-                val whatsAppMessageConfig = mandateUseCase.getWhatsAppMessageConfig()
-                val messageTemplate = WhatsAppMessageParserUtils.getMessageForSharePaymentLink(whatsAppMessageConfig,
+                val message = WhatsAppMessageParserUtils.getMessageForSharePaymentLink(messageTemplate = sideEffect.messageTemplate,
                     sideEffect.mandate, CommonUseCase.getInstance().getName())
                 dispatchEvent(MandateDetailEvent.WhatsAppTemplateCreated(sideEffect.mandate,
-                    whatsAppMessageConfig.experiment, messageTemplate))
+                    message))
             }
             is MandateDetailASF.StartPolling -> {
                 if(job == null) {
@@ -459,6 +474,20 @@ internal class MandateDetailStateMachine(
             }
             is MandateDetailASF.RefreshMandate -> {
                 mandateUseCase.refreshMandate(sideEffect.mandateId)
+            }
+            is MandateDetailASF.LoadConfig -> {
+                propertyUseCase.getMultiplePropertyLive(listOf(
+                    PropertyUtils.PAYMENT_LINK_SHARE_MESSAGE_DEFAULT,
+                    PropertyUtils.PAYMENT_LINK_SHARE_MESSAGE_ONE_TIME
+                )).collectIn(viewModelScope){
+                    val paymentLinkShareMessageDefault = it.find { it?.id == PropertyUtils.PAYMENT_LINK_SHARE_MESSAGE_DEFAULT }?.value.orEmpty()
+                    val paymentLinkShareMessageOneTime = it.find { it?.id == PropertyUtils.PAYMENT_LINK_SHARE_MESSAGE_ONE_TIME }?.value.orEmpty()
+
+                    dispatchEvent(MandateDetailEvent.ConfigLoaded(
+                        paymentLinkShareMessageDefault = paymentLinkShareMessageDefault,
+                        paymentLinkShareMessageOneTime = paymentLinkShareMessageOneTime
+                    ))
+                }
             }
         }
     }

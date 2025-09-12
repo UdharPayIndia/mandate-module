@@ -11,5 +11,7 @@ internal object PropertyUtils {
     const val TERMS_AND_CONDITION_URL = "tnc_url"
     const val MAX_UPI_NON_MONETISED_INSTALLMENT_AMOUNT = "max_upi_non_monetised_installment_amount"
     const val PRIVACY_POLICY_URL = "privacy_policy_url"
+    const val PAYMENT_LINK_SHARE_MESSAGE_ONE_TIME = "payment_link_share_message_one_time"
+    const val PAYMENT_LINK_SHARE_MESSAGE_DEFAULT = "payment_link_share_message"
 
 }

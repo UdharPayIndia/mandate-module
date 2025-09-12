@@ -3,7 +3,6 @@ package com.rocketpay.mandate.feature.mandate.presentation.ui.mandateadd.view
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.text.SpannableString
@@ -15,7 +14,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.rocketpay.mandate.R
@@ -45,7 +43,6 @@ import com.rocketpay.mandate.common.basemodule.common.presentation.ext.openWebPa
 import com.rocketpay.mandate.common.basemodule.common.presentation.ext.showDialogFragment
 import com.rocketpay.mandate.common.basemodule.common.presentation.progressdialog.ProgressDialog
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.AmountUtils
-import com.rocketpay.mandate.common.basemodule.common.presentation.utils.BitmapUtils
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.DatePickerUtils
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.DateUtils
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.KeyboardUtils
@@ -54,10 +51,6 @@ import com.rocketpay.mandate.common.basemodule.common.presentation.utils.ShowUti
 import com.rocketpay.mandate.databinding.BottomSheetEnterRpBinding
 import com.rocketpay.mandate.common.basemodule.main.view.BaseMainFragment
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
-import com.rocketpay.mandate.feature.mandate.presentation.ui.mandatelist.statemachine.MandateListEvent
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 internal class MandateAddFragment : BaseMainFragment<MandateAddEvent, MandateAddState, MandateAddUSF>() {

@@ -40,7 +40,9 @@ internal class BusinessPropertyService {
                     PropertyUtils.TERMS_AND_CONDITION_URL,
                     PropertyUtils.PRIVACY_POLICY_URL,
                     PropertyUtils.MAX_UPI_NON_MONETISED_INSTALLMENT_AMOUNT,
-                    PropertyUtils.BUSINESS_MOBILE_NUMBER)
+                    PropertyUtils.BUSINESS_MOBILE_NUMBER,
+                    PropertyUtils.PAYMENT_LINK_SHARE_MESSAGE_DEFAULT,
+                    PropertyUtils.PAYMENT_LINK_SHARE_MESSAGE_ONE_TIME)
             ))
             .build()
             .post()

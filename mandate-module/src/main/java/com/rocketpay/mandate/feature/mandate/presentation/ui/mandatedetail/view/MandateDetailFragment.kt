@@ -92,6 +92,7 @@ internal class MandateDetailFragment : BaseMainFragment<MandateDetailEvent, Mand
         }else{
             stateMachine.dispatchEvent(MandateDetailEvent.LoadMandate(mandateId, installmentSerialNumber))
         }
+        stateMachine.dispatchEvent(MandateDetailEvent.LoadConfig)
     }
 
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
