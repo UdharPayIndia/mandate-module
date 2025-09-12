@@ -97,6 +97,7 @@ internal class InstallmentDetailFragment : BaseMainFragment<InstallmentDetailEve
         stateMachine.dispatchEvent(InstallmentDetailEvent.LoadMandateAndInstallment(mandateId, installmentId, referenceId))
         stateMachine.dispatchEvent(InstallmentDetailEvent.FetchInstallment(installmentId))
         stateMachine.dispatchEvent(InstallmentDetailEvent.LoadSettlementBannerInfo)
+        stateMachine.dispatchEvent(InstallmentDetailEvent.LoadConfig)
     }
 
     override fun createView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

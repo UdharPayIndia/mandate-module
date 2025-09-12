@@ -19,6 +19,7 @@ import com.rocketpay.mandate.feature.mandate.domain.entities.PaymentMethod
 import com.rocketpay.mandate.feature.mandate.domain.usecase.MandateUseCase
 import com.rocketpay.mandate.feature.product.presentation.ui.utils.ProductUtils
 import com.rocketpay.mandate.feature.property.domain.usecase.PropertyUseCase
+import com.rocketpay.mandate.feature.property.presentation.utils.PropertyUtils
 import com.rocketpay.mandate.feature.settlements.domain.usecase.PaymentOrderUseCase
 import com.udharpay.core.networkmanager.domain.entities.Outcome
 import kotlinx.coroutines.CoroutineScope
@@ -268,13 +269,26 @@ internal class InstallmentDetailStateMachine(
                 next(state.copy(installmentPenalty = event.installmentPenalty))
             }
             is InstallmentDetailEvent.ChargePenaltyClick -> {
-                next(
-                    InstallmentDetailUSF.OpenEnterPenaltyBottomSheet(
-                        state.mandateId.orEmpty(),
-                        state.installmentId.orEmpty(),
-                        state.installment?.amount ?: 0.0
+                if(state.installment?.chargePenalty == true) {
+                    next(
+                        InstallmentDetailUSF.OpenEnterPenaltyBottomSheet(
+                            state.mandateId.orEmpty(),
+                            state.installmentId.orEmpty(),
+                            state.installment?.amount ?: 0.0
+                        )
                     )
-                )
+                }else{
+                    if(state.mandate?.paymentMethodDetail?.method == PaymentMethod.Nach
+                        || state.mandate?.paymentMethodDetail?.method == PaymentMethod.Manual){
+                        next(InstallmentDetailUSF.ShowSnackBar(
+                            ResourceManager.getInstance().getString(
+                                R.string.rp_automatic_charge_penalty_is_not_available_for_nach_payments,
+                                state.mandate.paymentMethodDetail.method.transalion))
+                        )
+                    }else{
+                        noChange()
+                    }
+                }
             }
             is InstallmentDetailEvent.MarkAsPaidClick -> {
                 next(InstallmentDetailUSF.OpenInstallmentUpdateScreen(
@@ -319,6 +333,12 @@ internal class InstallmentDetailStateMachine(
             }
             is InstallmentDetailEvent.DismissLoader -> {
                 next(InstallmentDetailUSF.DismissLoader)
+            }
+            is InstallmentDetailEvent.LoadConfig -> {
+                next(InstallmentDetailASF.LoadConfig)
+            }
+            is InstallmentDetailEvent.ConfigLoaded -> {
+                next(state.copy(isPenaltyEnabled = event.isPenaltyEnabled))
             }
         }
     }
@@ -414,6 +434,12 @@ internal class InstallmentDetailStateMachine(
                         dispatchEvent(InstallmentDetailEvent.RetryInstallmentSucceed)
                     }
                 }
+            }
+            is InstallmentDetailASF.LoadConfig -> {
+                propertyUseCase.getPropertyLive(PropertyUtils.IS_PENALTY_ENABLED)
+                    .collectIn(viewModelScope) {
+                        dispatchEvent(InstallmentDetailEvent.ConfigLoaded(it?.value.toBoolean()))
+                    }
             }
         }
     }

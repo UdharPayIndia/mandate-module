@@ -2,19 +2,24 @@ package com.rocketpay.mandate.feature.installment.presentation.ui.penalty.statem
 
 import com.rocketpay.mandate.BuildConfig
 import com.rocketpay.mandate.R
+import com.rocketpay.mandate.common.basemodule.common.presentation.ext.double
 import com.rocketpay.mandate.feature.installment.domain.usecase.InstallmentUseCase
 import com.rocketpay.mandate.feature.mandate.data.MandateSyncer
 import com.udharpay.core.networkmanager.domain.entities.Outcome
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.AmountUtils
 import com.rocketpay.mandate.common.mvistatemachine.contract.Next
+import com.rocketpay.mandate.common.mvistatemachine.contract.collectIn
 import com.rocketpay.mandate.common.mvistatemachine.viewmodel.simple.SimpleStateMachineImpl
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
 import com.rocketpay.mandate.common.syncmanager.client.SyncManager
+import com.rocketpay.mandate.feature.property.domain.usecase.PropertyUseCase
+import com.rocketpay.mandate.feature.property.presentation.utils.PropertyUtils
 import com.rocketpay.mandate.main.init.MandateManager
 import kotlinx.coroutines.CoroutineScope
 
-internal class EnterPenaltyAmountStateMachine  (
-    private val installmentUseCase: InstallmentUseCase
+internal class EnterPenaltyAmountStateMachine(
+    private val installmentUseCase: InstallmentUseCase,
+    private val propertyUseCase: PropertyUseCase
 ): SimpleStateMachineImpl<EnterPenaltyAmountEvent, EnterPenaltyAmountState, EnterPenaltyAmountASF, EnterPenaltyAmountUSF>(
     EnterPenaltyAmountAnalyticsHandler()
 ) {
@@ -39,6 +44,7 @@ internal class EnterPenaltyAmountStateMachine  (
             is EnterPenaltyAmountEvent.UpdatePenaltyAmount -> {
                 val penaltyAmount = AmountUtils.stringToDouble(event.penaltyAmount)
                 val installmentAmount = AmountUtils.stringToDouble(state.installmentAmount)
+                val maximumAmount = maxOf(installmentAmount, state.maximumAmount)
                 val minimumAmount = state.minimumAmount
                 if(penaltyAmount <= 0.0){
                     next(state.copy(penaltyAmount = event.penaltyAmount,
@@ -49,10 +55,10 @@ internal class EnterPenaltyAmountStateMachine  (
                         penaltyAmountError = ResourceManager.getInstance().getString(R.string.rp_penalty_amount_should_be_greater_than_amount,
                             AmountUtils.format(minimumAmount)),
                         isEnabled = false))
-                }else if(penaltyAmount > installmentAmount){
+                }else if(penaltyAmount > maximumAmount){
                     next(state.copy(penaltyAmount = event.penaltyAmount,
                         penaltyAmountError = ResourceManager.getInstance().getString(R.string.rp_penalty_amount_should_be_lesser_than_installment_amount,
-                            AmountUtils.format(installmentAmount)),
+                            AmountUtils.format(maximumAmount)),
                         isEnabled = false))
                 }else {
                     next(state.copy(penaltyAmount = event.penaltyAmount,
@@ -110,6 +116,15 @@ internal class EnterPenaltyAmountStateMachine  (
             is EnterPenaltyAmountEvent.UpdatePenaltyDetails -> {
                 next(EnterPenaltyAmountUSF.CloseScreen)
             }
+            is EnterPenaltyAmountEvent.LoadConfig -> {
+                next(EnterPenaltyAmountASF.LoadConfig)
+            }
+            is EnterPenaltyAmountEvent.ConfigLoaded -> {
+                next(state.copy(
+                    maximumAmount = event.maximumPenaltyAmount,
+                    minimumAmount = event.minimumPenaltyAmount)
+                )
+            }
         }
     }
 
@@ -149,6 +164,16 @@ internal class EnterPenaltyAmountStateMachine  (
                     is Outcome.Success -> {
                         dispatchEvent(EnterPenaltyAmountEvent.UpdatePenaltyDetails(outcome.data))
                     }
+                }
+            }
+            is EnterPenaltyAmountASF.LoadConfig -> {
+                propertyUseCase.getMultiplePropertyLive(
+                    listOf(PropertyUtils.PENALTY_MAXIMUM_AMOUNT,
+                    PropertyUtils.PENALTY_MINIMUM_AMOUNT)
+                ).collectIn(viewModelScope){
+                    val minimumPenaltyAmount = it.find { it?.id == PropertyUtils.PENALTY_MINIMUM_AMOUNT }?.value.double()
+                    val maximumPenaltyAmount = it.find { it?.id == PropertyUtils.PENALTY_MAXIMUM_AMOUNT }?.value.double()
+                    dispatchEvent(EnterPenaltyAmountEvent.ConfigLoaded(minimumPenaltyAmount, maximumPenaltyAmount))
                 }
             }
         }

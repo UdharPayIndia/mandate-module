@@ -436,7 +436,8 @@ internal class MandateDetailStateMachine(
                 val whatsAppMessageConfig = mandateUseCase.getWhatsAppMessageConfig()
                 val messageTemplate = WhatsAppMessageParserUtils.getMessageForSharePaymentLink(whatsAppMessageConfig,
                     sideEffect.mandate, CommonUseCase.getInstance().getName())
-                dispatchEvent(MandateDetailEvent.WhatsAppTemplateCreated(sideEffect.mandate, whatsAppMessageConfig.experiment, messageTemplate))
+                dispatchEvent(MandateDetailEvent.WhatsAppTemplateCreated(sideEffect.mandate,
+                    whatsAppMessageConfig.experiment, messageTemplate))
             }
             is MandateDetailASF.StartPolling -> {
                 if(job == null) {

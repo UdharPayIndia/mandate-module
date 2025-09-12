@@ -211,7 +211,8 @@ internal class InstallmentDetailUM(val dispatchEvent: (InstallmentDetailEvent) -
                 skipVisibility.set(false)
             }
 
-            if(state.installment.chargePenalty != null && state.mandate?.paymentMethodDetail?.method != PaymentMethod.Manual){
+            if(state.isPenaltyEnabled
+                && state.installment.chargePenalty != null && state.mandate?.paymentMethodDetail?.method != PaymentMethod.Manual){
                 penaltyVisibility.set(true)
                 penaltyEnable.set(state.installment.chargePenalty)
                 if (state.installment.chargePenalty) {

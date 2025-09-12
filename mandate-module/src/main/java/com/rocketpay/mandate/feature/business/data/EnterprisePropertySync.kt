@@ -3,11 +3,10 @@ package com.rocketpay.mandate.feature.business.data
 import com.rocketpay.mandate.feature.business.data.datasource.entities.EnterprisePropertyDto
 import com.rocketpay.mandate.feature.business.domain.repositories.BusinessPropertyRepository
 import com.rocketpay.mandate.feature.business.presentation.injection.BusinessProfileComponent
-import com.rocketpay.mandate.feature.common.domain.CommonUseCase
 import com.rocketpay.mandate.feature.property.data.entities.PropertyDto
 import com.rocketpay.mandate.feature.property.data.entities.PropertyType
 import com.rocketpay.mandate.feature.property.domain.repositories.PropertyRepository
-import com.udharpay.core.networkmanager.domain.entities.GenericErrorResponse
+import com.rocketpay.mandate.main.init.MandateManager
 import com.udharpay.core.networkmanager.domain.entities.Outcome
 import com.udharpay.core.syncmanager.domain.enities.DefaultSyncConstraint
 import com.udharpay.core.syncmanager.domain.enities.ExistingSyncPolicy
@@ -51,7 +50,7 @@ internal class EnterprisePropertySyncer: Syncer {
 
     private suspend fun pullEnterpriseProperties(): Outcome<List<EnterprisePropertyDto>> {
         return when(val outcome = businessPropertyRepository.pullEnterprisePropertyList(
-            CommonUseCase.getInstance().getAccountId()
+            MandateManager.getInstance().getEnterpriseId()
         )) {
             is Outcome.Error -> {
                 outcome

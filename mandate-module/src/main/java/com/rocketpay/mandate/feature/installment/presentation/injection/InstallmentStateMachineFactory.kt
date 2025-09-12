@@ -28,7 +28,7 @@ internal open class InstallmentStateMachineFactory(
             modelClass.isAssignableFrom(InstallmentDetailStateMachine::class.java) -> InstallmentDetailStateMachine(mandateUseCase, installmentUseCase, propertyUseCase, paymentOrderUseCase) as T
             modelClass.isAssignableFrom(InstallmentAddStateMachine::class.java) -> InstallmentAddStateMachine(mandateUseCase, installmentUseCase, dataValidator) as T
             modelClass.isAssignableFrom(InstallmentUpdateStateMachine::class.java) -> InstallmentUpdateStateMachine(installmentUseCase) as T
-            modelClass.isAssignableFrom(EnterPenaltyAmountStateMachine::class.java) -> EnterPenaltyAmountStateMachine(installmentUseCase) as T
+            modelClass.isAssignableFrom(EnterPenaltyAmountStateMachine::class.java) -> EnterPenaltyAmountStateMachine(installmentUseCase, propertyUseCase) as T
             modelClass.isAssignableFrom(PaymentTrackerListStateMachine::class.java) -> PaymentTrackerListStateMachine(installmentUseCase) as T
             modelClass.isAssignableFrom(PaymentTrackerMainStateMachine::class.java) -> PaymentTrackerMainStateMachine(installmentUseCase) as T
             else -> throw IllegalArgumentException("ViewModel Not Found")

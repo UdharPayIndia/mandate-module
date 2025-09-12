@@ -79,6 +79,7 @@ internal class EnterPenaltyAmountFragment :
         val installmentId = savedInstanceState?.getString(BUNDLE_INSTALLMENT_ID, "").orEmpty()
         val installmentAmount = savedInstanceState?.getString(BUNDLE_INSTALLMENT_AMOUNT, "").orEmpty()
         stateMachine.dispatchEvent(EnterPenaltyAmountEvent.Init(mandateId, installmentId, installmentAmount))
+        stateMachine.dispatchEvent(EnterPenaltyAmountEvent.LoadConfig)
     }
 
 

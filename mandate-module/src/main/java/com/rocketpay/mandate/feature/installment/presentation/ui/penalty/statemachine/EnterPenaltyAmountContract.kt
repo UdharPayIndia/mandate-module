@@ -16,7 +16,8 @@ internal data class EnterPenaltyAmountState(
     val penaltyAmount: String = "",
     val penaltyAmountError: String = "",
     val isEnabled: Boolean = false,
-    val minimumAmount: Double = MandateManager.getInstance().penaltyMinimumAmount
+    val minimumAmount: Double = 0.0,
+    val maximumAmount: Double = 0.0
 ) : BaseState(EnterPenaltyAmountScreen)
 
 internal sealed class EnterPenaltyAmountEvent(name: String? = null) : BaseEvent(name) {
@@ -38,6 +39,8 @@ internal sealed class EnterPenaltyAmountEvent(name: String? = null) : BaseEvent(
     ): EnterPenaltyAmountEvent()
     data object ChargePenaltySucceed: EnterPenaltyAmountEvent()
     data class UpdatePenaltyDetails(val data: InstallmentPenalty) : EnterPenaltyAmountEvent()
+    data object LoadConfig: EnterPenaltyAmountEvent()
+    data class ConfigLoaded(val minimumPenaltyAmount: Double, val maximumPenaltyAmount: Double): EnterPenaltyAmountEvent()
 }
 
 
@@ -50,6 +53,7 @@ internal sealed class EnterPenaltyAmountASF : AsyncSideEffect {
     data class LoadPenalty(
         val installmentId: String
     ): EnterPenaltyAmountASF()
+    data object LoadConfig: EnterPenaltyAmountASF()
 }
 
 

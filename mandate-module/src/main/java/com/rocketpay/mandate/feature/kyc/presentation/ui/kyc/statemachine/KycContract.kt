@@ -21,7 +21,7 @@ internal data class KycState(
     val bankAccounts: List<BankAccount> = emptyList(),
     val isSkipJourneyEnabled: Boolean = false,
     val errorCode: String = "",
-    val nonBusinessEnumString: String = MandateManager.getInstance().nonBusinessEnumString
+    val nonBusinessEnumString: String = "I don’t have a business"
 ) : BaseState(KycScreen)
 
 

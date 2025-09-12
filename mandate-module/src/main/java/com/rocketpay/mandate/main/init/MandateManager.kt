@@ -15,7 +15,6 @@ import com.rocketpay.mandate.main.init.serializer.JsonHandlerImpl
 import com.rocketpay.mandate.main.init.sync.SyncConstraintObserverRegister
 import com.rocketpay.mandate.main.init.sync.SyncRegister
 import com.udharpay.core.networkmanager.client.NetworkManager
-import com.rocketpay.mandate.common.basemodule.common.presentation.utils.AmountUtils
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
 import com.rocketpay.mandate.common.syncmanager.client.SyncManager
 import com.rocketpay.mandate.common.jsonconverter.JsonConverter
@@ -33,11 +32,6 @@ class MandateManager private constructor(
     private val skipKyc: Boolean,
     private var isDebug: Boolean
 ){
-
-    //Config
-    internal val penaltyMinimumAmount: Double = 15.0
-    internal val nonBusinessEnumString: String = "I don’t have a business"
-
     companion object {
         private var instance: MandateManager? = null
         fun getInstance(): MandateManager {

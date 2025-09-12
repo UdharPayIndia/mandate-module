@@ -416,15 +416,15 @@ internal class MandateAddUM (private val dispatchEvent: (MandateAddEvent) -> Uni
                 handlingChargeLabel.set(ResourceManager.getInstance().getString(
                     R.string.rp_merchant_charges_per_installment_at_zero))
             }
-//            subscriptionInfoText.set(ResourceManager.getInstance().getString(R.string.rp_saved_with_app_plan,
-//                AmountUtils.format(merchantCharges.discount), MandateManager.getInstance().getAppName()))
+            subscriptionInfoText.set(ResourceManager.getInstance().getString(R.string.rp_saved_with_app_plan,
+                AmountUtils.format(merchantCharges.discount), MandateManager.getInstance().getAppName()))
         }else{
             if(state.chargeResponse?.showAtMandateLevel == true || installment <= 1){
                 handlingChargeLabel.set(ResourceManager.getInstance().getString(R.string.rp_merchant_charges))
             }else{
                 handlingChargeLabel.set(ResourceManager.getInstance().getString(R.string.rp_merchant_charges_per_installment))
             }
-//            subscriptionInfoText.set(null)
+            subscriptionInfoText.set(null)
         }
     }
 

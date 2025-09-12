@@ -25,7 +25,8 @@ internal data class InstallmentDetailState(
     val isManual: Boolean = false,
     val settlementBannerMessage: String = "",
     val paymentOrder: PaymentOrder? = null,
-    val retryDate: Long? = null
+    val retryDate: Long? = null,
+    val isPenaltyEnabled: Boolean = false
 ) : BaseState(InstallmentDetailScreen)
 
 
@@ -77,7 +78,8 @@ internal sealed class InstallmentDetailEvent(name: String? = null) : BaseEvent(n
         val errorMessage: String
     ): InstallmentDetailEvent()
     data object RetryInstallmentSucceed: InstallmentDetailEvent("installment_retried")
-
+    data object LoadConfig: InstallmentDetailEvent()
+    data class ConfigLoaded(val isPenaltyEnabled: Boolean): InstallmentDetailEvent()
 }
 
 
@@ -96,6 +98,8 @@ internal sealed class InstallmentDetailASF : AsyncSideEffect {
         val installmentId: String,
         val retryDate: Long
     ): InstallmentDetailASF()
+    data object LoadConfig: InstallmentDetailASF()
+
 }
 
 
