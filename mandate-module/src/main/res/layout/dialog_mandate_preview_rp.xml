@@ -247,7 +247,8 @@
                         app:icon="@drawable/rp_ic_whatsapp"
                         app:iconGravity="textStart"
                         app:iconSize="@dimen/rp_size_24"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintEnd_toStartOf="@+id/btnSms"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
