@@ -269,7 +269,7 @@ internal class InstallmentDetailStateMachine(
                 )
             }
             is InstallmentDetailEvent.UpdatePenaltyDetails -> {
-                next(state.copy(installmentPenalty = event.installmentPenalty))
+                next(state.copy(installmentPenalty = event.installment))
             }
             is InstallmentDetailEvent.ChargePenaltyClick -> {
                 if(state.installmentPenalty != null
@@ -330,6 +330,9 @@ internal class InstallmentDetailStateMachine(
             }
             is InstallmentDetailEvent.ViewSettlementClick -> {
                 next(InstallmentDetailUSF.OpenSettlementScreen(state.installment?.paymentOrderId.orEmpty()))
+            }
+            is InstallmentDetailEvent.ViewPenaltySettlementClick -> {
+                next(InstallmentDetailUSF.OpenSettlementScreen(state.installmentPenalty?.paymentOrderId.orEmpty()))
             }
             is InstallmentDetailEvent.SettlementBannerClick -> {
                 next(InstallmentDetailUSF.OpenKyc)
@@ -425,12 +428,8 @@ internal class InstallmentDetailStateMachine(
             }
             is InstallmentDetailASF.LoadPenalty -> {
                 SyncManager.getInstance().enqueue(MandateSyncer.TYPE)
-                when (val outcome = installmentUseCase.fetchInstallmentPenalty(sideEffect.installmentId)) {
-                    is Outcome.Error -> {
-                    }
-                    is Outcome.Success -> {
-                        dispatchEvent(InstallmentDetailEvent.UpdatePenaltyDetails(outcome.data))
-                    }
+                installmentUseCase.getPenaltyInstallment(sideEffect.installmentId).collectIn(viewModelScope){
+                    dispatchEvent(InstallmentDetailEvent.UpdatePenaltyDetails(it))
                 }
             }
             is InstallmentDetailASF.LoadSettlementBannerInfo -> {
