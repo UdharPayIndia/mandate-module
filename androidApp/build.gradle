@@ -88,29 +88,12 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation libs.androidx.swiperefreshlayout
-    implementation libs.play.services.location
-    implementation libs.play.services.auth.api.phone
 
     implementation project(':mandate-module')
-
-    // Gson
-    implementation libs.gson
-
-    // Retrofit
-    implementation(libs.converter.gson)
 
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test:runner:1.6.1'
     androidTestImplementation 'androidx.test:rules:1.6.1'
-
-    // Google
-    implementation libs.play.services.auth
-    implementation libs.play.services.base
-    //QrCodegenerator
-    implementation libs.play.services.vision
-
-    implementation(libs.gms.play.services.ads.identifier)
 
 }
 

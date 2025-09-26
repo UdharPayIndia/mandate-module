@@ -1,5 +1,5 @@
 [versions]
-agp = "8.10.0"
+agp = "8.8.2"
 compiler = "4.11.0"
 converterGson = "3.0.0"
 dagger = "2.49"
@@ -144,8 +144,4 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "composejb" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-room = { id = "androidx.room", version.ref = "room" }
-googleServices = { id = "com.google.gms.google-services", version.ref = "googleServices"}
