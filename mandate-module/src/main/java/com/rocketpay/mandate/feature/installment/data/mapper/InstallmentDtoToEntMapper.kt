@@ -35,7 +35,8 @@ internal class InstallmentDtoToEntMapper : ListMapper<InstallmentDto, Installmen
                 source.meta?.mode, source.meta?.merchant_collected == true,
                 source.meta?.comments,
                 source.meta?.retry_schedule_date.orEmpty()
-            )
+            ),
+            referenceId = source.reference_id.orEmpty()
         )
     }
 }

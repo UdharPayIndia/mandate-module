@@ -40,7 +40,7 @@ internal sealed class EnterPenaltyAmountEvent(name: String? = null) : BaseEvent(
         val errorMessage: String
     ): EnterPenaltyAmountEvent()
     data object ChargePenaltySucceed: EnterPenaltyAmountEvent()
-    data class UpdatePenaltyDetails(val data: InstallmentPenalty) : EnterPenaltyAmountEvent()
+    data object UpdatePenaltyDetails : EnterPenaltyAmountEvent()
     data object LoadConfig: EnterPenaltyAmountEvent()
     data class ConfigLoaded(val minimumPenaltyAmount: Double, val maximumPenaltyAmount: Double): EnterPenaltyAmountEvent()
 }

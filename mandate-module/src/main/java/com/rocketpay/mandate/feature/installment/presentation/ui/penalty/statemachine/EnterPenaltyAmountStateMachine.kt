@@ -157,17 +157,7 @@ internal class EnterPenaltyAmountStateMachine(
             }
             is EnterPenaltyAmountASF.LoadPenalty -> {
                 SyncManager.getInstance().enqueue(MandateSyncer.TYPE)
-                when (val outcome = installmentUseCase.fetchInstallmentPenalty(sideEffect.installmentId)) {
-                    is Outcome.Error -> {
-                        EnterPenaltyAmountEvent.ChargePenaltyFailed(
-                            outcome.error.code.orEmpty(),
-                            outcome.error.message.orEmpty()
-                        )
-                    }
-                    is Outcome.Success -> {
-                        dispatchEvent(EnterPenaltyAmountEvent.UpdatePenaltyDetails(outcome.data))
-                    }
-                }
+                dispatchEvent(EnterPenaltyAmountEvent.UpdatePenaltyDetails)
             }
             is EnterPenaltyAmountASF.LoadConfig -> {
                 propertyUseCase.getMultiplePropertyLive(

@@ -71,15 +71,33 @@ internal class PaymentTrackerListStateMachine(
             }
             is PaymentTrackerListEvent.InstallmentClick -> {
                 if(state.skipManualMandate){
-                    next(PaymentTrackerListUSF.OpenMandateDetails(
-                        event.installment.installment.mandateId,
-                        event.installment.installment.serialNumber
-                    ))
+                    if(event.installment.installment.mandateId == event.installment.installment.referenceId){
+                        next(
+                            PaymentTrackerListUSF.OpenMandateDetails(
+                                event.installment.installment.mandateId,
+                                event.installment.installment.serialNumber
+                            )
+                        )
+                    }else {
+                        next(
+                            PaymentTrackerListUSF.OpenInstallmentDetails(
+                                event.installment.installment
+                            )
+                        )
+                    }
                 }else{
-                    next(PaymentTrackerListUSF.OpenMandateDetails(
-                        event.installment.installment.mandateId,
-                        event.installment.installment.serialNumber
-                    ))
+                    if(event.installment.installment.mandateId == event.installment.installment.referenceId){
+                        next(PaymentTrackerListUSF.OpenMandateDetails(
+                            event.installment.installment.mandateId,
+                            event.installment.installment.serialNumber
+                        ))
+                    }else{
+                        next(
+                            PaymentTrackerListUSF.OpenInstallmentDetails(
+                                event.installment.installment
+                            )
+                        )
+                    }
                 }
             }
             is PaymentTrackerListEvent.FetchNextInstallments -> {

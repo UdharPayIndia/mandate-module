@@ -14,6 +14,7 @@ import com.rocketpay.mandate.feature.mandate.presentation.ui.mandatedetail.viewm
 import com.rocketpay.mandate.common.basemodule.common.presentation.adapter.RecyclerViewAdapter
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.AmountUtils
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
+import kotlin.text.get
 
 internal class ItemInstallmentListVM(
     val installment: InstallmentWithMandateEntity,
@@ -33,16 +34,42 @@ internal class ItemInstallmentListVM(
         bodyTitle.set("${installment.customerName} \u2022 #${installment.installment.serialNumber}")
         if(hideTag){
             if(installment.installment.status == InstallmentState.SettlementSuccess.value){
-                bodySubtitle.set("${installment.paidInstallment}/${installment.noOfInstallment} ${ResourceManager.getInstance().getString(R.string.rp_installment)}")
+                if(installment.installment.mandateId == installment.installment.referenceId){
+                    bodySubtitle.set("${installment.paidInstallment}/${installment.noOfInstallment} " +
+                            ResourceManager.getInstance().getString(R.string.rp_installment)
+                    )
+                }else{
+                    bodySubtitle.set("${ResourceManager.getInstance().getString(R.string.rp_installment)} " +
+                            "#${installment.installment.serialNumber} " +
+                            "\u2022 ${ResourceManager.getInstance().getString(R.string.rp_penalty)}"
+                    )
+                }
             }else{
-                bodySubtitle.set("${installment.paidInstallment}/${installment.noOfInstallment} ${ResourceManager.getInstance().getString(R.string.rp_installment)}" +
-                        " \u2022 ${ResourceManager.getInstance().getString(R.string.rp_yet_to_settle)}")
+                if(installment.installment.mandateId == installment.installment.referenceId){
+                    bodySubtitle.set("${installment.paidInstallment}/${installment.noOfInstallment} " +
+                            ResourceManager.getInstance().getString(R.string.rp_installment) +
+                            " \u2022 ${ResourceManager.getInstance().getString(R.string.rp_yet_to_settle)}")
+                }else{
+                    bodySubtitle.set("${ResourceManager.getInstance().getString(R.string.rp_installment)} " +
+                            "#${installment.installment.serialNumber} " +
+                            "\u2022 ${ResourceManager.getInstance().getString(R.string.rp_penalty)}" +
+                            " \u2022 ${ResourceManager.getInstance().getString(R.string.rp_yet_to_settle)}"
+                    )
+                }
             }
         }else {
             if(installment.paymentMethod != PaymentMethod.Manual.value){
-                bodySubtitle.set("${installment.paidInstallment}/${installment.noOfInstallment} ${ResourceManager.getInstance().getString(R.string.rp_installment)}" +
-                        " \u2022 ${ResourceManager.getInstance().getString(MandateStateUi.getMandateStateUi(
-                            MandateState.get(installment.mandateState)).text)}")
+                if(installment.installment.mandateId == installment.installment.referenceId){
+                    bodySubtitle.set(
+                        "${installment.paidInstallment}/${installment.noOfInstallment} " +
+                                ResourceManager.getInstance().getString(R.string.rp_installment) +
+                                " \u2022 ${ResourceManager.getInstance().getString(MandateStateUi.getMandateStateUi(MandateState.get(installment.mandateState)).text)}")
+                }else{
+                    bodySubtitle.set("${ResourceManager.getInstance().getString(R.string.rp_installment)} " +
+                            "#${installment.installment.serialNumber} " +
+                            "\u2022 ${ResourceManager.getInstance().getString(R.string.rp_penalty)}"
+                    )
+                }
             }else {
                 bodySubtitle.set("${installment.paidInstallment}/${installment.noOfInstallment} ${ResourceManager.getInstance().getString(R.string.rp_installment)}")
             }

@@ -7,6 +7,7 @@ import com.rocketpay.mandate.common.basemodule.common.presentation.statemachine.
 import com.rocketpay.mandate.common.basemodule.common.presentation.statemachine.Screen
 import com.rocketpay.mandate.common.mvistatemachine.contract.AsyncSideEffect
 import com.rocketpay.mandate.common.mvistatemachine.contract.UiSideEffect
+import com.rocketpay.mandate.feature.installment.data.datasource.local.InstallmentEntity
 
 internal data class PaymentTrackerListState(
     val paymentTrackerType: PaymentTrackerType = PaymentTrackerType.Outstanding,
@@ -55,6 +56,8 @@ internal sealed class PaymentTrackerListUSF : UiSideEffect {
         val hideTag: Boolean): PaymentTrackerListUSF()
     data class ShowToast(val message: String) : PaymentTrackerListUSF()
     data class OpenMandateDetails(val mandateId: String, val installmentSerialNumber: Int): PaymentTrackerListUSF()
+    data class OpenInstallmentDetails(val installment: InstallmentEntity): PaymentTrackerListUSF()
+
 }
 
 internal object PaymentTrackerListScreen : Screen("payment_tracker")

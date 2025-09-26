@@ -215,15 +215,6 @@ internal class InstallmentRepositoryImpl(
         )
     }
 
-    override suspend fun fetchInstallmentPenalty(installmentId: String): Outcome<InstallmentPenalty>{
-        return when(val outcome = installmentService.fetchInstallmentPenalty(installmentId)) {
-            is Outcome.Error -> outcome
-            is Outcome.Success -> {
-                Outcome.Success(installmentPenaltyDtoToEntMapper.map(outcome.data))
-            }
-        }
-    }
-
     override suspend fun chargePenalty(installmentId: String, installmentAmount: Double): Outcome<InstallmentPenalty>{
         return when(val outcome = installmentService.chargePenalty(installmentId, installmentAmount)) {
             is Outcome.Error -> outcome
@@ -237,6 +228,16 @@ internal class InstallmentRepositoryImpl(
 
     override fun getMaxTimeStamp(): InstallmentEntity{
         return installmentDao.lastTimeStamp()
+    }
+
+    override fun getPenaltyInstallment(installmentId: String): Flow<Installment?> {
+        return installmentDao.getPenaltyInstallment(installmentId).transform {
+            if(it != null){
+                emit(installmentEntToDomMapper.map(it))
+            }else{
+                emit(null)
+            }
+        }
     }
 
     override fun getTrackerAmountSummary(date: Long, isSuperKeyFlow: Boolean): Flow<InstallmentAmountSummary>{

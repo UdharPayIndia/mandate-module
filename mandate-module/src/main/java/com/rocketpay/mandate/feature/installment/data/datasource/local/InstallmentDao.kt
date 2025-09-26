@@ -20,10 +20,10 @@ internal interface InstallmentDao {
     @Query("SELECT * FROM installment WHERE id = :installmentId")
     fun getOneNonLive(installmentId: String): InstallmentEntity?
 
-    @Query("SELECT * FROM installment WHERE mandate_id = :mandateId ORDER BY serial_number")
+    @Query("SELECT * FROM installment WHERE reference_id = :mandateId ORDER BY serial_number")
     fun getAllWithId(mandateId: String): Flow<List<InstallmentEntity>>
 
-    @Query("SELECT * FROM installment WHERE mandate_id = :mandateId ORDER BY serial_number")
+    @Query("SELECT * FROM installment WHERE reference_id = :mandateId ORDER BY serial_number")
     fun getAllWithIdNonLive(mandateId: String): List<InstallmentEntity>
 
     @Query("SELECT * FROM installment")
@@ -46,6 +46,9 @@ internal interface InstallmentDao {
 
     @Query("SELECT * FROM installment ORDER BY updated_at DESC, created_at DESC")
     fun lastTimeStamp(): InstallmentEntity
+
+    @Query("SELECT * FROM installment WHERE reference_id == :installmentId")
+    fun getPenaltyInstallment(installmentId: String): Flow<InstallmentEntity?>
 
     @Query("SELECT installment.*, (SELECT name FROM mandate WHERE mandate.id = installment.mandate_id) as customerName  FROM installment WHERE installment.payment_order_id in (:paymentOrderIds)")
     fun getAllWithPaymentOrderIds(paymentOrderIds: List<String>): List<InstallmentWithCustomerEntity>?

@@ -449,7 +449,7 @@
     <string name="rp_otp_request_failed">OTP request failed</string>
     <string name="rp_allow_app_to_charge">Allow %1$s to charge penalty for every bounced installment.</string>
     <string name="rp_penalty_details">penalty details</string>
-    <string name="rp_app_bounce_penalty_collected">%1$S Bounce Penalty Collected</string>
+    <string name="rp_app_bounce_penalty_collected">Bounce Penalty Collected</string>
     <string name="rp_charge_penalty">Charge Penalty</string>
     <string name="rp_confirm_penalty">Confirm penalty</string>
     <string name="rp_allow_app_to_charge_bounce_charge">Allow %2$s to collect %1$s bounce charges?</string>
@@ -623,5 +623,8 @@
     <string name="rp_manual_penalty_charge_not_available_as_automatic_penalty_is_enabled_for_this_mandate">Manual penalty charge not available as Automatic penalty is enabled for this mandate</string>
     <string name="rp_confirm_penalty_charge">Confim penalty charge</string>
     <string name="rp_charge_amount_as_bounce_penalty_from_customer"><![CDATA[Charge %1$s as bounce penalty from %2$s tomorrow]]></string>
-
+    <string name="rp_penalty">Penalty</string>
+    <string name="rp_bounce_penalty_settled">Bounce Penalty Settled</string>
+    <string name="rp_bounce_penalty_collection_initiated">Bounce Penalty Collection Initiated</string>
+    <string name="rp_view_details">View Details</string>
 </resources>

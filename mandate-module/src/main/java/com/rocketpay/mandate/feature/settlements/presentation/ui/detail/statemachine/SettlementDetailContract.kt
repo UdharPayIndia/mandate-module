@@ -63,6 +63,7 @@ internal sealed class SettlementDetailUSF : UiSideEffect {
     data class Copy(val message: String, val link: String) : SettlementDetailUSF()
     data class SetInstallments(val installments: List<Installment>, val refundedInstallments: List<Installment>): SettlementDetailUSF()
     data class OpenMandate(val installment: Installment): SettlementDetailUSF()
+    data class OpenInstallment(val installment: Installment): SettlementDetailUSF()
     data object CloseScreen: SettlementDetailUSF()
 }
 

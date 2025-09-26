@@ -100,14 +100,6 @@ internal class InstallmentService {
             .post()
     }
 
-    suspend fun fetchInstallmentPenalty(installmentId: String): Outcome<InstallmentPenaltyDto> {
-        return NetworkRequestBuilder()
-            .subUrl("/v1/merchant/installments/{id}/charge-penalty")
-            .pathParameter("id", installmentId)
-            .build()
-            .get()
-    }
-
     suspend fun chargePenalty(installmentId: String, installmentAmount: Double): Outcome<InstallmentPenaltyDto> {
         return NetworkRequestBuilder()
             .subUrl("/v3/merchant/installments/{id}/charge-penalty")

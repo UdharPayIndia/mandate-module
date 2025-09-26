@@ -89,8 +89,8 @@ internal class InstallmentUseCase internal constructor(
         return installmentRepository.getInstallmentSummaryByState(userId)
     }
 
-    suspend fun fetchInstallmentPenalty(installmentId: String): Outcome<InstallmentPenalty>{
-        return installmentRepository.fetchInstallmentPenalty(installmentId)
+    fun getPenaltyInstallment(installmentId: String): Flow<Installment?>{
+        return installmentRepository.getPenaltyInstallment(installmentId)
     }
 
     suspend fun chargePenalty(installmentId: String, installmentAmount: Double): Outcome<InstallmentPenalty>{

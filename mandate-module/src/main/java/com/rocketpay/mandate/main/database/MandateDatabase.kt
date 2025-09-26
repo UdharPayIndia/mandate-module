@@ -54,7 +54,7 @@ internal abstract class MandateDatabase : RoomDatabase() {
 
     companion object {
         private const val NAME = "rocketpay-mandate"
-        const val VERSION = 1
+        const val VERSION = 2
 
         @Volatile
         lateinit var instance: MandateDatabase
@@ -62,6 +62,7 @@ internal abstract class MandateDatabase : RoomDatabase() {
             if (!::instance.isInitialized) {
                 instance = Room.databaseBuilder(context.applicationContext, MandateDatabase::class.java, NAME)
                     .addCallback(DB_CALLBACK)
+                    .addMigrations(MIGRATION_1_2)
                     .build()
             }
         }
@@ -74,6 +75,10 @@ internal abstract class MandateDatabase : RoomDatabase() {
 
         public val MIGRATION_1_2: Migration = object : Migration(1, 2) {
             override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE `installment` ADD COLUMN `reference_id` TEXT NOT NULL DEFAULT '';")
+                db.execSQL("UPDATE `installment` SET `created_at` = 0")
+                db.execSQL("UPDATE `installment` SET `updated_at` = 0")
+                db.execSQL("UPDATE `installment` SET `reference_id` = `mandate_id`")
             }
         }
 

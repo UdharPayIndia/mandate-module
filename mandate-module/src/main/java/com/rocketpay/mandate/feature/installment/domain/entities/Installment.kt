@@ -36,7 +36,8 @@ internal data class Installment(
 	val comments: String?,
 	val paymentOrderId: String,
 	var customerName: String? = null,
-	val retryScheduleDate: String
+	val retryScheduleDate: String,
+	val referenceId: String
 ){
 
 	fun getInstallmentAmount(bearer: ChargeBearer?): Double {

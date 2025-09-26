@@ -7,6 +7,7 @@ import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
 import com.rocketpay.mandate.BuildConfig
 import com.rocketpay.mandate.R
+import com.rocketpay.mandate.common.basemodule.common.presentation.ext.long
 import com.rocketpay.mandate.feature.installment.domain.entities.InstallmentState
 import com.rocketpay.mandate.feature.installment.presentation.ui.installmentdetail.statemachine.InstallmentDetailEvent
 import com.rocketpay.mandate.feature.installment.presentation.ui.installmentdetail.statemachine.InstallmentDetailState
@@ -21,6 +22,7 @@ import com.rocketpay.mandate.common.basemodule.main.viewmodel.BaseMainUM
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
 import com.rocketpay.mandate.feature.common.domain.CommonUseCase
 import com.rocketpay.mandate.main.init.MandateManager
+import kotlin.text.format
 
 internal class InstallmentDetailUM(val dispatchEvent: (InstallmentDetailEvent) -> Unit) : BaseMainUM() {
 
@@ -73,9 +75,9 @@ internal class InstallmentDetailUM(val dispatchEvent: (InstallmentDetailEvent) -
     val settlementButtonVisibility = ObservableBoolean()
 
     val penaltyDetailVisibility = ObservableBoolean(false)
-    val penaltyTitleText = ObservableField<String>(ResourceManager.getInstance().getString(R.string.rp_app_bounce_penalty_collected,
-        MandateManager.getInstance().getAppName()))
+    val penaltyStatusText = ObservableField<String>()
     val penaltyDetailText = ObservableField<String>()
+    val viewPenaltySettlement = ObservableBoolean()
 
     val manualSummaryVisibility = ObservableBoolean(false)
     val time = ObservableField<String>()
@@ -170,15 +172,27 @@ internal class InstallmentDetailUM(val dispatchEvent: (InstallmentDetailEvent) -
 
             fromParty.set(state.mandate?.customerDetail?.name)
 
-            if(state.installmentPenalty?.amount != null && state.installmentPenalty.status == InstallmentState.CollectionSuccess){
+            if(state.installmentPenalty != null){
+                when(state.installmentPenalty.status){
+                    InstallmentState.SettlementSuccess ->  {
+                        viewPenaltySettlement.set(!state.installmentPenalty.paymentOrderId.isNullOrEmpty())
+                        penaltyStatusText.set(ResourceManager.getInstance().getString(R.string.rp_bounce_penalty_settled))
+                    }
+                    InstallmentState.CollectionSuccess -> {
+                        viewPenaltySettlement.set(false)
+                        penaltyStatusText.set(ResourceManager.getInstance().getString(R.string.rp_bounce_penalty_collected))
+                    }
+                    else -> {
+                        viewPenaltySettlement.set(false)
+                        penaltyStatusText.set(ResourceManager.getInstance().getString(R.string.rp_bounce_penalty_collection_initiated))
+                    }
+                }
                 penaltyDetailVisibility.set(true)
-                penaltyDetailText.set(
-                    AmountUtils.format(state.installmentPenalty.amount) + " \u2022 "
-                        + DateUtils.getDate(state.installmentPenalty.captureAt ?: 0, DateUtils.DOT_DATE_AND_TIME_FORMAT_WITH_TEXT))
+                penaltyDetailText.set(AmountUtils.format(state.installmentPenalty.amount) + " \u2022 "
+                        + DateUtils.getDate(state.installmentPenalty.updatedAt.long(), DateUtils.DOT_DATE_AND_TIME_FORMAT_WITH_TEXT))
             }else{
                 penaltyDetailVisibility.set(false)
             }
-
             setManualSummary(state)
 
             if(state.mandate?.paymentMethodDetail?.method != PaymentMethod.Manual){
@@ -385,5 +399,9 @@ internal class InstallmentDetailUM(val dispatchEvent: (InstallmentDetailEvent) -
         }else{
             dispatchEvent(InstallmentDetailEvent.SettlementBannerClick)
         }
+    }
+
+    fun onPenaltySettlementClick(){
+        dispatchEvent(InstallmentDetailEvent.ViewPenaltySettlementClick)
     }
 }

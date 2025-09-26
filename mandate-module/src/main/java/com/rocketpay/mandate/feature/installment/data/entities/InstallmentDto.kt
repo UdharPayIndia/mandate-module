@@ -24,6 +24,7 @@ internal class InstallmentDto(
 	val installment_utr: String?,
 	val charges: ChargeResponseDto?,
 	val payment_order_id: String?,
+	val reference_id: String?,
 	//Not in Sync Call
 	val journey: List<InstallmentJourneyDto>?,
 )

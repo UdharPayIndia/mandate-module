@@ -50,9 +50,9 @@ internal interface InstallmentRepository {
     fun getInstallmentSummaryByState(userId: String): List<InstallmentSummaryByState>
     fun getInstallmentNonLive(installmentId: String): Installment?
     fun getInstallmentsByPaymentOrderIds(paymentOrderIds: List<String>): List<Installment>
-    suspend fun fetchInstallmentPenalty(installmentId: String): Outcome<InstallmentPenalty>
     suspend fun chargePenalty(installmentId: String, installmentAmount: Double): Outcome<InstallmentPenalty>
     fun getMaxTimeStamp(): InstallmentEntity?
+    fun getPenaltyInstallment(installmentId: String): Flow<Installment?>
     fun getTrackerAmountSummary(date: Long, isSuperKeyFlow: Boolean): Flow<InstallmentAmountSummary>
     fun getAutomaticTrackerAmountSummary(date: Long): Flow<InstallmentAmountSummary>
     fun getManualTrackerAmountSummary(date: Long): Flow<InstallmentAmountSummary>

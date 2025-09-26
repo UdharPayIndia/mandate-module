@@ -59,6 +59,9 @@ internal class InstallmentEntity(
     @Embedded
     val paymentModeDetailEntity: PaymentModeDetailEntity?,
 
+    @ColumnInfo(name = "reference_id")
+    val referenceId: String,
+
     @ColumnInfo(name = "source")
     val source: String?,
 

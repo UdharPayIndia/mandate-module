@@ -28,6 +28,8 @@ import com.rocketpay.mandate.common.basemodule.common.presentation.adapter.Divid
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.ShowUtils
 import com.rocketpay.mandate.common.basemodule.main.view.BaseMainFragment
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
+import com.rocketpay.mandate.feature.installment.presentation.ui.installmentdetail.statemachine.InstallmentDetailScreen
+import com.rocketpay.mandate.feature.installment.presentation.ui.installmentdetail.view.InstallmentDetailFragment
 import javax.inject.Inject
 
 internal class PaymentTrackerListFragment : BaseMainFragment<PaymentTrackerListEvent, PaymentTrackerListState, PaymentTrackerListUSF>(){
@@ -149,6 +151,12 @@ internal class PaymentTrackerListFragment : BaseMainFragment<PaymentTrackerListE
                 bundle.putString(MandateDetailFragment.MANDATE_ID, sideEffect.mandateId)
                 bundle.putInt(MandateDetailFragment.BUNDLE_INSTALLMENT_SERIAL_NUMBER, sideEffect.installmentSerialNumber)
                 listener?.onNavigate(MandateDetailFragment.newInstance(bundle), fragmentTag = MandateDetailScreen.name)
+            }
+            is PaymentTrackerListUSF.OpenInstallmentDetails -> {
+                val bundle = Bundle()
+                bundle.putString(InstallmentDetailFragment.INSTALLMENT_ID, sideEffect.installment.referenceId)
+                bundle.putString(InstallmentDetailFragment.MANDATE_ID, sideEffect.installment.mandateId)
+                listener?.onNavigate(InstallmentDetailFragment.newInstance(bundle), fragmentTag = InstallmentDetailScreen.name)
             }
         }
     }

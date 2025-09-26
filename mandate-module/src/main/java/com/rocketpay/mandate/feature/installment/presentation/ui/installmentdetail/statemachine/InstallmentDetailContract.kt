@@ -22,7 +22,7 @@ internal data class InstallmentDetailState(
     val mandate: Mandate? = null,
     val isRefreshing: Boolean = false,
     val isExpanded: Boolean = false,
-    val installmentPenalty: InstallmentPenalty? = null,
+    val installmentPenalty: Installment? = null,
     val isManual: Boolean = false,
     val settlementBannerMessage: String = "",
     val paymentOrder: PaymentOrder? = null,
@@ -59,12 +59,13 @@ internal sealed class InstallmentDetailEvent(name: String? = null) : BaseEvent(n
     object InstallmentSkipped: InstallmentDetailEvent("installment_skipped")
     data class UnableToSkipInstallment(val message: String): InstallmentDetailEvent()
 
-    data class UpdatePenaltyDetails(val installmentPenalty: InstallmentPenalty) : InstallmentDetailEvent()
+    data class UpdatePenaltyDetails(val installment: Installment?) : InstallmentDetailEvent()
     object ChargePenaltyClick: InstallmentDetailEvent("installment_charge_penalty_click")
     object MarkAsPaidClick: InstallmentDetailEvent("mark_paid_click")
     data object LoadSettlementBannerInfo: InstallmentDetailEvent()
     data class UpdateSettlementBannerMessage(val message: String): InstallmentDetailEvent()
     data object ViewSettlementClick: InstallmentDetailEvent("view_settlement_details")
+    data object ViewPenaltySettlementClick: InstallmentDetailEvent()
     data object SettlementBannerClick: InstallmentDetailEvent("settlement_kyc_banner_click")
     data object AddBankAccountClick: InstallmentDetailEvent("settlement_bank_account_banner_click")
     data class UpdatePaymentOrder(val paymentOrder: PaymentOrder?): InstallmentDetailEvent()

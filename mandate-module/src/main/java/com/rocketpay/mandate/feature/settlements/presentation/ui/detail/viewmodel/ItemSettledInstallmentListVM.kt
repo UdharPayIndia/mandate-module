@@ -34,11 +34,18 @@ internal class ItemSettledInstallmentListVM(
         )
         val totalAmount = AmountUtils.format(installment.amountUI)
         amountText.set(totalAmount)
-        serialNumberText.set(
-            "${
-                ResourceManager.getInstance().getString(R.string.rp_installment)
-            } #${installment.serialNumber}"
-        )
+        if(installment.referenceId == installment.mandateId) {
+            serialNumberText.set(
+                ResourceManager.getInstance().getString(R.string.rp_installment) +
+                        " #${installment.serialNumber}"
+            )
+        }else{
+            serialNumberText.set(
+                ResourceManager.getInstance().getString(R.string.rp_installment) +
+                        " #${installment.serialNumber} \u2022 " +
+                        ResourceManager.getInstance().getString(R.string.rp_penalty).uppercase()
+            )
+        }
 
         if(isRefunded){
             amountIcon.set(ResourceManager.getInstance().getDrawable(R.drawable.rp_ic_cash_refund))

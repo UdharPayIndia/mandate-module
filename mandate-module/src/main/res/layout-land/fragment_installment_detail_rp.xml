@@ -482,44 +482,71 @@
 
             <LinearLayout
                 style="@style/rp_surface_1"
-                android:layout_margin="@dimen/rp_size_8"
-                android:paddingVertical="@dimen/rp_size_16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="@{vm.penaltyDetailVisibility ? View.VISIBLE : View.GONE}"
-                android:orientation="vertical">
+                android:layout_margin="@dimen/rp_size_8"
+                android:orientation="vertical"
+                android:paddingVertical="@dimen/rp_size_16"
+                android:visibility="@{vm.penaltyDetailVisibility &amp;&amp; !vm.isManualPayment ? View.VISIBLE : View.GONE}">
 
                 <TextView
-                    android:textAppearance="@style/rp_header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/rp_size_16"
                     android:layout_marginEnd="@dimen/rp_size_16"
                     android:layout_marginBottom="@dimen/rp_size_16"
-                    android:text="@string/rp_penalty_details" />
+                    android:text="@string/rp_penalty_details"
+                    android:textAppearance="@style/rp_header" />
 
-                <TextView
-                    android:textAppearance="@style/rp_body_small"
-                    android:textColor="@color/rp_grey_3"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:singleLine="true"
-                    android:layout_marginStart="@dimen/rp_size_16"
-                    android:layout_marginEnd="@dimen/rp_size_16"
-                    android:ellipsize="end"
-                    android:text="@{vm.penaltyTitleText}"
-                    tools:text="@string/rp_app_bounce_penalty_collected"/>
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:textAppearance="@style/rp_body_large"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/rp_size_16"
-                    android:layout_marginEnd="@dimen/rp_size_16"
-                    app:textWithNullCheck="@{vm.penaltyDetailText}"
-                    tools:text="UPI (8877168861@oksbi)"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/rp_size_16"
+                            android:layout_marginEnd="@dimen/rp_size_16"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="@{vm.penaltyStatusText}"
+                            tools:text="@string/rp_app_bounce_penalty_collected"
+                            android:textAppearance="@style/rp_body_small"
+                            android:textColor="@color/rp_grey_3" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/rp_size_16"
+                            android:layout_marginEnd="@dimen/rp_size_16"
+                            android:textAppearance="@style/rp_body_large"
+                            app:textWithNullCheck="@{vm.penaltyDetailText}"
+                            tools:text="UPI (8877168861@oksbi)" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:visibility="@{vm.viewPenaltySettlement ? View.VISIBLE : View.GONE}"
+                        android:onClick="@{() -> vm.onPenaltySettlementClick()}"
+                        android:layout_marginStart="@dimen/rp_size_16"
+                        android:layout_marginEnd="@dimen/rp_size_16"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="@string/rp_view_details"
+                        android:textAppearance="@style/rp_cta_small" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

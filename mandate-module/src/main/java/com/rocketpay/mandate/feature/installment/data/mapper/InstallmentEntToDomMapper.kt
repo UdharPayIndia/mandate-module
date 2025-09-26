@@ -42,6 +42,7 @@ internal class InstallmentEntToDomMapper : ListMapper<InstallmentEntity, Install
             markAsPaid = isMarkAsPaidEnable(source.actions),
             charges = getChargeResponse(source.charges),
             paymentMedium = PaymentMedium.get(source.medium),
+            referenceId = source.referenceId,
             paymentMode = PaymentMode.get(source.paymentModeDetailEntity?.mode),
             isMerchantCollected = source.paymentModeDetailEntity?.merchantCollected == true,
             comments = source.paymentModeDetailEntity?.comments,
