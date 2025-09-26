@@ -194,12 +194,12 @@ internal class MandateAddStateMachine(
                 val isPenaltyApplicable =
                     isPenaltyApplicable(
                         event.amount,
-                        state.installment,
-                        state.paymentMethod,
-                        state.minimumInstallmentAmountForPenalty
+                        newState.installment,
+                        newState.paymentMethod,
+                        newState.minimumInstallmentAmountForPenalty
                     )
                 val verifyEnable = shouldEnableVerify(newState)
-                if(state.isPenaltySelected && !isPenaltyApplicable.first){
+                if(newState.isPenaltySelected && !isPenaltyApplicable.first){
                     next(
                         newState.copy(
                             isGeneratePaymentLinkEnable = verifyEnable,

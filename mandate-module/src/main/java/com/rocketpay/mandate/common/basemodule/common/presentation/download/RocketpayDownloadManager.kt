@@ -121,16 +121,6 @@ internal object RocketpayDownloadManager {
                 notificationBuilder.setSmallIcon(R.drawable.rp_ic_download_report)
             }
 
-            if (targetUri != null) {
-                val viewIntent = Intent(Intent.ACTION_VIEW, targetUri)
-                viewIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                val pendingIntent = PendingIntent.getActivity(
-                    MandateManager.getInstance().getContext(),
-                    0, viewIntent, PendingIntent.FLAG_IMMUTABLE
-                )
-                notificationBuilder.setContentIntent(pendingIntent)
-            }
-
             notificationBuilder.priority = Notification.PRIORITY_MIN
             notificationManager.notify(notificationId, notificationBuilder.build())
         }catch (ex: Exception){
