@@ -35,6 +35,8 @@ internal class EnterPenaltyAmountFragment :
         const val BUNDLE_MANDATE_ID = "BUNDLE_MANDATE_ID"
         const val BUNDLE_INSTALLMENT_ID = "BUNDLE_INSTALLMENT_ID"
         const val BUNDLE_INSTALLMENT_AMOUNT = "BUNDLE_INSTALLMENT_AMOUNT"
+        const val BUNDLE_CUSTOMER_NAME = "BUNDLE_CUSTOMER_NAME"
+
         fun newInstance(bundle: Bundle?): EnterPenaltyAmountFragment {
             val fragment = EnterPenaltyAmountFragment()
             fragment.arguments = bundle
@@ -78,7 +80,8 @@ internal class EnterPenaltyAmountFragment :
         val mandateId = savedInstanceState?.getString(BUNDLE_MANDATE_ID, "").orEmpty()
         val installmentId = savedInstanceState?.getString(BUNDLE_INSTALLMENT_ID, "").orEmpty()
         val installmentAmount = savedInstanceState?.getString(BUNDLE_INSTALLMENT_AMOUNT, "").orEmpty()
-        stateMachine.dispatchEvent(EnterPenaltyAmountEvent.Init(mandateId, installmentId, installmentAmount))
+        val customerName = savedInstanceState?.getString(BUNDLE_CUSTOMER_NAME, "").orEmpty()
+        stateMachine.dispatchEvent(EnterPenaltyAmountEvent.Init(mandateId, installmentId, installmentAmount, customerName))
         stateMachine.dispatchEvent(EnterPenaltyAmountEvent.LoadConfig)
     }
 

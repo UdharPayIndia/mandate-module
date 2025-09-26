@@ -167,7 +167,7 @@
                     android:layout_marginTop="@dimen/rp_size_4"
                     android:layout_weight="1"
                     android:visibility="@{vm.autoPenaltyVisibility ? View.VISIBLE : View.GONE}"
-                    android:text="@string/rp_enter_amount_and_manually_retry_on_a_bounced_installment_from_installment_page"
+                    android:text="@string/rp_penalty_is_automatically_charged_on_next_day_of_installment_bounce"
                     android:textAppearance="@style/rp_body_small" />
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -200,18 +200,46 @@
                     android:layout_marginTop="@dimen/rp_size_8">
 
                     <TextView
+                        android:id="@+id/tv_merchant_charges_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/rp_size_16"
+                        android:layout_weight="1"
+                        android:text="@string/rp_you_will_get"
+                        android:textAppearance="@style/rp_body_small"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_merchant_charges"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_merchant_charges"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|end"
+                        android:layout_weight="1"
+                        tools:text="@string/rp_rocketpay_charges"
+                        android:text="@{vm.penaltyChargedByMerchant}"
+                        android:textAppearance="@style/rp_body_small"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tv_merchant_charges_label"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_merchant_charges_label"/>
+
+
+                    <TextView
                         android:id="@+id/tv_rocketpay_charges_label"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="@dimen/rp_size_16"
+                        android:layout_marginTop="@dimen/rp_size_6"
                         android:layout_weight="1"
                         android:text="@{vm.penaltyTextByRocketpay}"
                         tools:text="@string/rp_rocketpay_charges"
                         android:textAppearance="@style/rp_body_small"
                         app:layout_constraintEnd_toStartOf="@+id/tv_rocketpay_charges"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_merchant_charges_label" />
 
                     <TextView
                         android:id="@+id/tv_rocketpay_charges"
@@ -226,32 +254,6 @@
                         app:layout_constraintTop_toTopOf="@+id/tv_rocketpay_charges_label"
                         app:layout_constraintBottom_toBottomOf="@+id/tv_rocketpay_charges_label"/>
 
-                    <TextView
-                        android:id="@+id/tv_merchant_charges_label"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="@dimen/rp_size_6"
-                        android:layout_marginEnd="@dimen/rp_size_16"
-                        android:layout_weight="1"
-                        android:text="@string/rp_you_will_get"
-                        android:textAppearance="@style/rp_body_small"
-                        app:layout_constraintEnd_toStartOf="@+id/tv_merchant_charges"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_rocketpay_charges_label" />
-
-                    <TextView
-                        android:id="@+id/tv_merchant_charges"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical|end"
-                        android:layout_weight="1"
-                        tools:text="@string/rp_rocketpay_charges"
-                        android:text="@{vm.penaltyChargedByMerchant}"
-                        android:textAppearance="@style/rp_body_small"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/tv_merchant_charges_label"
-                        app:layout_constraintBottom_toBottomOf="@+id/tv_merchant_charges_label"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>

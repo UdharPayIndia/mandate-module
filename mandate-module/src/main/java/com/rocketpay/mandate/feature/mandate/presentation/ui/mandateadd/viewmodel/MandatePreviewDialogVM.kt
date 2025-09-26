@@ -160,14 +160,14 @@ internal class MandatePreviewDialogVM(
         if (isPenaltyEnabled && mandate.meta?.penaltyMetaDto?.isEnabled == true) {
             penaltyVisibility.set(true)
             if (mandate?.meta?.penaltyMetaDto?.isAuto == true) {
+                penaltyChargesText.set(AmountUtils.format(mandate.meta?.penaltyMetaDto?.amountInRs.double()))
+            } else {
                 penaltyChargesText.set(
                     ResourceManager.getInstance().getString(
                         R.string.rp_upto,
                         AmountUtils.format(maximumPenaltyAmount.toDouble())
                     )
                 )
-            } else {
-                penaltyChargesText.set(AmountUtils.format(mandate.meta?.penaltyMetaDto?.amountInRs.double()))
             }
         } else {
             penaltyVisibility.set(false)

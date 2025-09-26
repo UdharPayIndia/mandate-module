@@ -16,6 +16,7 @@ import com.rocketpay.mandate.feature.property.domain.usecase.PropertyUseCase
 import com.rocketpay.mandate.feature.property.presentation.utils.PropertyUtils
 import com.rocketpay.mandate.main.init.MandateManager
 import kotlinx.coroutines.CoroutineScope
+import kotlin.text.format
 
 internal class EnterPenaltyAmountStateMachine(
     private val installmentUseCase: InstallmentUseCase,
@@ -38,7 +39,9 @@ internal class EnterPenaltyAmountStateMachine(
                     state.copy(
                         mandateId = event.mandateId,
                         installmentId = event.installmentId,
-                        installmentAmount = event.installmentAmount)
+                        installmentAmount = event.installmentAmount,
+                        customerName = event.customerName
+                    )
                 )
             }
             is EnterPenaltyAmountEvent.UpdatePenaltyAmount -> {
@@ -71,14 +74,14 @@ internal class EnterPenaltyAmountStateMachine(
                     EnterPenaltyAmountUSF.ShowPenaltyConfirmation(
                         ResourceManager.getInstance().getDrawable(R.drawable.rp_ic_warning_triangle),
                         ResourceManager.getInstance().getDrawable(R.color.rp_yellow_1),
-                        ResourceManager.getInstance().getString(R.string.rp_confirm_penalty),
+                        ResourceManager.getInstance().getString(R.string.rp_confirm_penalty_charge),
                         ResourceManager.getInstance().getString(
-                            R.string.rp_allow_app_to_charge_bounce_charge,
+                            R.string.rp_charge_amount_as_bounce_penalty_from_customer,
                             AmountUtils.format(AmountUtils.stringToDouble(state.penaltyAmount)),
-                            MandateManager.getInstance().getAppName()
+                            state.customerName
                         ),
-                        ResourceManager.getInstance().getString(R.string.rp_yes),
-                        ResourceManager.getInstance().getString(R.string.rp_dismiss)
+                        ResourceManager.getInstance().getString(R.string.rp_charge_penalty),
+                        ResourceManager.getInstance().getString(R.string.rp_cancel)
                     )
                 )
             }

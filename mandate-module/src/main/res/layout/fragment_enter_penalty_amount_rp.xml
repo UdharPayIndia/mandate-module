@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:gravity="start"
             android:text="@string/rp_enter_penalty_amount"
+            android:textColor="@color/rp_blue_2"
             android:textAppearance="@style/rp_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +50,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_subtitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/tv_rocketpay_charges_label">
+            app:layout_constraintBottom_toTopOf="@+id/tv_merchant_charges_label">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_otp"
@@ -65,34 +66,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/tv_rocketpay_charges_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="@dimen/rp_size_12"
-            android:layout_marginEnd="@dimen/rp_size_16"
-            android:layout_weight="1"
-            android:text="@{vm.penaltyChargedByRocketPayLabel}"
-            tools:text="@string/rp_rocketpay_charges"
-            android:textAppearance="@style/rp_body_small"
-            app:layout_constraintEnd_toStartOf="@+id/tv_rocketpay_charges"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lyt_otp" />
-
-        <TextView
-            android:id="@+id/tv_rocketpay_charges"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|end"
-            android:layout_weight="1"
-            tools:text="@string/rp_rocketpay_charges"
-            android:text="@{vm.penaltyChargedByRocketPay}"
-            android:textAppearance="@style/rp_body_small"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_rocketpay_charges_label"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_rocketpay_charges_label"/>
-
-        <TextView
             android:id="@+id/tv_merchant_charges_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -104,7 +77,7 @@
             android:textAppearance="@style/rp_body_small"
             app:layout_constraintEnd_toStartOf="@+id/tv_merchant_charges"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_rocketpay_charges_label" />
+            app:layout_constraintTop_toBottomOf="@+id/lyt_otp" />
 
         <TextView
             android:id="@+id/tv_merchant_charges"
@@ -118,6 +91,34 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tv_merchant_charges_label"
             app:layout_constraintBottom_toBottomOf="@+id/tv_merchant_charges_label"/>
+
+        <TextView
+            android:id="@+id/tv_rocketpay_charges_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="@dimen/rp_size_12"
+            android:layout_marginEnd="@dimen/rp_size_16"
+            android:layout_weight="1"
+            android:text="@{vm.penaltyChargedByRocketPayLabel}"
+            tools:text="@string/rp_rocketpay_charges"
+            android:textAppearance="@style/rp_body_small"
+            app:layout_constraintEnd_toStartOf="@+id/tv_rocketpay_charges"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_merchant_charges_label" />
+
+        <TextView
+            android:id="@+id/tv_rocketpay_charges"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:layout_weight="1"
+            tools:text="@string/rp_rocketpay_charges"
+            android:text="@{vm.penaltyChargedByRocketPay}"
+            android:textAppearance="@style/rp_body_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_rocketpay_charges_label"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_rocketpay_charges_label"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_save"

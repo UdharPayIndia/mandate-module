@@ -156,7 +156,7 @@ dependencies {
     implementation(libs.chucker.library)
 
     // hyper verge
-    api("co.hyperverge:hyperkyc:0.28.0", {
+    api("co.hyperverge:hyperkyc:1.0.0", {
         isTransitive = true
         exclude(group = "co.hyperverge", module = "hyperdocdetect") // Line to exclude Document-Auto-Capture feature and its dependencies
     })

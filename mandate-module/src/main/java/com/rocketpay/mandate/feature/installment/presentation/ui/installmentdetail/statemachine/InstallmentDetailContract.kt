@@ -10,6 +10,7 @@ import com.rocketpay.mandate.feature.settlements.domain.entities.PaymentOrder
 import com.rocketpay.mandate.common.basemodule.common.presentation.statemachine.BaseEvent
 import com.rocketpay.mandate.common.basemodule.common.presentation.statemachine.BaseState
 import com.rocketpay.mandate.common.basemodule.common.presentation.statemachine.Screen
+import com.rocketpay.mandate.common.basemodule.common.presentation.utils.AmountUtils
 import com.rocketpay.mandate.common.mvistatemachine.contract.AsyncSideEffect
 import com.rocketpay.mandate.common.mvistatemachine.contract.UiSideEffect
 
@@ -26,7 +27,8 @@ internal data class InstallmentDetailState(
     val settlementBannerMessage: String = "",
     val paymentOrder: PaymentOrder? = null,
     val retryDate: Long? = null,
-    val isPenaltyEnabled: Boolean = false
+    val isPenaltyEnabled: Boolean = false,
+    val minimumInstallmentAmountForPenalty: Int = AmountUtils.MINIMUM_INSTALLMENT_AMOUNT_FOR_PENALTY
 ) : BaseState(InstallmentDetailScreen)
 
 
@@ -79,7 +81,7 @@ internal sealed class InstallmentDetailEvent(name: String? = null) : BaseEvent(n
     ): InstallmentDetailEvent()
     data object RetryInstallmentSucceed: InstallmentDetailEvent("installment_retried")
     data object LoadConfig: InstallmentDetailEvent()
-    data class ConfigLoaded(val isPenaltyEnabled: Boolean): InstallmentDetailEvent()
+    data class ConfigLoaded(val isPenaltyEnabled: Boolean, val minimumInstallmentAmountForPenalty: Int): InstallmentDetailEvent()
 }
 
 
@@ -145,7 +147,12 @@ internal sealed class InstallmentDetailUSF : UiSideEffect {
     data class ShowLoader(val message: String): InstallmentDetailUSF()
     data class ShowError(val header: String, val message: String): InstallmentDetailUSF()
     data object DismissLoader: InstallmentDetailUSF()
-    data class OpenEnterPenaltyBottomSheet(val mandateId: String, val installmentId: String, val installmentAmount: Double): InstallmentDetailUSF()
+    data class OpenEnterPenaltyBottomSheet(
+        val mandateId: String,
+        val installmentId: String,
+        val installmentAmount: Double,
+        val customerName: String
+    ): InstallmentDetailUSF()
     data object OpenRetryDateSelection: InstallmentDetailUSF()
     data class ShowRetryConfirmation(
         val headerDrawable: Drawable,

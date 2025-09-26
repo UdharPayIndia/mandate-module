@@ -1,6 +1,7 @@
 package com.rocketpay.mandate.feature.installment.presentation.ui.installmentdetail.statemachine
 
 import com.rocketpay.mandate.R
+import com.rocketpay.mandate.common.basemodule.common.presentation.ext.double
 import com.rocketpay.mandate.common.basemodule.common.presentation.ext.ifNullOrEmpty
 import com.rocketpay.mandate.common.basemodule.common.presentation.ext.long
 import com.rocketpay.mandate.common.basemodule.common.presentation.statemachine.BaseAnalyticsHandler
@@ -17,6 +18,7 @@ import com.rocketpay.mandate.feature.mandate.data.MandateSyncer
 import com.rocketpay.mandate.feature.mandate.domain.entities.MandateState
 import com.rocketpay.mandate.feature.mandate.domain.entities.PaymentMethod
 import com.rocketpay.mandate.feature.mandate.domain.usecase.MandateUseCase
+import com.rocketpay.mandate.feature.mandate.presentation.ui.mandateadd.statemachine.MandateAddStateMachine
 import com.rocketpay.mandate.feature.product.presentation.ui.utils.ProductUtils
 import com.rocketpay.mandate.feature.property.domain.usecase.PropertyUseCase
 import com.rocketpay.mandate.feature.property.presentation.utils.PropertyUtils
@@ -24,6 +26,7 @@ import com.rocketpay.mandate.feature.settlements.domain.usecase.PaymentOrderUseC
 import com.udharpay.core.networkmanager.domain.entities.Outcome
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
+import kotlin.toString
 
 internal class InstallmentDetailStateMachine(
     private val mandateUseCase: MandateUseCase,
@@ -269,24 +272,47 @@ internal class InstallmentDetailStateMachine(
                 next(state.copy(installmentPenalty = event.installmentPenalty))
             }
             is InstallmentDetailEvent.ChargePenaltyClick -> {
-                if(state.installment?.chargePenalty == true) {
-                    next(
-                        InstallmentDetailUSF.OpenEnterPenaltyBottomSheet(
-                            state.mandateId.orEmpty(),
-                            state.installmentId.orEmpty(),
-                            state.installment?.amount ?: 0.0
-                        )
-                    )
+                if(state.installmentPenalty != null
+                    && state.installmentPenalty.status in arrayOf(
+                        InstallmentState.CollectionInitiated,
+                        InstallmentState.CollectionSuccess,
+                        InstallmentState.SettlementSuccess,
+                        InstallmentState.SettlementInitiated)){
+                    next(InstallmentDetailUSF.ShowSnackBar(
+                        ResourceManager.getInstance().getString(R.string.rp_penalty_already_attempted_or_collected)
+                    ))
                 }else{
-                    if(state.mandate?.paymentMethodDetail?.method == PaymentMethod.Nach
-                        || state.mandate?.paymentMethodDetail?.method == PaymentMethod.Manual){
-                        next(InstallmentDetailUSF.ShowSnackBar(
-                            ResourceManager.getInstance().getString(
-                                R.string.rp_automatic_charge_penalty_is_not_available_for_nach_payments,
-                                state.mandate.paymentMethodDetail.method.transalion))
-                        )
+                    val isPenaltyApplicable = MandateAddStateMachine.isPenaltyApplicable(
+                        state.mandate?.amount?.toString().ifNullOrEmpty("0"),
+                        state.mandate?.installments,
+                        state.mandate?.paymentMethodDetail?.method,
+                        state.minimumInstallmentAmountForPenalty
+                    )
+                    if(isPenaltyApplicable.first){
+                        if(state.mandate?.meta?.penaltyMetaDto?.isEnabled != true){
+                            next(InstallmentDetailUSF.ShowSnackBar(
+                                ResourceManager.getInstance().getString(R.string.rp_penalty_is_not_enabled_for_this_mandate)
+                            ))
+                        }else if(state.mandate?.meta?.penaltyMetaDto?.isAuto == true){
+                            next(InstallmentDetailUSF.ShowSnackBar(
+                                ResourceManager.getInstance().getString(R.string.rp_manual_penalty_charge_not_available_as_automatic_penalty_is_enabled_for_this_mandate)
+                            ))
+                        }else if(state.installment?.chargePenalty == true) {
+                            next(
+                                InstallmentDetailUSF.OpenEnterPenaltyBottomSheet(
+                                    state.mandateId.orEmpty(),
+                                    state.installmentId.orEmpty(),
+                                    state.installment?.amount ?: 0.0,
+                                    state.mandate.customerDetail.name
+                                )
+                            )
+                        }else {
+                            noChange()
+                        }
                     }else{
-                        noChange()
+                        next(InstallmentDetailUSF.ShowSnackBar(
+                            isPenaltyApplicable.second.orEmpty()
+                        ))
                     }
                 }
             }
@@ -338,7 +364,8 @@ internal class InstallmentDetailStateMachine(
                 next(InstallmentDetailASF.LoadConfig)
             }
             is InstallmentDetailEvent.ConfigLoaded -> {
-                next(state.copy(isPenaltyEnabled = event.isPenaltyEnabled))
+                next(state.copy(isPenaltyEnabled = event.isPenaltyEnabled,
+                    minimumInstallmentAmountForPenalty = event.minimumInstallmentAmountForPenalty))
             }
         }
     }
@@ -436,9 +463,14 @@ internal class InstallmentDetailStateMachine(
                 }
             }
             is InstallmentDetailASF.LoadConfig -> {
-                propertyUseCase.getPropertyLive(PropertyUtils.IS_PENALTY_ENABLED)
+                propertyUseCase.getMultiplePropertyLive(listOf(PropertyUtils.IS_PENALTY_ENABLED, PropertyUtils.PENALTY_MINIMUM_AMOUNT))
                     .collectIn(viewModelScope) {
-                        dispatchEvent(InstallmentDetailEvent.ConfigLoaded(it?.value.toBoolean()))
+                        val isPenaltyEnabled = it.find { it?.id == PropertyUtils.IS_PENALTY_ENABLED }?.value.toBoolean()
+                        val penaltyMinimumAmount = it.find { it?.id == PropertyUtils.PENALTY_MINIMUM_AMOUNT }?.value.double()
+                        dispatchEvent(InstallmentDetailEvent.ConfigLoaded(
+                            isPenaltyEnabled = isPenaltyEnabled,
+                            minimumInstallmentAmountForPenalty = penaltyMinimumAmount.toInt()
+                        ))
                     }
             }
         }

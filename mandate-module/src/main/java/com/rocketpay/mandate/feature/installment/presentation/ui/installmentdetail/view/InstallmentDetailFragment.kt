@@ -220,6 +220,7 @@ internal class InstallmentDetailFragment : BaseMainFragment<InstallmentDetailEve
                 bundle.putString(EnterPenaltyAmountFragment.BUNDLE_MANDATE_ID, sideEffect.mandateId)
                 bundle.putString(EnterPenaltyAmountFragment.BUNDLE_INSTALLMENT_ID, sideEffect.installmentId)
                 bundle.putString(EnterPenaltyAmountFragment.BUNDLE_INSTALLMENT_AMOUNT, sideEffect.installmentAmount.toString())
+                bundle.putString(EnterPenaltyAmountFragment.BUNDLE_CUSTOMER_NAME, sideEffect.customerName)
                 val fragment = EnterPenaltyAmountFragment.newInstance(bundle)
                 showDialogFragment(EnterPenaltyAmountScreen.name, fragment)
             }

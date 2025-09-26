@@ -14,6 +14,7 @@ internal data class EnterPenaltyAmountState(
     val installmentId: String = "",
     var installmentAmount: String = "",
     val penaltyAmount: String = "",
+    val customerName: String = "",
     val penaltyAmountError: String = "",
     val isEnabled: Boolean = false,
     val minimumAmount: Double = 0.0,
@@ -24,7 +25,8 @@ internal sealed class EnterPenaltyAmountEvent(name: String? = null) : BaseEvent(
     data class Init(
         val mandateId: String,
         val installmentId: String,
-        val installmentAmount: String
+        val installmentAmount: String,
+        val customerName: String
     ): EnterPenaltyAmountEvent()
     data class UpdatePenaltyAmount(
         val penaltyAmount: String

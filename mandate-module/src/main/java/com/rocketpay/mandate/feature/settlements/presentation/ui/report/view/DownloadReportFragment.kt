@@ -1,5 +1,6 @@
 package com.rocketpay.mandate.feature.settlements.presentation.ui.report.view
 
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -123,10 +124,18 @@ internal class DownloadReportFragment :
                 }
             }
             is DownloadReportUSF.OpenFromDateCalender -> {
+                val calendar = Calendar.getInstance()
+                // ----- Start of this month -----
+                calendar.set(Calendar.DAY_OF_MONTH, 1)
+                calendar.set(Calendar.HOUR_OF_DAY, 0)
+                calendar.set(Calendar.MINUTE, 0)
+                calendar.set(Calendar.SECOND, 0)
+                calendar.set(Calendar.MILLISECOND, 0)
                 DatePickerUtils.showDatePicker(requireContext(),
                     maxDate = DateUtils.getDate(System.currentTimeMillis()),
-                    date = DateUtils.getDate(DateUtils.addDay(System.currentTimeMillis(), -30)),
-                    addRemoveButton = false) { _, time ->
+                    date = DateUtils.getDate(calendar.timeInMillis),
+                    addRemoveButton = false
+                ) { _, time ->
                     stateMachine.dispatchEvent(DownloadReportEvent.FromDateSelected(time))
                 }
             }
