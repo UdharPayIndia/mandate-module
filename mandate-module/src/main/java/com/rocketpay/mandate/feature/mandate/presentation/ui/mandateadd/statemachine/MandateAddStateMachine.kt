@@ -683,15 +683,17 @@ internal class MandateAddStateMachine(
                         val errorPair = getStateBasedOnCollectionDetailError(state)
                         if (errorPair.first) {
                             if (state.paymentMethod != PaymentMethod.Manual) {
-                                if (errorPair.second.paymentMethod != null
-                                    && state.installmentFrequency !is InstallmentFrequency.Adhoc) {
+                                if (state.installmentFrequency !is InstallmentFrequency.Adhoc) {
                                     next(
                                         errorPair.second, MandateAddASF.CheckChargeAndDiscount(
                                             amount = AmountUtils.stringToDouble(errorPair.second.amount),
                                             frequency = errorPair.second.installmentFrequency!!.value,
                                             installments = errorPair.second.installment!!,
-                                            chargeBearer = getChargeBearer(errorPair.second.chargeResponse, errorPair.second.isCustomerChargeBearer),
-                                            paymentMethod = errorPair.second.paymentMethod!!
+                                            chargeBearer = getChargeBearer(
+                                                errorPair.second.chargeResponse,
+                                                errorPair.second.isCustomerChargeBearer
+                                            ),
+                                            paymentMethod = errorPair.second.paymentMethod ?: PaymentMethod.Upi
                                         )
                                     )
                                 } else {
@@ -1354,9 +1356,8 @@ internal class MandateAddStateMachine(
             maxUpiAmountLimit: Int
         ): Pair<Boolean, PaymentMethod?> {
             return if (paymentMethod != PaymentMethod.Manual) {
-                val isUpiEnable = AmountUtils.stringToDouble(amount).div(
-                    installment ?: 1
-                ) <= maxUpiAmountLimit && installmentFrequency !is InstallmentFrequency.Adhoc
+                val installmentAmount = AmountUtils.stringToDouble(amount).div(installment ?: 1)
+                val isUpiEnable = installmentAmount <= maxUpiAmountLimit && installmentFrequency !is InstallmentFrequency.Adhoc
                 val paymentMethod = if (isUpiEnable) {
                     PaymentMethod.Upi
                 } else {
