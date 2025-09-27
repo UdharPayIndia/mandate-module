@@ -10,6 +10,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url = uri("https://jitpack.io") }
         maven("https://maven.singular.net/")
         maven("https://s3.ap-south-1.amazonaws.com/hvsdk/android/releases")
     }

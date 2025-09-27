@@ -171,32 +171,22 @@ dependencies {
     api(libs.play.services.location)
 
     //Glide
-    api("com.github.bumptech.glide:glide:4.12.0")
+    api(libs.glide)
     kapt("com.github.bumptech.glide:compiler:4.11.0")
 
-    api("com.squareup.retrofit2:retrofit:2.9.0")
-
-    api("androidx.core:core-ktx:1.13.1")
-    api("androidx.appcompat:appcompat:1.7.0")
-    api("com.google.android.material:material:1.12.0")
+    api(libs.retrofit)
 
     // To support viewModelScope, LiveData, LifecycleCoroutineScope
-    api("androidx.lifecycle:lifecycle-runtime-ktx:2.8.3")
-    api("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.3")
-    api("androidx.lifecycle:lifecycle-livedata-ktx:2.8.3")
+    api(libs.androidx.lifecycle.runtime.ktx)
+    api(libs.androidx.lifecycle.viewmodel.ktx)
+    api(libs.androidx.lifecycle.livedata.ktx)
 
     //QrCodegenerator
-    api("com.google.zxing:core:3.5.3")
+    api(libs.core)
 
     //Ads
     api(libs.gms.play.services.ads.identifier)
 
-    // Room components
-    api("androidx.room:room-runtime:2.6.1")
-    api("androidx.room:room-ktx:2.6.1")
-    ksp("androidx.room:room-compiler:2.6.1")
-    api("androidx.room:room-testing:2.6.1")
-
     // Background execution
-    api ("androidx.work:work-runtime-ktx:2.9.0")
+    api (libs.androidx.work.runtime.ktx)
 }
