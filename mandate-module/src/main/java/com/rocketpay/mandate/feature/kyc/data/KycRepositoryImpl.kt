@@ -89,9 +89,9 @@ internal class KycRepositoryImpl(
     }
 
     private fun insertKyc(kycEntity: KycEntity) {
+        kycDao.insertOne(kycEntity)
         val kycStatus = getKycStatusNonLive()
         setIsKycCompleted(kycStatus == KycStateEnum.Completed)
-        kycDao.insertOne(kycEntity)
     }
 
     override fun getKycStatus(): Flow<KycStateEnum> {
