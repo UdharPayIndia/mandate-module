@@ -1,6 +1,6 @@
 package com.rocketpay.mandate.feature.kyc.domain.entities
 
-internal sealed class KycStateEnum(val value: String) {
+sealed class KycStateEnum(val value: String) {
     object Initiated : KycStateEnum("initiated")
     object Pending : KycStateEnum("in_progress")
     object Completed : KycStateEnum("success")

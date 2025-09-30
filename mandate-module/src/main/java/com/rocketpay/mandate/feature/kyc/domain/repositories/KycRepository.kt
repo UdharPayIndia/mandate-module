@@ -13,7 +13,7 @@ internal interface KycRepository {
     suspend fun fetchKyc(propertyUseCase: PropertyUseCase): Outcome<Kyc>
     suspend fun submitKycItem(kycItem: KycWorkFlow, jsonObject: JsonObject): Outcome<Kyc>
     fun getKycStatus(): Flow<KycStateEnum>
-    fun getKycStatusNonLive(): KycStateEnum
+    suspend fun getKycStatusNonLive(): KycStateEnum
     suspend fun initKycItem(kycItem: KycWorkFlow): Outcome<Kyc>
     fun setIsKycCompleted(flag: Boolean)
     fun isKycCompleted(): Boolean

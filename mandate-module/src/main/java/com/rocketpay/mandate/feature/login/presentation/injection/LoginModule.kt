@@ -24,8 +24,12 @@ import dagger.Module
 import dagger.Provides
 
 
-@Module(includes = [KycModule::class, PropertyModule::class,
-    BusinessProfileModule::class, ProductModule::class])
+@Module(includes = [
+    KycModule::class,
+    PropertyModule::class,
+    BusinessProfileModule::class,
+    ProductModule::class
+])
 internal open class LoginModule {
 
     @Provides

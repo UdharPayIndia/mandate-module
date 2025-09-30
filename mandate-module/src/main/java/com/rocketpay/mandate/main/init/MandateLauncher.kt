@@ -4,13 +4,16 @@ import android.content.Context
 import android.content.Intent
 import androidx.fragment.app.Fragment
 import com.rocketpay.mandate.common.basemodule.common.data.cache.DataStore
+import com.rocketpay.mandate.feature.common.domain.CommonUseCase
 import com.rocketpay.mandate.feature.kyc.data.datasource.local.KycDataStore
+import com.rocketpay.mandate.feature.kyc.domain.entities.KycStateEnum
 import com.rocketpay.mandate.feature.login.data.datasource.local.LoginDataStore
 import com.rocketpay.mandate.feature.mandate.presentation.ui.mandateadd.view.MandateAddFragment
 import com.rocketpay.mandate.feature.mandate.presentation.ui.mandatelist.view.MandateListFragment
 import com.rocketpay.mandate.main.database.MandateDatabase
 import com.rocketpay.mandate.main.presentation.view.RpMainActivity
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 object MandateLauncher {
@@ -89,6 +92,14 @@ object MandateLauncher {
 
     fun getMandateList(context: Context): Fragment {
         return MandateListFragment.newInstance(null)
+    }
+
+    suspend fun getKycStatus(): KycStateEnum{
+        return CommonUseCase.getInstance().getKycStatus()
+    }
+
+    fun getKycStatusLive(): Flow<KycStateEnum>{
+        return CommonUseCase.getInstance().getKycStatusLive()
     }
 
     suspend fun logoutUser(){

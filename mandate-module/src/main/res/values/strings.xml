@@ -627,4 +627,7 @@
     <string name="rp_bounce_penalty_settled">Bounce Penalty Settled</string>
     <string name="rp_bounce_penalty_collection_initiated">Bounce Penalty Collection Initiated</string>
     <string name="rp_view_details">View Details</string>
+    <string name="rp_bounce_penalty_collection_failed">Bounce Penalty Collection Failed</string>
+    <string name="rp_bounce_penalty_settlement_failed">Bounce Penalty Settlement Failed</string>
+
 </resources>

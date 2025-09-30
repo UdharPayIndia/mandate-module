@@ -20,5 +20,5 @@ internal interface KycDao {
     fun getAll(): Flow<List<KycEntity>>
 
     @Query("SELECT * FROM kyc")
-    fun getAllNonLive(): List<KycEntity>
+    suspend fun getAllNonLive(): List<KycEntity>
 }

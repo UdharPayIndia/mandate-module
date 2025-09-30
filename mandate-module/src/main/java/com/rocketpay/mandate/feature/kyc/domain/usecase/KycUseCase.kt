@@ -8,7 +8,9 @@ import com.rocketpay.mandate.feature.kyc.domain.repositories.KycRepository
 import com.rocketpay.mandate.feature.property.domain.usecase.PropertyUseCase
 import com.udharpay.core.networkmanager.domain.entities.Outcome
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.DataValidator
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 
 internal class KycUseCase internal constructor(
     private val kycRepository: KycRepository,
@@ -35,7 +37,9 @@ internal class KycUseCase internal constructor(
     }
 
     internal suspend fun getKycStatusNonLive(): KycStateEnum{
-        return kycRepository.getKycStatusNonLive()
+        return withContext(Dispatchers.IO) {
+            kycRepository.getKycStatusNonLive()
+        }
     }
 
     fun setIsKycCompleted(flag: Boolean) {

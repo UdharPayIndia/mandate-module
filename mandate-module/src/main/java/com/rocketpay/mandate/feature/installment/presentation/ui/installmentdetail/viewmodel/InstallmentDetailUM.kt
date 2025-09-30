@@ -182,6 +182,14 @@ internal class InstallmentDetailUM(val dispatchEvent: (InstallmentDetailEvent) -
                         viewPenaltySettlement.set(false)
                         penaltyStatusText.set(ResourceManager.getInstance().getString(R.string.rp_app_bounce_penalty_collected))
                     }
+                    InstallmentState.CollectionFailed -> {
+                        viewPenaltySettlement.set(false)
+                        penaltyStatusText.set(ResourceManager.getInstance().getString(R.string.rp_bounce_penalty_collection_failed))
+                    }
+                    InstallmentState.SettlementFailed -> {
+                        viewPenaltySettlement.set(false)
+                        penaltyStatusText.set(ResourceManager.getInstance().getString(R.string.rp_bounce_penalty_settlement_failed))
+                    }
                     else -> {
                         viewPenaltySettlement.set(false)
                         penaltyStatusText.set(ResourceManager.getInstance().getString(R.string.rp_bounce_penalty_collection_initiated))

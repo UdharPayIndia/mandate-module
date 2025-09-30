@@ -109,6 +109,12 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Hello", Toast.LENGTH_LONG).show()
 
         }
+
+        lifecycleScope.launch {
+            val kycStatus = MandateLauncher.getKycStatus()
+            Toast.makeText(this@MainActivity, kycStatus.value, Toast.LENGTH_LONG).show()
+        }
+
     }
 
     private fun setInsetBackgroundColor(colorId: Int) {
