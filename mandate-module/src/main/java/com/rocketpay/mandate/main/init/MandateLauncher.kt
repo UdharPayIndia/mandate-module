@@ -104,6 +104,7 @@ object MandateLauncher {
 
     suspend fun logoutUser(){
         withContext(Dispatchers.IO) {
+            MandateManager.getInstance().setLoginMobileNumber("")
             val kycDataStore = KycDataStore(
                 DataStore(
                     MandateManager.getInstance().getContext(),
