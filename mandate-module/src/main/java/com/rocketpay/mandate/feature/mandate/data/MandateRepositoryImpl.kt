@@ -123,6 +123,15 @@ internal class MandateRepositoryImpl(
         }
     }
 
+    override fun getMandateNonLiveByGatewayId(mandateId: String): Mandate? {
+        val mandate = mandateDao.getOneNonLiveByGatewayId(mandateId)
+        return if (mandate == null) {
+            null
+        } else {
+            mandateEntToDomMapper.map(mandate)
+        }
+    }
+
     override suspend fun syncMandates(createdAt: Long, updatedAt: Long): Outcome<MandateListResponse> {
         return mandateService.syncMandates(createdAt, updatedAt)
     }

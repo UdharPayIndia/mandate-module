@@ -33,6 +33,7 @@ internal interface MandateRepository {
     suspend fun sendPaymentRequest(mandateId: String): Outcome<GenericSuccessResponse>
     suspend fun fetchMandateState(mandateId: String): Outcome<MandateStateDto>
     fun getMandateNonLive(mandateId: String): Mandate?
+    fun getMandateNonLiveByGatewayId(mandateId: String): Mandate?
 
     suspend fun syncMandates(createdAt: Long, updatedAt: Long): Outcome<MandateListResponse>
     suspend fun refreshMandate(mandateId: String): Outcome<Mandate>

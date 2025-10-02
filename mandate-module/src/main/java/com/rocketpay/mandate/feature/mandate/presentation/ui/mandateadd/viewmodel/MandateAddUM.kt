@@ -156,7 +156,7 @@ internal class MandateAddUM (private val dispatchEvent: (MandateAddEvent) -> Uni
     val collectionAmountText = ObservableField<String>()
     val handlingChargeLabel = ObservableField<String>(ResourceManager.getInstance().getString(R.string.rp_merchant_charges))
     val handlingChargeText = ObservableField<SpannableString>()
-    val tokenText = ObservableField<SpannableString>()
+    val tokenUsedText = ObservableField<SpannableString>()
 
     val userCollectionPerInstallmentLabel = ObservableField<String>(ResourceManager.getInstance().getString(R.string.rp_your_collection))
     val userCollectionPerInstallmentText = ObservableField<String>()
@@ -394,14 +394,14 @@ internal class MandateAddUM (private val dispatchEvent: (MandateAddEvent) -> Uni
             val charges = setMerchantCharges(state.chargeResponse, state.installment ?: 1)
             setUserCollectionAmount(state.chargeResponse, state.installment ?: 1)
             setSubscriptionCharges(state, state.installment ?: 1, charges)
-            tokenText.set(SpannableString(state.installment.int().toString()))
+            tokenUsedText.set(SpannableString(state.chargeResponse.tokenConsumed.int().toString()))
         }else{
             handlingChargeLabel.set(ResourceManager.getInstance().getString(R.string.rp_merchant_charges))
             collectionAmountText.set(null)
             handlingChargeText.set(null)
             userCollectionPerInstallmentText.set(null)
             subscriptionInfoText.set(null)
-            tokenText.set(null)
+            tokenUsedText.set(null)
         }
     }
 
@@ -417,7 +417,7 @@ internal class MandateAddUM (private val dispatchEvent: (MandateAddEvent) -> Uni
                     R.string.rp_merchant_charges_per_installment_at_zero))
             }
             subscriptionInfoText.set(ResourceManager.getInstance().getString(R.string.rp_saved_with_app_plan,
-                AmountUtils.format(merchantCharges.discount), MandateManager.getInstance().getAppName()))
+                AmountUtils.format(merchantCharges.discount)))
         }else{
             if(state.chargeResponse?.showAtMandateLevel == true || installment <= 1){
                 handlingChargeLabel.set(ResourceManager.getInstance().getString(R.string.rp_merchant_charges))

@@ -1,5 +1,9 @@
 package com.rocketpay.mandate.feature.product.presentation.injection
 
+import com.rocketpay.mandate.feature.installment.domain.usecase.InstallmentUseCase
+import com.rocketpay.mandate.feature.installment.presentation.injection.InstallmentModule
+import com.rocketpay.mandate.feature.mandate.domain.usecase.MandateUseCase
+import com.rocketpay.mandate.feature.mandate.presentation.injection.MandateModule
 import com.rocketpay.mandate.feature.permission.common.PermissionModule
 import com.rocketpay.mandate.feature.product.data.ProductRepositoryImpl
 import com.rocketpay.mandate.feature.product.data.datasource.local.ProductDataStore
@@ -20,7 +24,7 @@ import com.rocketpay.mandate.main.database.MandateDatabase
 import dagger.Module
 import dagger.Provides
 
-@Module(includes = [PropertyModule::class, PermissionModule::class])
+@Module(includes = [PropertyModule::class, PermissionModule::class, MandateModule::class, InstallmentModule::class])
 internal open class ProductModule {
 
 
@@ -33,8 +37,10 @@ internal open class ProductModule {
     internal fun provideProductStateMachineFactory(
         productUseCase: ProductUseCase,
         propertyUseCase: PropertyUseCase,
+        mandateUseCase: MandateUseCase,
+        installmentUseCase: InstallmentUseCase
     ): ProductStateMachineFactory {
-        return ProductStateMachineFactory(productUseCase, propertyUseCase)
+        return ProductStateMachineFactory(productUseCase, propertyUseCase, mandateUseCase, installmentUseCase)
     }
 
     @Provides

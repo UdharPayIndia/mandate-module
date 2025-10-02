@@ -16,6 +16,10 @@ import com.rocketpay.mandate.common.basemodule.common.presentation.utils.ShowUti
 import com.rocketpay.mandate.common.basemodule.main.view.BaseMainFragment
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
 import com.rocketpay.mandate.databinding.FragmentProductOrderDetailRpBinding
+import com.rocketpay.mandate.feature.installment.presentation.ui.installmentdetail.statemachine.InstallmentDetailScreen
+import com.rocketpay.mandate.feature.installment.presentation.ui.installmentdetail.view.InstallmentDetailFragment
+import com.rocketpay.mandate.feature.mandate.presentation.ui.mandatedetail.statemachine.MandateDetailScreen
+import com.rocketpay.mandate.feature.mandate.presentation.ui.mandatedetail.view.MandateDetailFragment
 import com.rocketpay.mandate.feature.product.presentation.injection.ProductComponent
 import com.rocketpay.mandate.feature.product.presentation.injection.ProductStateMachineFactory
 import com.rocketpay.mandate.feature.product.presentation.ui.order.detail.statemachine.ProductOrderDetailEvent
@@ -108,6 +112,17 @@ internal class ProductOrderDetailFragment : BaseMainFragment<ProductOrderDetailE
             is ProductOrderDetailUSF.Copy -> {
                 ShareUtils.copyToClipboard(requireContext(), sideEffect.link)
                 ShowUtils.shortToast(requireContext(), sideEffect.message)
+            }
+            is ProductOrderDetailUSF.OpenMandate -> {
+                val bundle = Bundle()
+                bundle.putString(MandateDetailFragment.MANDATE_ID, sideEffect.mandate.id)
+                listener?.onNavigate(MandateDetailFragment.newInstance(bundle), fragmentTag = MandateDetailScreen.name)
+            }
+            is ProductOrderDetailUSF.OpenInstallment -> {
+                val bundle = Bundle()
+                bundle.putString(InstallmentDetailFragment.INSTALLMENT_ID, sideEffect.installment.id)
+                bundle.putString(InstallmentDetailFragment.MANDATE_ID, sideEffect.installment.mandateId)
+                listener?.onNavigate(InstallmentDetailFragment.newInstance(bundle), fragmentTag = InstallmentDetailScreen.name)
             }
         }
     }

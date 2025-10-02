@@ -142,6 +142,10 @@ internal class MandateUseCase internal constructor(
         return mandateRepository.getMandateNonLive(mandateId)
     }
 
+    fun getMandateNonLiveByGatewayId(mandateId: String): Mandate? {
+        return mandateRepository.getMandateNonLiveByGatewayId(mandateId)
+    }
+
     fun isValidName(name: String): Boolean {
         return dataValidator.isValidName(name)
     }

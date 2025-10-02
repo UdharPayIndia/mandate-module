@@ -56,4 +56,8 @@ internal class ProductUseCase internal constructor(
     suspend fun getPaymentMethods(): Outcome<List<PaymentMethod>>{
         return productRepository.getPaymentMethods()
     }
+
+    suspend fun getProductOrderNonLive(productOrderId: String): ProductOrder?{
+        return productRepository.getProductOrderNonLive(productOrderId)
+    }
 }

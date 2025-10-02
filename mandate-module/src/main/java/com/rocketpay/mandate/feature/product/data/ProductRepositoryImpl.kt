@@ -140,7 +140,15 @@ internal class ProductRepositoryImpl(
                 emit(null)
             }
         }
+    }
 
+    override suspend fun getProductOrderNonLive(productOrderId: String): ProductOrder? {
+        val data = productOrderDao.getOneNonLive(productOrderId)
+        return if(data != null){
+            productOrderEntToDomMapper.map(data)
+        }else{
+            null
+        }
     }
 
     override fun saveProductOrder(
@@ -153,11 +161,7 @@ internal class ProductRepositoryImpl(
     }
 
     override fun getProductOrders(productType: String): Flow<List<ProductOrder>>{
-        val list = if(productType == ProductTypeEnum.CreditScore.value){
-            productOrderDao.getAllByProductType(productType)
-        }else{
-            productOrderDao.getAllByProductType(productType, ProductOrderTypeEnum.Redeem.value)
-        }
+        val list =  productOrderDao.getAllByProductType(productType)
         return list.transform {
             if(!it.isNullOrEmpty()){
                 emit(productOrderEntToDomMapper.mapList(it))

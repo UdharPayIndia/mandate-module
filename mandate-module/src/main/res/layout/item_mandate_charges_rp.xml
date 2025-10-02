@@ -166,7 +166,6 @@
             android:layout_marginEnd="@dimen/rp_size_16"
             android:gravity="start"
             android:text="@string/rp_token_used"
-            android:visibility="gone"
             android:textAppearance="@style/rp_body_small"
             android:textColor="@color/rp_grey_3"
             app:layout_constraintBottom_toTopOf="@+id/tokenBarrier"
@@ -182,7 +181,6 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@+id/tvTokenLabel"
             app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="gone"
             app:layout_constraintStart_toEndOf="@+id/tvTokenLabel"
             app:layout_constraintTop_toTopOf="@+id/tvTokenLabel"
             app:layout_constraintVertical_chainStyle="packed"
@@ -191,8 +189,8 @@
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="@{TextUtils.isEmpty(vm.tokenText) ?View.VISIBLE  :View.GONE}"
-                app:showShimmer="@{TextUtils.isEmpty(vm.tokenText)}">
+                android:visibility="@{TextUtils.isEmpty(vm.tokenUsedText) ?View.VISIBLE  :View.GONE}"
+                app:showShimmer="@{TextUtils.isEmpty(vm.tokenUsedText)}">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -211,9 +209,9 @@
                 android:background="@color/rp_grey_6"
                 android:gravity="end"
                 android:minWidth="@dimen/rp_size_80"
-                android:text="@{vm.tokenText}"
+                android:text="@{vm.tokenUsedText}"
                 android:textAppearance="@style/rp_body_small"
-                android:visibility="@{TextUtils.isEmpty(vm.tokenText) ?View.GONE  :View.VISIBLE}"
+                android:visibility="@{TextUtils.isEmpty(vm.tokenUsedText) ?View.GONE  :View.VISIBLE}"
                 tools:text="@string/rp_kyc_registration" />
         </FrameLayout>
 

@@ -39,16 +39,12 @@ internal class ProductOrderListSimpleStateMachine (
                 next(ProductOrderListUSF.CloseScreen)
             }
             is ProductOrderListEvent.ProductOrderClick -> {
-                if (event.order.orderType != ProductOrderTypeEnum.Redeem.value) {
-                    next(
-                        ProductOrderListUSF.OpenProductOrderDetails(
-                            event.order,
-                            state.productType
-                        )
+                next(
+                    ProductOrderListUSF.OpenProductOrderDetails(
+                        event.order,
+                        state.productType
                     )
-                }else{
-                    noChange()
-                }
+                )
             }
             is ProductOrderListEvent.RefreshClick -> {
                 next(state.copy(isRefreshing = true),

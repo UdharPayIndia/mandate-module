@@ -50,39 +50,14 @@ internal class InstallmentAddStateMachine(
                     next(state.copy(viewState = InstallmentAddViewState.InvalidAmount))
                 }
             }
-            InstallmentAddEvent.OtpFocusChanged -> {
-                next(InstallmentAddUSF.OtpFocusChanged)
-            }
-            is InstallmentAddEvent.OtpChanged -> {
-                if (dataValidator.isValidOtp(event.otp)) {
-                    next(state.copy(otp = event.otp, viewState = InstallmentAddViewState.VerifyOtp))
-                } else {
-                    next(state.copy(viewState = InstallmentAddViewState.InvalidOtp))
-                }
-            }
-            InstallmentAddEvent.RequestOtpClick -> {
-                if (state.mandate == null || state.dueDate == null) {
-                    noChange()
-                } else {
-                    val header = ResourceManager.getInstance().getString(R.string.rp_installment_creation_request_otp_in_progress)
-                    val message = ResourceManager.getInstance().getString(R.string.rp_installment_creation_request_otp_in_progress_detail)
-                    next(InstallmentAddASF.RequestOtp(AmountUtils.stringToDouble(state.amount), state.dueDate, state.mandate.id), InstallmentAddUSF.ShowInProgress(header, message))
-                }
-            }
-            InstallmentAddEvent.RequestOtpSuccess -> {
-                next(state.copy(viewState = InstallmentAddViewState.ReadOrEnterOtp), InstallmentAddUSF.StartSmsListener(state.otpTimeout, state.interval))
-            }
-            is InstallmentAddEvent.RequestOtpFailed -> {
-                val header = ResourceManager.getInstance().getString(R.string.rp_installment_creation_request_otp_failed)
-                next(InstallmentAddUSF.ShowError(header, event.message))
-            }
             InstallmentAddEvent.InstallmentCreationClick -> {
                 if (state.mandate == null || state.dueDate == null) {
                     noChange()
                 } else {
                     val header = ResourceManager.getInstance().getString(R.string.rp_installment_creation_in_progress)
                     val message = ResourceManager.getInstance().getString(R.string.rp_installment_creation_in_progress_detail)
-                    next(InstallmentAddASF.CreateInstallment(AmountUtils.stringToDouble(state.amount), state.dueDate, state.otp, state.mandate.id), InstallmentAddUSF.ShowInProgress(header, message))
+                    next(InstallmentAddASF.CreateInstallment(AmountUtils.stringToDouble(state.amount), state.dueDate,
+                        state.mandate.id), InstallmentAddUSF.ShowInProgress(header, message))
                 }
             }
             is InstallmentAddEvent.InstallmentCreationSuccess -> {
@@ -91,24 +66,6 @@ internal class InstallmentAddStateMachine(
             is InstallmentAddEvent.InstallmentCreationFailed -> {
                 val header = ResourceManager.getInstance().getString(R.string.rp_installment_creation_failed)
                 next(InstallmentAddUSF.ShowError(header, event.message))
-            }
-            is InstallmentAddEvent.EditClick -> {
-                next(state.copy(viewState = InstallmentAddViewState.RequestOtp))
-            }
-            is InstallmentAddEvent.UpdateTimeLeft -> {
-                next(state.copy(timeLeftToResendOtp = event.time))
-            }
-            InstallmentAddEvent.OtpTimeout -> {
-                next(state.copy(viewState = InstallmentAddViewState.UnableToReadOtp))
-            }
-            InstallmentAddEvent.ResendOtp -> {
-                if (state.mandate == null || state.dueDate == null) {
-                    noChange()
-                } else {
-                    val header = ResourceManager.getInstance().getString(R.string.rp_installment_creation_request_otp_in_progress)
-                    val message = ResourceManager.getInstance().getString(R.string.rp_installment_creation_request_otp_in_progress_detail)
-                    next(InstallmentAddASF.RequestOtp(AmountUtils.stringToDouble(state.amount), state.dueDate, state.mandate.id), InstallmentAddUSF.ShowInProgress(header, message))
-                }
             }
             is InstallmentAddEvent.ActionButtonClick -> {
                 next(InstallmentAddUSF.CloseProgressDialog)
@@ -124,7 +81,7 @@ internal class InstallmentAddStateMachine(
 
     private fun getViewState(state: InstallmentAddState, dueDate: Long?, amount: String): InstallmentAddViewState {
         return if (dueDate != null && mandateUseCase.isValidAmount(amount)) {
-            InstallmentAddViewState.RequestOtp
+            InstallmentAddViewState.VerifyAmount
         } else {
             state.viewState
         }
@@ -141,14 +98,9 @@ internal class InstallmentAddStateMachine(
                     dispatchEvent(InstallmentAddEvent.DataLoaded(mandate = it))
                 }
             }
-            is InstallmentAddASF.RequestOtp -> {
-                when(val outcome = installmentUseCase.requestOtp(sideEffect.amount, sideEffect.dueDate, sideEffect.mandateId)) {
-                    is Outcome.Error -> dispatchEvent(InstallmentAddEvent.RequestOtpFailed(outcome.error.message.orEmpty()))
-                    is Outcome.Success -> dispatchEvent(InstallmentAddEvent.RequestOtpSuccess)
-                }
-            }
             is InstallmentAddASF.CreateInstallment -> {
-                when(val outcome = installmentUseCase.createInstallment(sideEffect.amount, sideEffect.dueDate, sideEffect.otp, sideEffect.mandateId)) {
+                when(val outcome = installmentUseCase.createInstallment(sideEffect.amount,
+                    sideEffect.dueDate, sideEffect.mandateId)) {
                     is Outcome.Error -> dispatchEvent(InstallmentAddEvent.InstallmentCreationFailed(outcome.error.message.orEmpty()))
                     is Outcome.Success -> dispatchEvent(InstallmentAddEvent.InstallmentCreationSuccess)
                 }

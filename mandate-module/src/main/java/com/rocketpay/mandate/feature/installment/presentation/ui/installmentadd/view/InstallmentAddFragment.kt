@@ -14,7 +14,6 @@ import com.rocketpay.mandate.feature.installment.presentation.ui.installmentadd.
 import com.rocketpay.mandate.feature.installment.presentation.ui.installmentadd.statemachine.InstallmentAddState
 import com.rocketpay.mandate.feature.installment.presentation.ui.installmentadd.statemachine.InstallmentAddStateMachine
 import com.rocketpay.mandate.feature.installment.presentation.ui.installmentadd.statemachine.InstallmentAddUSF
-import com.rocketpay.mandate.feature.installment.presentation.ui.installmentadd.statemachine.OtpTimer
 import com.rocketpay.mandate.feature.installment.presentation.ui.installmentadd.viewmodel.InstallmentAddUM
 import com.rocketpay.mandate.feature.mandate.presentation.injection.MandateComponent
 import com.rocketpay.mandate.common.basemodule.common.presentation.progressdialog.ProgressDialog
@@ -32,8 +31,6 @@ internal class InstallmentAddFragment : BaseMainFragment<InstallmentAddEvent, In
     @Inject
     internal lateinit var installmentStateMachineFactory: InstallmentStateMachineFactory
     private val progressDialog by lazy { ProgressDialog(requireContext(), vm.progressDialogVM) }
-
-    private var otpTimer: OtpTimer? = null
 
     companion object {
         const val MANDATE_ID = "mandate_id"
@@ -85,11 +82,6 @@ internal class InstallmentAddFragment : BaseMainFragment<InstallmentAddEvent, In
                 vm.progressDialogVM.setProgressState(sideEffect.header, sideEffect.message)
                 progressDialog.show()
             }
-            is InstallmentAddUSF.StartSmsListener -> {
-                progressDialog.dismiss()
-                handleGetSms(sideEffect.interval, sideEffect.otpTimeout)
-                stateMachine.dispatchEvent(InstallmentAddEvent.OtpFocusChanged)
-            }
             is InstallmentAddUSF.CloseClick -> {
                 progressDialog.dismiss()
                 onBackPress()
@@ -104,10 +96,6 @@ internal class InstallmentAddFragment : BaseMainFragment<InstallmentAddEvent, In
                 binding.etMobileNumber.requestFocus()
                 KeyboardUtils.showKeyBoard(binding.etMobileNumber, requireContext())
             }
-            is InstallmentAddUSF.OtpFocusChanged -> {
-                binding.etOtp.requestFocus()
-                KeyboardUtils.showKeyBoard(binding.etOtp, requireContext())
-            }
             is InstallmentAddUSF.OpenStartDateSelection -> {
                 DatePickerUtils.showDatePicker(requireContext(), minDate = DateUtils.getDate(DateUtils.addDay(System.currentTimeMillis(), 1), DateUtils.SLASH_DATE_FORMAT), addRemoveButton = false) { _, time ->
                     stateMachine.dispatchEvent(InstallmentAddEvent.DueDateSelected(time))
@@ -116,31 +104,8 @@ internal class InstallmentAddFragment : BaseMainFragment<InstallmentAddEvent, In
         }
     }
 
-    private fun handleGetSms(interval: Long, otpTimeout: Long) {
-        if (otpTimer == null) {
-            otpTimer = OtpTimer(
-                otpTimeout = otpTimeout,
-                interval = interval,
-                {
-                    stateMachine.dispatchEvent(InstallmentAddEvent.UpdateTimeLeft(it))
-                },
-                {
-                    otpTimer?.cancel()
-                    stateMachine.dispatchEvent(InstallmentAddEvent.OtpTimeout)
-                }
-            )
-        }
-        otpTimer?.cancel()
-        otpTimer?.start()
-    }
-
     override fun deInitView() {
         super.deInitView()
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-    }
-
-    override fun onDestroy() {
-        otpTimer?.cancel()
-        super.onDestroy()
     }
 }

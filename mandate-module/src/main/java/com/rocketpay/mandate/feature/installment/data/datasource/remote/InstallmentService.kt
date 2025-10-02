@@ -91,10 +91,11 @@ internal class InstallmentService {
     }
 
     suspend fun createInstallment(
+        mandateId: String,
         createInstallmentRequest: CreateInstallmentRequest
     ): Outcome<InstallmentDto> {
         return NetworkRequestBuilder()
-            .subUrl("/v1/merchant/installments")
+            .subUrl("/v3/merchant/mandates/${mandateId}/installment")
             .body(createInstallmentRequest)
             .build()
             .post()

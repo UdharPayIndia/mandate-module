@@ -18,7 +18,8 @@ internal class ChargeResponseDto(
     @SerializedName("customer_charges_at_mandate_level") val customerChargesAtMandateLevel: Boolean,
     @SerializedName("show_at_mandate_level") val showAtMandateLevel: Boolean,
     @SerializedName("is_bearer_control_available") var isBearerControlAvailable: Boolean = false,
-    @SerializedName("bearer") var chargeBearer: String = ""
+    @SerializedName("bearer") var chargeBearer: String = "",
+    @SerializedName("tokens_consumed") var tokenConsumed: String? = ""
 )
 
 @Keep

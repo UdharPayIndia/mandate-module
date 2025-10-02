@@ -30,13 +30,7 @@ internal class ProductSummarySimpleStateMachine(
                     ProductSummaryASF.LoadProductWallet(event.productType))
             }
             is ProductSummaryEvent.UpdateProductWalletBalance -> {
-                if(state.productType == ProductTypeEnum.Installment.value){
-                    next(
-                        state.copy(productWallet = event.productWallet
-                    ))
-                }else{
-                    next(state.copy(productWallet = event.productWallet))
-                }
+                next(state.copy(productWallet = event.productWallet))
             }
             is ProductSummaryEvent.FetchProductWallet -> {
                 next(ProductSummaryASF.FetchProductWallet)

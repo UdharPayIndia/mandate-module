@@ -64,21 +64,12 @@ internal class InstallmentUseCase internal constructor(
         return installmentRepository.markAsPaidInstallment(installmentId, request)
     }
 
-    suspend fun requestOtp(
-        amount: Double,
-        dueDate: Long,
-        mandateId: String
-    ): Outcome<GenericSuccessResponse> {
-        return installmentRepository.requestOtp(amount, dueDate, mandateId)
-    }
-
     suspend fun createInstallment(
         amount: Double,
         dueDate: Long,
-        otp: String,
         mandateId: String
     ): Outcome<InstallmentDto> {
-        return installmentRepository.createInstallment(amount, dueDate, otp, mandateId)
+        return installmentRepository.createInstallment(amount, dueDate, mandateId)
     }
 
     fun getInstallmentSummary(userId: String): InstallmentSummary {

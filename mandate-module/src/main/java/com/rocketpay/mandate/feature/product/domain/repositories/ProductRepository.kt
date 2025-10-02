@@ -29,6 +29,7 @@ internal interface ProductRepository {
     suspend fun syncProductOrder(serverSequence: Long): Outcome<List<ProductOrderDto>>
     suspend fun lastServerSequence(): Long
     suspend fun getProductOrder(productOrderId: String): Flow<ProductOrder?>
+    suspend fun getProductOrderNonLive(productOrderId: String): ProductOrder?
     fun saveProductOrder(
         data: List<ProductOrderDto>,
         onInsert: (ProductOrderEntity) -> Unit,

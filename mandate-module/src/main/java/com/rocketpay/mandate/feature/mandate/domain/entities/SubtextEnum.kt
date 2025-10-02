@@ -60,7 +60,8 @@ internal sealed class SubtextEnum(val value: String, val stringResourceId: Int) 
                      ResourceManager.getInstance().getString(mandate.subTextEnum.stringResourceId)
                  }
                  else -> {
-                     ""
+                     val startDate = DateUtils.getDate(mandate.createdAt, DateUtils.MONTH_DATE_FORMAT)
+                     ResourceManager.getInstance().getString(R.string.rp_mandate_created_on, startDate)
                  }
             }
         }

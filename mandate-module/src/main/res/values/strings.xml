@@ -427,8 +427,7 @@
     <string name="rp_discount_coupons"><![CDATA[Discount coupons ->]]></string>
     <string name="rp_applied">Applied</string>
     <string name="rp_merchant_charges">Merchant charges</string>
-    <string name="rp_saved_with_app_plan">%1$s saved! With %2$s+</string>
-    <string name="rp_saved_with_superkey">%1$s saved! With Superkey</string>
+    <string name="rp_saved_with_app_plan">%1$s saved! With Payment Tokens</string>
     <string name="rp_merchant_charges_at_zero">Merchant charges @ ₹0</string>
     <string name="rp_merchant_charges_per_installment_at_zero">Merchant charges per installment @ ₹0</string>
     <string name="rp_merchant_charges_at_zero_with_superkey">Merchant charges @ ₹0 with Superkey</string>
@@ -552,7 +551,7 @@
     <string name="rp_tokens">Payment Tokens</string>
     <string name="rp_token">Payment Token</string>
     <string name="rp_token_history">Payment Token history</string>
-    <string name="rp_you_have_not_made_any_payment_for_tokens">You have not made any payment for payment tokens</string>
+    <string name="rp_you_have_not_made_any_payment_for_tokens">You do not have any payment tokens history</string>
     <string name="rp_used">Used</string>
     <string name="rp_from_distributor">From\nDistributor</string>
     <string name="rp_installment_refresh_success">Installment data is refreshed</string>
@@ -629,5 +628,8 @@
     <string name="rp_view_details">View Details</string>
     <string name="rp_bounce_penalty_collection_failed">Bounce Penalty Collection Failed</string>
     <string name="rp_bounce_penalty_settlement_failed">Bounce Penalty Settlement Failed</string>
-
+    <string name="rp_refunded">Refunded</string>
+    <string name="rp_payment_token_refunded">Payment Token Refunded</string>
+    <string name="rp_payment_token_redeemed">Payment Token Redeemed</string>
+    <string name="rp_deleted">Deleted</string>
 </resources>

@@ -23,6 +23,9 @@ internal interface MandateDao {
     @Query("SELECT * FROM mandate WHERE id = :mandateId")
     fun getOneNonLive(mandateId: String): MandateEntity?
 
+    @Query("SELECT * FROM mandate WHERE gateway_mandate_id = :mandateId")
+    fun getOneNonLiveByGatewayId(mandateId: String): MandateEntity?
+
     @Query("SELECT * FROM mandate WHERE id in (:mandateIds)")
     fun getById(mandateIds: List<String>): List<MandateEntity>?
 

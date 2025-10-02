@@ -33,16 +33,9 @@ internal interface InstallmentRepository {
     suspend fun retryInstallment(mandateId: String, installmentId: String, retryDate: String): Outcome<InstallmentDto>
     suspend fun skipInstallment(mandateId: String, installmentId: String): Outcome<InstallmentDto>
     suspend fun markAsPaidInstallment(installmentId: String , request: InstallmentMarkAsPaidRequest): Outcome<InstallmentDto>
-    suspend fun requestOtp(
-        amount: Double,
-        dueDate: Long,
-        mandateId: String
-    ): Outcome<GenericSuccessResponse>
-
     suspend fun createInstallment(
         amount: Double,
         dueDate: Long,
-        otp: String,
         mandateId: String
     ): Outcome<InstallmentDto>
 

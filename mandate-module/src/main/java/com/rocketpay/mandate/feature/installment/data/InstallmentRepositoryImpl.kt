@@ -1,6 +1,7 @@
 package com.rocketpay.mandate.feature.installment.data
 
 import androidx.sqlite.db.SimpleSQLiteQuery
+import com.rocketpay.mandate.common.basemodule.common.presentation.utils.DateUtils
 import com.rocketpay.mandate.feature.installment.data.datasource.local.InstallmentDao
 import com.rocketpay.mandate.feature.installment.data.datasource.local.InstallmentDataStore
 import com.rocketpay.mandate.feature.installment.data.datasource.local.InstallmentEntity
@@ -21,7 +22,6 @@ import com.rocketpay.mandate.feature.installment.domain.entities.InstallmentPena
 import com.rocketpay.mandate.feature.installment.domain.repositories.InstallmentRepository
 import com.rocketpay.mandate.feature.installment.presentation.ui.paymentSchedule.main.statemachine.InstallmentAmountSummary
 import com.rocketpay.mandate.feature.mandate.data.MandateSyncer
-import com.udharpay.core.networkmanager.domain.entities.GenericSuccessResponse
 import com.udharpay.core.networkmanager.domain.entities.Outcome
 import com.rocketpay.mandate.common.syncmanager.client.SyncManager
 import com.rocketpay.mandate.common.jsonconverter.JsonConverter
@@ -178,21 +178,13 @@ internal class InstallmentRepositoryImpl(
         }
     }
 
-    override suspend fun requestOtp(
-        amount: Double,
-        dueDate: Long,
-        mandateId: String
-    ): Outcome<GenericSuccessResponse> {
-        return installmentService.requestOtp(createInstallmentRequest(amount, dueDate, "", mandateId))
-    }
-
     override suspend fun createInstallment(
         amount: Double,
         dueDate: Long,
-        otp: String,
         mandateId: String
     ): Outcome<InstallmentDto> {
-        return when(val outcome = installmentService.createInstallment(createInstallmentRequest(amount, dueDate, otp, mandateId))) {
+        return when(val outcome = installmentService.createInstallment(mandateId,
+            createInstallmentRequest(amount, dueDate))) {
             is Outcome.Error -> outcome
             is Outcome.Success -> {
                 SyncManager.getInstance().enqueue(MandateSyncer.TYPE)
@@ -204,14 +196,10 @@ internal class InstallmentRepositoryImpl(
     private fun createInstallmentRequest(
         amount: Double,
         dueDate: Long,
-        otp: String,
-        mandateId: String
     ): CreateInstallmentRequest {
         return CreateInstallmentRequest(
-            mandate_id = mandateId,
             amount = amount,
-            due_date = dueDate,
-            otp = otp
+            due_date = DateUtils.getDate(dueDate, DateUtils.SLASH_DATE_FORMAT),
         )
     }
 
