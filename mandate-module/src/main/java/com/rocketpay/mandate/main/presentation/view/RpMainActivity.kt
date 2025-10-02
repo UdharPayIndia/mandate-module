@@ -125,7 +125,7 @@ internal class RpMainActivity : AppCompatActivity(), BaseFragmentListener {
 
         FragmentResultBus.register(LoginFragment.RESULT_LOGGED_IN) {
             val data = it as Boolean?
-            if(data == true) {
+            if(data == true && mViewModel.flowType != FLOW_KYC) {
                 handleMandateRedirection()
             }else{
                 launchFragment()
