@@ -967,7 +967,7 @@ internal class MandateAddStateMachine(
                     maxUpiAmountLimit = event.maxUpiNonMonetisedInstallmentAmount.toInt(),
                     paymentLinkShareMessageDefault = event.paymentLinkShareMessageDefault,
                     paymentLinkShareMessageOneTime = event.paymentLinkShareMessageOneTime
-                ))
+                ),MandateAddASF.LoadSupportedFrequency(event.isAdhocEnabled))
             }
             else -> {
                 noChange()
