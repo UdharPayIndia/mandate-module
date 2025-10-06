@@ -275,6 +275,9 @@ internal class KycStateMachine(
                     ResourceManager.getInstance().getString(R.string.rp_retry),
                     null))
             }
+            is KycEvent.ViewBankAccountDetails -> {
+                next(KycUSF.ViewBankAccountDetails)
+            }
         }
     }
 

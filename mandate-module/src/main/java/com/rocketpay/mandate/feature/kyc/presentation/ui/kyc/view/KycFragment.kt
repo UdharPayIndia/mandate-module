@@ -41,6 +41,8 @@ import com.rocketpay.mandate.common.basemodule.common.presentation.progressdialo
 import com.rocketpay.mandate.databinding.DialogBottomSheetConfirmationRpBinding
 import com.rocketpay.mandate.common.basemodule.main.view.BaseMainFragment
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
+import com.rocketpay.mandate.feature.bankaccount.presentation.ui.bankaccountlist.statemachine.BankAccountListScreen
+import com.rocketpay.mandate.feature.bankaccount.presentation.ui.bankaccountlist.view.BankAccountListFragment
 import javax.inject.Inject
 
 internal class KycFragment : BaseMainFragment<KycEvent, KycState, KycUSF>(), ImageSelectionListener {
@@ -248,6 +250,9 @@ internal class KycFragment : BaseMainFragment<KycEvent, KycState, KycUSF>(), Ima
                 bottomSheetConfirmationDialog = BottomSheetDialog(requireContext())
                 bottomSheetConfirmationDialog?.setContentView(bottomSheetConfirmationBinding.root)
                 bottomSheetConfirmationDialog?.show()
+            }
+            is KycUSF.ViewBankAccountDetails -> {
+                listener?.onNavigate(BankAccountListFragment.newInstance(null), fragmentTag = BankAccountListScreen.name)
             }
         }
     }

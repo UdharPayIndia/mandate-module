@@ -92,6 +92,7 @@ internal sealed class KycEvent(name: String? = null) : BaseEvent(name) {
     data class UploadDocumentFailed(
         val message: String
     ) : KycEvent()
+    data object ViewBankAccountDetails: KycEvent()
 }
 
 
@@ -105,7 +106,8 @@ internal sealed class KycASF : AsyncSideEffect {
         val inputName: KycItemInputMeta,
         val uri: String,
         val jsonObject: JsonObject,
-        val fileSize: Double): KycASF()
+        val fileSize: Double
+    ): KycASF()
 }
 
 
@@ -155,6 +157,8 @@ internal sealed class KycUSF : UiSideEffect {
         val kycWorkFlow: KycWorkFlow,
         val jsonObject: JsonObject
     ): KycUSF()
+    data object ViewBankAccountDetails: KycUSF()
+
 }
 
 internal object KycScreen : Screen("kyc")

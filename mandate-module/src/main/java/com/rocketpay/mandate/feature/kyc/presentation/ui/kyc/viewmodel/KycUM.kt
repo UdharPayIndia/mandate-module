@@ -2,6 +2,7 @@ package com.rocketpay.mandate.feature.kyc.presentation.ui.kyc.viewmodel
 
 import android.graphics.drawable.Drawable
 import android.view.View
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
 import com.google.gson.JsonObject
@@ -31,6 +32,8 @@ internal class KycUM(private val dispatchEvent: (KycEvent) -> Unit) : BaseMainUM
     var kycWorkFlow: KycWorkFlow? = null
     var kycInputName: KycItemInputMeta? = null
     var jsonObject: JsonObject = JsonObject()
+
+    val viewBankButtonVisibility = ObservableBoolean()
 
     val progressDialogVM = ProgressDialogVM ({
         if(isErrorDialogShown){
@@ -76,8 +79,10 @@ internal class KycUM(private val dispatchEvent: (KycEvent) -> Unit) : BaseMainUM
     fun handleState(state: KycState) {
         isKycCompletedOrUnderReview = KycStateEnum.isInReviewOrCompleted(state.kyc?.state?.value)
         if(isKycCompletedOrUnderReview){
+            viewBankButtonVisibility.set(true)
             toolbarTitleString.set(ResourceManager.getInstance().getString(R.string.rp_your_kyc_details))
         }else{
+            viewBankButtonVisibility.set(false)
             toolbarTitleString.set(ResourceManager.getInstance().getString(R.string.rp_complete_kyc_registration_form))
         }
         if (state.kyc == null || state.kyc.workflow.isEmpty()) {
@@ -85,5 +90,9 @@ internal class KycUM(private val dispatchEvent: (KycEvent) -> Unit) : BaseMainUM
         } else {
             emptyStateVisibility.set(View.GONE)
         }
+    }
+
+    fun onViewBankAccountClick(){
+        dispatchEvent(KycEvent.ViewBankAccountDetails)
     }
 }

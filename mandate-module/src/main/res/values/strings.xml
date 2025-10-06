@@ -632,4 +632,5 @@
     <string name="rp_payment_token_refunded">Payment Token Refunded</string>
     <string name="rp_payment_token_redeemed">Payment Token Redeemed</string>
     <string name="rp_deleted">Deleted</string>
+    <string name="rp_view_bank_account">View Bank Details</string>
 </resources>

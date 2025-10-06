@@ -160,7 +160,8 @@ internal class RpMainActivity : AppCompatActivity(), BaseFragmentListener {
                 GlobalState.isLogin.value = true
                 val bundle = Bundle()
                 bundle.putBoolean(KycFragment.BUNDLE_IS_ONBOARDING, mViewModel.flowType != FLOW_KYC)
-                onNavigate(KycFragment.newInstance(bundle), fragmentTag = KycScreen.name, addToBackStack = false)
+                onNavigate(KycFragment.newInstance(bundle), fragmentTag = KycScreen.name,
+                    addToBackStack = mViewModel.flowType == FLOW_KYC)
             }
             else -> {
                 handleMandateRedirection()
@@ -351,7 +352,9 @@ internal class RpMainActivity : AppCompatActivity(), BaseFragmentListener {
 
 
     override fun onBackPressed() {
-        val backHandled = supportFragmentManager.fragments.isNotEmpty() && supportFragmentManager.fragments.last() is BackPressListener && (supportFragmentManager.fragments.last() as BackPressListener).isBackPressHandled()
+        val backHandled = supportFragmentManager.fragments.isNotEmpty()
+                && supportFragmentManager.fragments.last() is BackPressListener
+                && (supportFragmentManager.fragments.last() as BackPressListener).isBackPressHandled()
         if (!backHandled) {
             if (supportFragmentManager.backStackEntryCount > 1 && supportFragmentManager.fragments.last() is BackPressListener) {
                 supportFragmentManager.popBackStack()
