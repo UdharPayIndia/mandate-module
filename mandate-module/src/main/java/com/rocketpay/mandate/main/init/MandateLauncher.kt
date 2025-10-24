@@ -8,6 +8,7 @@ import com.rocketpay.mandate.feature.common.domain.CommonUseCase
 import com.rocketpay.mandate.feature.kyc.data.datasource.local.KycDataStore
 import com.rocketpay.mandate.feature.kyc.domain.entities.KycStateEnum
 import com.rocketpay.mandate.feature.login.data.datasource.local.LoginDataStore
+import com.rocketpay.mandate.feature.mandate.domain.entities.MandateState
 import com.rocketpay.mandate.feature.mandate.presentation.ui.mandateadd.view.MandateAddFragment
 import com.rocketpay.mandate.feature.mandate.presentation.ui.mandatelist.view.MandateListFragment
 import com.rocketpay.mandate.main.database.MandateDatabase
@@ -100,6 +101,14 @@ object MandateLauncher {
 
     fun getKycStatusLive(): Flow<KycStateEnum>{
         return CommonUseCase.getInstance().getKycStatusLive()
+    }
+
+    fun getMandateStatusLive(referenceId: String): Flow<MandateState?> {
+        return CommonUseCase.getInstance().getMandateStatusLive(referenceId)
+    }
+
+    fun getMandateUrl(referenceId: String): Flow<String?>{
+        return CommonUseCase.getInstance().getMandateUrl(referenceId)
     }
 
     suspend fun logoutUser(){

@@ -1,6 +1,6 @@
 package com.rocketpay.mandate.feature.mandate.domain.entities
 
-internal sealed class MandateState(val value: String) {
+sealed class MandateState(val value: String) {
     object Pending : MandateState("pending")
     object UserAccepted : MandateState("accepted")
     object Active : MandateState("active")
