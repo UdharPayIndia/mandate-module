@@ -9,9 +9,11 @@ import com.rocketpay.mandate.feature.installment.presentation.ui.paymentSchedule
 import com.rocketpay.mandate.feature.installment.presentation.ui.paymentSchedule.list.viewmodel.PaymentTrackerType
 import com.rocketpay.mandate.feature.settlements.presentation.ui.list.view.SettlementListFragment
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
+import com.rocketpay.mandate.main.presentation.view.RpMainActivity
 
 internal class SettlementMainAdapter(
-    private val fm: FragmentManager
+    private val fm: FragmentManager,
+    private val blockInternalRedirection: Boolean
 ) : FragmentStatePagerAdapter(fm) {
 
     override fun getItem(index: Int): Fragment {
@@ -21,10 +23,13 @@ internal class SettlementMainAdapter(
                 bundle.putBoolean(PaymentTrackerListFragment.BUNDLE_ORDER_BY_DESC, true)
                 bundle.putString(PaymentTrackerListFragment.BUNDLE_PAYMENT_TRACKER_TYPE, PaymentTrackerType.Collected.value)
                 bundle.putBoolean(PaymentTrackerListFragment.BUNDLE_SKIP_MANUAL_MANDATE, true)
+                bundle.putBoolean(RpMainActivity.BUNDLE_BLOCK_INTERNAL_REDIRECTION, blockInternalRedirection)
                 return PaymentTrackerListFragment.newInstance(bundle)
             }
             else -> {
-                return SettlementListFragment.newInstance(null)
+                val bundle = Bundle()
+                bundle.putBoolean(RpMainActivity.BUNDLE_BLOCK_INTERNAL_REDIRECTION, blockInternalRedirection)
+                return SettlementListFragment.newInstance(bundle)
             }
         }
     }

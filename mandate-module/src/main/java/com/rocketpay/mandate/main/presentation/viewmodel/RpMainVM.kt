@@ -15,6 +15,7 @@ internal class RpMainVM(
     var customerNumber: String = ""
     var amount: Long = 0
     var note: String = ""
+    var blockInternalRedirection: Boolean = false
 
     fun isLoggedIn(): Boolean{
         return loginUseCase.isLoggedIn()

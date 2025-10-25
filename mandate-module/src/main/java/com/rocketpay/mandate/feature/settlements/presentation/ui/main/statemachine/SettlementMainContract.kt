@@ -7,7 +7,7 @@ import com.rocketpay.mandate.common.mvistatemachine.contract.AsyncSideEffect
 import com.rocketpay.mandate.common.mvistatemachine.contract.UiSideEffect
 
 internal data class SettlementMainState(
-    val selectedIndex: Int = 0,
+    val selectedIndex: Int = 0
 ) : BaseState(SettlementMainScreen)
 
 internal sealed class SettlementMainEvent(name: String? = null) : BaseEvent(name) {

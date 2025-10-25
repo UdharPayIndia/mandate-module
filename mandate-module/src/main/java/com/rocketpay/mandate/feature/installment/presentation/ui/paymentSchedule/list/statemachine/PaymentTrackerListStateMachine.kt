@@ -34,7 +34,8 @@ internal class PaymentTrackerListStateMachine(
                         lastFetchedTimeStamp = lastFetchedTimeStamp,
                         isLoading = true,
                         isSuperKeyFlow = event.isSuperKeyFlow,
-                        skipManualMandate = event.skipManualMandate
+                        skipManualMandate = event.skipManualMandate,
+                        blockInternalRedirection = event.blockInternalRedirection
                     ),
                     PaymentTrackerListASF.LoadInstallments(
                         type,
@@ -70,34 +71,38 @@ internal class PaymentTrackerListStateMachine(
 
             }
             is PaymentTrackerListEvent.InstallmentClick -> {
-                if(state.skipManualMandate){
-                    if(event.installment.installment.mandateId == event.installment.installment.referenceId){
-                        next(
-                            PaymentTrackerListUSF.OpenMandateDetails(
+                if(!state.blockInternalRedirection){
+                    if(state.skipManualMandate){
+                        if(event.installment.installment.mandateId == event.installment.installment.referenceId){
+                            next(
+                                PaymentTrackerListUSF.OpenMandateDetails(
+                                    event.installment.installment.mandateId,
+                                    event.installment.installment.serialNumber
+                                )
+                            )
+                        }else {
+                            next(
+                                PaymentTrackerListUSF.OpenInstallmentDetails(
+                                    event.installment.installment
+                                )
+                            )
+                        }
+                    }else{
+                        if(event.installment.installment.mandateId == event.installment.installment.referenceId){
+                            next(PaymentTrackerListUSF.OpenMandateDetails(
                                 event.installment.installment.mandateId,
                                 event.installment.installment.serialNumber
+                            ))
+                        }else{
+                            next(
+                                PaymentTrackerListUSF.OpenInstallmentDetails(
+                                    event.installment.installment
+                                )
                             )
-                        )
-                    }else {
-                        next(
-                            PaymentTrackerListUSF.OpenInstallmentDetails(
-                                event.installment.installment
-                            )
-                        )
+                        }
                     }
                 }else{
-                    if(event.installment.installment.mandateId == event.installment.installment.referenceId){
-                        next(PaymentTrackerListUSF.OpenMandateDetails(
-                            event.installment.installment.mandateId,
-                            event.installment.installment.serialNumber
-                        ))
-                    }else{
-                        next(
-                            PaymentTrackerListUSF.OpenInstallmentDetails(
-                                event.installment.installment
-                            )
-                        )
-                    }
+                    noChange()
                 }
             }
             is PaymentTrackerListEvent.FetchNextInstallments -> {

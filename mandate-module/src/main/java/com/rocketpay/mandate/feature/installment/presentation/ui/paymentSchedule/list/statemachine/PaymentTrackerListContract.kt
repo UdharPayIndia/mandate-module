@@ -18,7 +18,8 @@ internal data class PaymentTrackerListState(
     val limit: Int = 20,
     val orderByDesc: Boolean = false,
     val isSuperKeyFlow: Boolean = false,
-    val skipManualMandate: Boolean = false
+    val skipManualMandate: Boolean = false,
+    val blockInternalRedirection: Boolean = false
 ) : BaseState(PaymentTrackerListScreen)
 
 internal sealed class PaymentTrackerListEvent(name: String? = null) : BaseEvent(name) {
@@ -26,7 +27,8 @@ internal sealed class PaymentTrackerListEvent(name: String? = null) : BaseEvent(
         val paymentTrackerType: String?,
         val orderByDesc: Boolean,
         val isSuperKeyFlow: Boolean,
-        val skipManualMandate: Boolean
+        val skipManualMandate: Boolean,
+        val blockInternalRedirection: Boolean
     ): PaymentTrackerListEvent()
     data class InstallmentsLoaded(
         val installments: ArrayList<InstallmentWithMandateEntity>

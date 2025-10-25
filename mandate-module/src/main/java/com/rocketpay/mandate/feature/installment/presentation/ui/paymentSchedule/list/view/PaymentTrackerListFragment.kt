@@ -30,6 +30,7 @@ import com.rocketpay.mandate.common.basemodule.main.view.BaseMainFragment
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
 import com.rocketpay.mandate.feature.installment.presentation.ui.installmentdetail.statemachine.InstallmentDetailScreen
 import com.rocketpay.mandate.feature.installment.presentation.ui.installmentdetail.view.InstallmentDetailFragment
+import com.rocketpay.mandate.main.presentation.view.RpMainActivity
 import javax.inject.Inject
 
 internal class PaymentTrackerListFragment : BaseMainFragment<PaymentTrackerListEvent, PaymentTrackerListState, PaymentTrackerListUSF>(){
@@ -77,7 +78,9 @@ internal class PaymentTrackerListFragment : BaseMainFragment<PaymentTrackerListE
         val orderByDesc = savedInstanceState?.getBoolean(BUNDLE_ORDER_BY_DESC) ?: false
         val isSuperKeyFlow = savedInstanceState?.getBoolean(BUNDLE_IS_SUPER_KEY_FLOW) ?: false
         val skipManualMandate = savedInstanceState?.getBoolean(BUNDLE_SKIP_MANUAL_MANDATE) ?: false
-        stateMachine.dispatchEvent(PaymentTrackerListEvent.LoadInstallments(paymentTrackerType, orderByDesc, isSuperKeyFlow, skipManualMandate))
+        val blockInternalRedirection = savedInstanceState?.getBoolean(RpMainActivity.BUNDLE_BLOCK_INTERNAL_REDIRECTION) ?: false
+        stateMachine.dispatchEvent(PaymentTrackerListEvent.LoadInstallments(paymentTrackerType,
+            orderByDesc, isSuperKeyFlow, skipManualMandate, blockInternalRedirection))
     }
 
     override fun handleState(state: PaymentTrackerListState) {

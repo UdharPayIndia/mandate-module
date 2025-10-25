@@ -32,6 +32,7 @@ import com.rocketpay.mandate.common.basemodule.main.view.BaseMainFragment
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
 import com.rocketpay.mandate.feature.settlements.presentation.ui.report.statemachine.DownloadReportScreen
 import com.rocketpay.mandate.feature.settlements.presentation.ui.report.view.DownloadReportFragment
+import com.rocketpay.mandate.main.presentation.view.RpMainActivity
 import javax.inject.Inject
 
 internal class SettlementListFragment : BaseMainFragment<SettlementListEvent, SettlementListState, SettlementListUSF>(){
@@ -42,6 +43,7 @@ internal class SettlementListFragment : BaseMainFragment<SettlementListEvent, Se
     private lateinit var vm: SettlementListUM
     @Inject
     internal lateinit var settlementStateMachineFactory: SettlementStateMachineFactory
+    private var blockInternalRedirection: Boolean = false
 
     companion object {
         fun newInstance(bundle: Bundle?): SettlementListFragment {
@@ -69,6 +71,7 @@ internal class SettlementListFragment : BaseMainFragment<SettlementListEvent, Se
 
     override fun loadData(savedInstanceState: Bundle?) {
         super.loadData(savedInstanceState)
+        blockInternalRedirection = savedInstanceState?.getBoolean(RpMainActivity.BUNDLE_BLOCK_INTERNAL_REDIRECTION, false) ?: false
         stateMachine.dispatchEvent(SettlementListEvent.LoadOutstandingSettlementBalance)
         stateMachine.dispatchEvent(SettlementListEvent.LoadSettlements(orderByDesc = true))
         stateMachine.dispatchEvent(SettlementListEvent.LoadSettlementBannerInfo)
@@ -125,6 +128,7 @@ internal class SettlementListFragment : BaseMainFragment<SettlementListEvent, Se
             is SettlementListUSF.OpenSettlementDetails -> {
                 val bundle = Bundle()
                 bundle.putString(SettlementDetailFragment.BUNDLE_SETTLEMENT_ID, sideEffect.settlementId)
+                bundle.putBoolean(RpMainActivity.BUNDLE_BLOCK_INTERNAL_REDIRECTION, blockInternalRedirection)
                 listener?.onNavigate(SettlementDetailFragment.newInstance(bundle), fragmentTag = SettlementDetailScreen.name)
             }
             is SettlementListUSF.OpenKyc -> {

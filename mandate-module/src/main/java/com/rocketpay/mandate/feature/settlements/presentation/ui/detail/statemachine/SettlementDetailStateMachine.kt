@@ -29,7 +29,7 @@ internal class SettlementDetailStateMachine (
     ): Next<SettlementDetailState?, SettlementDetailASF?, SettlementDetailUSF?> {
         return when (event) {
             is SettlementDetailEvent.Init -> {
-                next(state.copy(settlementId = event.settlementId, payInOrderId = event.payInOrderId),
+                next(state.copy(settlementId = event.settlementId, payInOrderId = event.payInOrderId, blockInternalRedirection = event.blockInternalRedirection),
                     SettlementDetailASF.Init(event.settlementId, event.payInOrderId))
             }
             is SettlementDetailEvent.LoadSettlement -> {
@@ -59,10 +59,14 @@ internal class SettlementDetailStateMachine (
                     SettlementDetailUSF.SetInstallments(event.installments, event.refundedInstallments))
             }
             is SettlementDetailEvent.InstallmentClick ->{
-                if(event.installment.referenceId == event.installment.mandateId) {
-                    next(SettlementDetailUSF.OpenMandate(event.installment))
+                if(!state.blockInternalRedirection) {
+                    if (event.installment.referenceId == event.installment.mandateId) {
+                        next(SettlementDetailUSF.OpenMandate(event.installment))
+                    } else {
+                        next(SettlementDetailUSF.OpenInstallment(event.installment))
+                    }
                 }else{
-                    next(SettlementDetailUSF.OpenInstallment(event.installment))
+                    noChange()
                 }
             }
             is SettlementDetailEvent.BackClick -> {

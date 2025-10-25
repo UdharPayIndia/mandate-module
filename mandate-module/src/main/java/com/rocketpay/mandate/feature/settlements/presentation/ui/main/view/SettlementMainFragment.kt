@@ -23,6 +23,7 @@ import com.rocketpay.mandate.feature.settlements.presentation.ui.main.viewmodel.
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.AmountUtils
 import com.rocketpay.mandate.common.basemodule.main.view.BaseMainFragment
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
+import com.rocketpay.mandate.main.presentation.view.RpMainActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -36,6 +37,7 @@ internal class SettlementMainFragment : BaseMainFragment<SettlementMainEvent, Se
     @Inject
     internal lateinit var settlementStateMachineFactory: SettlementStateMachineFactory
     private var selectedIndex: Int = 0
+    private var blockInternalRedirection: Boolean = false
 
     companion object {
         const val BUNDLE_SELECTED_INDEX = "index"
@@ -73,6 +75,7 @@ internal class SettlementMainFragment : BaseMainFragment<SettlementMainEvent, Se
 
     override fun loadData(savedInstanceState: Bundle?) {
         super.loadData(savedInstanceState)
+        blockInternalRedirection = savedInstanceState?.getBoolean(RpMainActivity.BUNDLE_BLOCK_INTERNAL_REDIRECTION, false) ?: false
         if(savedInstanceState?.containsKey(BUNDLE_SELECTED_INDEX) == true){
             selectedIndex = AmountUtils.stringToInt(savedInstanceState?.getString(BUNDLE_SELECTED_INDEX))
         }
@@ -93,7 +96,7 @@ internal class SettlementMainFragment : BaseMainFragment<SettlementMainEvent, Se
         setupToolbar(vm)
         binding.vm = vm
 
-        settlementMainAdapter = SettlementMainAdapter(childFragmentManager)
+        settlementMainAdapter = SettlementMainAdapter(childFragmentManager, blockInternalRedirection)
         binding.pager.adapter = settlementMainAdapter
 
         if(!movedToDefault) {

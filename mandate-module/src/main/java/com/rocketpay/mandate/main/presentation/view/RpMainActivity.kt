@@ -73,6 +73,7 @@ internal class RpMainActivity : AppCompatActivity(), BaseFragmentListener {
 
     companion object{
         const val BUNDLE_FLOW = "BUNDLE_FLOW"
+        const val BUNDLE_BLOCK_INTERNAL_REDIRECTION = "BUNDLE_BLOCK_INTERNAL_REDIRECTION"
         const val BUNDLE_REFERENCE_ID = "BUNDLE_REFERENCE_ID"
         const val FLOW_MANDATE_ADDITION = "FLOW_MANDATE_ADDITION"
         const val FLOW_MANDATE_DETAIL = "FLOW_MANDATE_DETAIL"
@@ -109,6 +110,7 @@ internal class RpMainActivity : AppCompatActivity(), BaseFragmentListener {
         mViewModel.customerNumber = intent.getStringExtra(MandateAddFragment.BUNDLE_CUSTOMER_NUMBER).toString()
         mViewModel.note = intent.getStringExtra(MandateAddFragment.BUNDLE_NOTE).toString()
         mViewModel.amount = intent.getLongExtra(MandateAddFragment.BUNDLE_AMOUNT, 0)
+        mViewModel.blockInternalRedirection = intent.getBooleanExtra(BUNDLE_BLOCK_INTERNAL_REDIRECTION, false)
     }
 
 
@@ -188,10 +190,14 @@ internal class RpMainActivity : AppCompatActivity(), BaseFragmentListener {
                 onNavigate(MandateAddFragment.newInstance(bundle), fragmentTag = MandateAddScreen.name)
             }
             mViewModel.flowType == FLOW_PAYMENT_TRACKER -> {
-                onNavigate(PaymentTrackerMainFragment.newInstance(null), fragmentTag = PaymentTrackerMainScreen.name)
+                val bundle = Bundle()
+                bundle.putBoolean(BUNDLE_BLOCK_INTERNAL_REDIRECTION, mViewModel.blockInternalRedirection)
+                onNavigate(PaymentTrackerMainFragment.newInstance(bundle), fragmentTag = PaymentTrackerMainScreen.name)
             }
             mViewModel.flowType == FLOW_SETTLEMENT -> {
-                onNavigate(SettlementMainFragment.newInstance(null), fragmentTag = SettlementMainScreen.name)
+                val bundle = Bundle()
+                bundle.putBoolean(BUNDLE_BLOCK_INTERNAL_REDIRECTION, mViewModel.blockInternalRedirection)
+                onNavigate(SettlementMainFragment.newInstance(bundle), fragmentTag = SettlementMainScreen.name)
             }
             mViewModel.flowType == FLOW_BANK_ACCOUNT_LIST -> {
                 onNavigate(BankAccountListFragment.newInstance(null), fragmentTag = BankAccountListScreen.name)

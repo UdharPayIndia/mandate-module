@@ -15,11 +15,12 @@ internal data class SettlementDetailState(
     internal val paymentOrder: PaymentOrder? = null,
     val installments: List<Installment> = emptyList(),
     val refundedInstallments: List<Installment> = emptyList(),
-    val error: String = ""
+    val error: String = "",
+    val blockInternalRedirection: Boolean = false
 ) : BaseState(SettlementDetailScreen)
 
 internal sealed class SettlementDetailEvent(name: String? = null) : BaseEvent(name) {
-    data class Init(val settlementId: String, val payInOrderId: String): SettlementDetailEvent()
+    data class Init(val settlementId: String, val payInOrderId: String, val blockInternalRedirection: Boolean): SettlementDetailEvent()
     data class LoadSettlement(
         val settlementId: String
     ): SettlementDetailEvent()

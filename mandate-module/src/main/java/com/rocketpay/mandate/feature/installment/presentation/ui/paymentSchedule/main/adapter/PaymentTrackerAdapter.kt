@@ -6,10 +6,12 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.rocketpay.mandate.feature.installment.presentation.ui.paymentSchedule.list.view.PaymentTrackerListFragment
 import com.rocketpay.mandate.feature.installment.presentation.ui.paymentSchedule.list.viewmodel.PaymentTrackerType
 import com.rocketpay.mandate.feature.installment.presentation.ui.paymentSchedule.main.view.PaymentTrackerMainFragment
+import com.rocketpay.mandate.main.presentation.view.RpMainActivity
 
 internal class PaymentTrackerAdapter(
     private val f: Fragment,
-    private val arguments: Bundle?
+    private val arguments: Bundle?,
+    private val blockInternalRedirection: Boolean
 ) : FragmentStateAdapter(f) {
     override fun getItemCount() = 3
 
@@ -17,6 +19,7 @@ internal class PaymentTrackerAdapter(
         val bundle = Bundle()
         bundle.putBoolean(PaymentTrackerListFragment.BUNDLE_IS_SUPER_KEY_FLOW, arguments?.getBoolean(
             PaymentTrackerMainFragment.BUNDLE_IS_SUPER_KEY_FLOW) ?: false)
+        bundle.putBoolean(RpMainActivity.BUNDLE_BLOCK_INTERNAL_REDIRECTION, blockInternalRedirection)
         when(position){
             PaymentTrackerType.Outstanding.index -> {
                 bundle.putBoolean(PaymentTrackerListFragment.BUNDLE_ORDER_BY_DESC, true)

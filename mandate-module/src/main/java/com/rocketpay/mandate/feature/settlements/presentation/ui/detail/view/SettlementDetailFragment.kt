@@ -27,6 +27,7 @@ import com.rocketpay.mandate.common.basemodule.main.view.BaseMainFragment
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
 import com.rocketpay.mandate.feature.installment.presentation.ui.installmentdetail.statemachine.InstallmentDetailScreen
 import com.rocketpay.mandate.feature.installment.presentation.ui.installmentdetail.view.InstallmentDetailFragment
+import com.rocketpay.mandate.main.presentation.view.RpMainActivity
 import javax.inject.Inject
 
 internal class SettlementDetailFragment  : BaseMainFragment<SettlementDetailEvent, SettlementDetailState, SettlementDetailUSF>(){
@@ -77,7 +78,8 @@ internal class SettlementDetailFragment  : BaseMainFragment<SettlementDetailEven
         super.loadData(savedInstanceState)
         val settlementId = savedInstanceState?.getString(BUNDLE_SETTLEMENT_ID).orEmpty()
         val payInOrderId = savedInstanceState?.getString(BUNDLE_PAY_IN_ORDER_ID).orEmpty()
-        stateMachine.dispatchEvent(SettlementDetailEvent.Init(settlementId = settlementId, payInOrderId = payInOrderId))
+        val blockInternalRedirection = savedInstanceState?.getBoolean(RpMainActivity.BUNDLE_BLOCK_INTERNAL_REDIRECTION, false) ?: false
+        stateMachine.dispatchEvent(SettlementDetailEvent.Init(settlementId = settlementId, payInOrderId = payInOrderId, blockInternalRedirection))
     }
 
     override fun handleState(state: SettlementDetailState) {

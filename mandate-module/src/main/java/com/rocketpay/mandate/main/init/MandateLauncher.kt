@@ -68,17 +68,21 @@ object MandateLauncher {
 
     fun openPaymentTracker(
         context: Context,
+        blockInternalRedirection: Boolean = false
     ){
         val intent = Intent(context, RpMainActivity::class.java)
         intent.putExtra(RpMainActivity.BUNDLE_FLOW, RpMainActivity.FLOW_PAYMENT_TRACKER)
+        intent.putExtra(RpMainActivity.BUNDLE_BLOCK_INTERNAL_REDIRECTION, blockInternalRedirection)
         context.startActivity(intent)
     }
 
     fun openSettlementDetails(
         context: Context,
+        blockInternalRedirection: Boolean = false
     ){
         val intent = Intent(context, RpMainActivity::class.java)
         intent.putExtra(RpMainActivity.BUNDLE_FLOW, RpMainActivity.FLOW_SETTLEMENT)
+        intent.putExtra(RpMainActivity.BUNDLE_BLOCK_INTERNAL_REDIRECTION, blockInternalRedirection)
         context.startActivity(intent)
     }
 
