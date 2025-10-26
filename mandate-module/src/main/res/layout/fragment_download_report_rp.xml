@@ -27,7 +27,7 @@
             android:layout_marginTop="@dimen/rp_size_16"
             android:layout_marginHorizontal="@dimen/rp_size_16"
             android:layout_gravity="center_horizontal"
-            android:textColor="@color/black"
+            android:textColor="@color/rp_grey_1"
             android:gravity="start"
             android:text="@string/rp_download_report" />
 
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/rp_size_16"
             android:layout_gravity="center_horizontal"
-            android:textColor="@color/black"
+            android:textColor="@color/rp_grey_1"
             android:gravity="start"
             android:text="@string/rp_select_report_period" />
 

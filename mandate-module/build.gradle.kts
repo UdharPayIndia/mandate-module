@@ -163,18 +163,9 @@ dependencies {
 
     api(libs.shimmer)
 
-    //SMS
-    api(libs.play.services.auth)
-    api(libs.play.services.auth.api.phone)
-
-    //Location
-    api(libs.play.services.location)
-
     //Glide
     api(libs.glide)
     kapt("com.github.bumptech.glide:compiler:4.11.0")
-
-    api(libs.retrofit)
 
     // To support viewModelScope, LiveData, LifecycleCoroutineScope
     api(libs.androidx.lifecycle.runtime.ktx)

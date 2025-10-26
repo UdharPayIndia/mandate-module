@@ -48,6 +48,10 @@ android {
         }
 
         debug {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
             manifestPlaceholders.providerName = "com.udharpay.sdk.debug"
             buildConfigField "String", "PROVIDER_NAME", "\"com.udharpay.sdk.debug.provider\""
 

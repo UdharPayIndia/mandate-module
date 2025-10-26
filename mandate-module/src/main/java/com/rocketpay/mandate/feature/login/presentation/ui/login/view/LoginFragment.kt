@@ -9,17 +9,11 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.IntentSenderRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.gms.auth.api.identity.GetPhoneNumberHintIntentRequest
-import com.google.android.gms.auth.api.identity.Identity
 import com.rocketpay.mandate.R
 import com.rocketpay.mandate.common.basemodule.common.eventbus.activityresultcallback.FragmentResultBus
 import com.rocketpay.mandate.common.basemodule.common.presentation.progressdialog.ProgressDialog
 import com.rocketpay.mandate.common.basemodule.common.presentation.utils.KeyboardUtils
-import com.rocketpay.mandate.common.basemodule.common.presentation.utils.PhoneUtils
 import com.rocketpay.mandate.common.basemodule.main.view.BaseMainFragment
 import com.rocketpay.mandate.common.resourcemanager.ResourceManager
 import com.rocketpay.mandate.databinding.FragmentLoginRpBinding
@@ -116,40 +110,9 @@ internal class LoginFragment : BaseMainFragment<LoginEvent, LoginState, LoginUSF
                 binding.etMobileNumber.requestFocus()
                 KeyboardUtils.showKeyBoard(binding.etMobileNumber, requireContext())
             }
-            is LoginUSF.RequestPhoneHint -> {
-                requestPhoneNumberHint()
-            }
         }
     }
 
-    private fun requestPhoneNumberHint() {
-        val hintRequest = GetPhoneNumberHintIntentRequest.builder().build()
-        Identity.getSignInClient(requireActivity())
-            .getPhoneNumberHintIntent(hintRequest)
-            .addOnSuccessListener {
-                phoneNumberHintIntentResultLauncher.launch(
-                    IntentSenderRequest.Builder(it.intentSender).build()
-                )
-            }
-            .addOnFailureListener {
-            }
-    }
-
-    private val phoneNumberHintIntentResultLauncher: ActivityResultLauncher<IntentSenderRequest> = registerForActivityResult(
-        ActivityResultContracts.StartIntentSenderForResult()
-    ) { result ->
-        try {
-            val phoneNumber = Identity.getSignInClient(requireActivity()).getPhoneNumberFromIntent(result.data)
-            if (!phoneNumber.isNullOrEmpty()) {
-                binding.etMobileNumber.setText(PhoneUtils.removedCountryCodeFromMobileNumber(phoneNumber))
-                stateMachine.dispatchEvent(LoginEvent.PhoneHintReceived(phoneNumber))
-                stateMachine.dispatchEvent(LoginEvent.VerifyUserClick)
-            } else {
-                stateMachine.dispatchEvent(LoginEvent.MobileNumberFocusChanged)
-            }
-        } catch (e: Exception) {
-        }
-    }
 
     override fun deInitView() {
         super.deInitView()

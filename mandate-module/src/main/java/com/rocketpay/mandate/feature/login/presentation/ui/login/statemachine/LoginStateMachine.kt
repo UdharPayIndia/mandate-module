@@ -58,7 +58,7 @@ internal class LoginStateMachine(
                     }
                 }else{
                     next(state.copy(otp = enterpriseToken),
-                        LoginASF.LoadCountryCode, LoginUSF.RequestPhoneHint)
+                        LoginASF.LoadCountryCode)
                 }
             }
             is LoginEvent.CountryCodeChanged -> {

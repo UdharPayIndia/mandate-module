@@ -62,7 +62,6 @@ internal sealed class LoginUSF : UiSideEffect {
     data class ShowInProgress(val header: String, val message: String) : LoginUSF()
     object CloseProgressDialog: LoginUSF()
     object MobileNumberFocusChanged: LoginUSF()
-    object RequestPhoneHint: LoginUSF()
 }
 
 internal object LoginScreen : Screen("login")
