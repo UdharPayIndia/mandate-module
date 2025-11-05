@@ -105,7 +105,7 @@ internal class RpMainActivity : AppCompatActivity(), BaseFragmentListener {
 
     private fun retrieveExtras(){
         mViewModel.flowType = intent.getStringExtra(BUNDLE_FLOW).toString()
-        mViewModel.referenceId = intent.getStringExtra(BUNDLE_REFERENCE_ID).toString()
+        mViewModel.referenceId = intent.getStringExtra(BUNDLE_REFERENCE_ID)
         mViewModel.customerName = intent.getStringExtra(MandateAddFragment.BUNDLE_CUSTOMER_NAME).toString()
         mViewModel.customerNumber = intent.getStringExtra(MandateAddFragment.BUNDLE_CUSTOMER_NUMBER).toString()
         mViewModel.note = intent.getStringExtra(MandateAddFragment.BUNDLE_NOTE).toString()
@@ -174,7 +174,7 @@ internal class RpMainActivity : AppCompatActivity(), BaseFragmentListener {
     private fun handleMandateRedirection(){
         GlobalState.isLogin.value = true
         when{
-            mViewModel.flowType == FLOW_MANDATE_DETAIL && mViewModel.referenceId.isNotEmpty() -> {
+            mViewModel.flowType == FLOW_MANDATE_DETAIL && !mViewModel.referenceId.isNullOrEmpty() -> {
                 val bundle = Bundle()
                 bundle.putString(MandateDetailFragment.BUNDLE_SUPER_KEY_ID, mViewModel.referenceId)
                 onNavigate(MandateDetailFragment.newInstance(bundle), fragmentTag = MandateDetailScreen.name)

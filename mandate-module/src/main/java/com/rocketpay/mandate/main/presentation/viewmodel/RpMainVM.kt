@@ -10,7 +10,7 @@ internal class RpMainVM(
 ): BaseMainUM() {
 
     var flowType: String = ""
-    var referenceId: String = ""
+    var referenceId: String? = null
     var customerName: String = ""
     var customerNumber: String = ""
     var amount: Long = 0

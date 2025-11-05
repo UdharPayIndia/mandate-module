@@ -25,7 +25,7 @@ object MandateLauncher {
         context.startActivity(intent)
     }
 
-    fun openMandateDetails(context: Context, referenceId: String) {
+    fun openMandateDetails(context: Context, referenceId: String? = null) {
         val intent = Intent(context, RpMainActivity::class.java)
         intent.putExtra(RpMainActivity.BUNDLE_FLOW, RpMainActivity.FLOW_MANDATE_DETAIL)
         intent.putExtra(RpMainActivity.BUNDLE_REFERENCE_ID, referenceId)

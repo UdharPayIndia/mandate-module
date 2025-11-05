@@ -1319,7 +1319,11 @@ internal class MandateAddStateMachine(
             discountId = sideEffect.discountId,
             amountWithoutCharges = sideEffect.amountWithoutCharges,
             originalAmount = sideEffect.originalAmount,
-            referenceId = sideEffect.referenceId,
+            referenceId =  if(!sideEffect.referenceId.isNullOrEmpty()){
+                sideEffect.referenceId
+            }else{
+                null
+            },
             referenceType = sideEffect.referenceType,
             chargeResponseDto = sideEffect.chargeResponse,
             penaltyMetaDto = PenaltyMetaDto(
